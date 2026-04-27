@@ -28,7 +28,8 @@ type CsvRow = Record<string, unknown>;
  * @param mapping   - Maps canonical field names to actual CSV column headers
  * @returns ParseResult with cleaned transactions and any row-level errors
  */
-export function parseCsv(csvText: string, mapping: ColumnMapping): ParseResult {
+export function parseCsv(csvText: string, inputMapping: ColumnMapping): ParseResult {
+  let mapping: ColumnMapping = { ...inputMapping };
   const lines = csvText.split('\n').filter((l) => l.trim().length > 0);
   if (lines.length < 2) {
     return { transactions: [], errors: [], skipped_rows: 0 };
@@ -40,14 +41,14 @@ export function parseCsv(csvText: string, mapping: ColumnMapping): ParseResult {
   const transactions: RawTransaction[] = [];
   let skipped_rows = 0;
 
-  // Only amount is truly required — date and vendor fall back to defaults
-  const amountCol = mapping['amount']?.toLowerCase();
+  // Find amount column — try mapped name first, then fall back to first numeric column
+  let amountCol = mapping['amount']?.toLowerCase();
   if (!amountCol || !headers.includes(amountCol)) {
-    errors.push({
-      row: 0,
-      field: 'amount',
-      message: `Could not find an amount column. Available columns: ${headers.join(', ')}`,
-    });
+    amountCol = detectNumericColumn(lines, headers) ?? headers[0] ?? '';
+    if (amountCol) mapping = { ...mapping, amount: amountCol };
+  }
+  if (!amountCol) {
+    errors.push({ row: 0, field: 'amount', message: 'No columns found in CSV.' });
     return { transactions: [], errors, skipped_rows: 0 };
   }
 
@@ -125,6 +126,36 @@ function extractTransaction(
  */
 function headers_available(row: CsvRow, col: string): boolean {
   return col in row;
+}
+
+/**
+ * Find the column most likely to contain monetary amounts by sampling rows
+ * and counting which column has the highest ratio of positive numeric values.
+ */
+function detectNumericColumn(lines: string[], headers: string[]): string | undefined {
+  const sampleSize = Math.min(20, lines.length - 1);
+  const scores = new Map<string, number>();
+
+  for (let i = 1; i <= sampleSize; i++) {
+    const values = parseCsvLine(lines[i] ?? '');
+    headers.forEach((h, idx) => {
+      const raw = String(values[idx] ?? '').replace(/[$,\s]/g, '');
+      const n = parseFloat(raw);
+      if (!isNaN(n) && n > 0 && raw !== '') {
+        scores.set(h, (scores.get(h) ?? 0) + 1);
+      }
+    });
+  }
+
+  let best: string | undefined;
+  let bestScore = 0;
+  scores.forEach((score, col) => {
+    if (score > bestScore) {
+      bestScore = score;
+      best = col;
+    }
+  });
+  return bestScore >= sampleSize * 0.5 ? best : undefined;
 }
 
 function parseCsvLine(line: string): string[] {
