@@ -14,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'ForensiQ | Forensic Accounting Intelligence',
+  title: 'ForensiQ - Forensic Accounting Intelligence',
   description: 'Advanced fraud detection and forensic accounting analysis platform powered by statistical analysis and machine learning.',
 }
 

@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts'
-import type { BenfordResult } from '@/forensiq/lib/types/transaction'
+import type { BenfordResult } from '@/lib/types/transaction'
 
 interface BenfordChartProps {
   data: BenfordResult

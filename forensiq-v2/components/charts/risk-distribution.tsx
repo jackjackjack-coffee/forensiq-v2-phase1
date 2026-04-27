@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
-import type { AnalyzedTransaction, RiskTier } from '@/forensiq/lib/types/transaction'
+import type { AnalyzedTransaction, RiskTier } from '@/lib/types/transaction'
 
 interface RiskDistributionProps {
   transactions: AnalyzedTransaction[]
