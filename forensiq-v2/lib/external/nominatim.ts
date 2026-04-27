@@ -80,8 +80,8 @@ export async function verifyAddress(address: string): Promise<NominatimResult> {
     return {
       address,
       valid: !isNaN(lat) && !isNaN(lon) && !is_suspicious,
-      lat: isNaN(lat) ? undefined : lat,
-      lon: isNaN(lon) ? undefined : lon,
+      ...(isNaN(lat) ? {} : { lat }),
+      ...(isNaN(lon) ? {} : { lon }),
       address_type,
     };
   } catch {
