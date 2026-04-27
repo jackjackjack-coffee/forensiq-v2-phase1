@@ -72,32 +72,16 @@ function TierPill({ tier }: { tier: RiskTier }) {
 // ── Section: Upload ───────────────────────────────────────────────
 
 function UploadSection({
-  onAnalysis,
+  onDrop,
   loading,
   error,
   hasResult,
 }: {
-  onAnalysis: (r: AnalysisResult) => void;
+  onDrop: (files: File[]) => void;
   loading: boolean;
   error: string | null;
   hasResult: boolean;
 }) {
-  const onDrop = useCallback(
-    (files: File[]) => {
-      const file = files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target?.result as string;
-        const mapping = autoDetectMapping(text);
-        const parsed = parseCsv(text, mapping);
-        if (parsed.transactions.length === 0) return;
-        onAnalysis(runForensicAnalysis(parsed.transactions));
-      };
-      reader.readAsText(file);
-    },
-    [onAnalysis]
-  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -612,7 +596,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-8 py-10">
           {section === 'upload' && (
             <UploadSection
-              onAnalysis={handleAnalysis}
+              onDrop={handleDrop}
               loading={loading}
               error={error}
               hasResult={!!result}
