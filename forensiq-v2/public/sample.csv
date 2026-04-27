@@ -1,0 +1,41 @@
+invoice_id,date,vendor,amount,description,category
+INV-1001,2025-01-03,ACME Corp,4823.45,Office supplies Q1,SUPPLIES
+INV-1002,2025-01-05,Globex Industries,12500.00,Consulting services,CONSULTING
+INV-1003,2025-01-08,ACME Corp,4823.45,Office supplies Q1,SUPPLIES
+INV-1004,2025-01-10,Initech Solutions,9990.00,Software license,SOFTWARE
+INV-1005,2025-01-12,Wayne Enterprises,387.22,Catering for board meeting,MEALS
+INV-1006,2025-01-15,Stark Industries,15750.50,Equipment maintenance,MAINT
+INV-1007,2025-01-18,Globex Industries,9985.00,Consulting follow-up,CONSULTING
+INV-1008,2025-01-22,ACME Corporation,4823.45,Office supplies,SUPPLIES
+INV-1009,2025-01-25,Soylent Green LLC,50000.00,Various services,MISC
+INV-1010,2025-01-28,Cyberdyne Systems,2450.75,IT support,IT
+INV-1011,2025-02-01,Wayne Enterprises,412.88,Office lunch,MEALS
+INV-1012,2025-02-03,Globex Industries,9999.00,Consulting,CONSULTING
+INV-1013,2025-02-05,Stark Industries,8350.00,Equipment service,MAINT
+INV-1014,2025-02-08,Umbrella Corp,75000.00,Special project,MISC
+INV-1015,2025-02-12,ACME Corp,5000.00,Office supplies bulk,SUPPLIES
+INV-1016,2025-02-15,Cyberdyne Systems,2890.50,IT consulting,IT
+INV-1017,2025-02-18,Wayne Enterprises,289.45,Team breakfast,MEALS
+INV-1018,2025-02-20,Initech Solutions,9988.00,Software renewal,SOFTWARE
+INV-1019,2025-02-22,Globex Industries,4995.00,Consulting,CONSULTING
+INV-1020,2025-02-25,Soylent Green LLC,4990.00,Miscellaneous services,MISC
+INV-1021,2025-03-01,Stark Industries,6720.30,Repair work,MAINT
+INV-1022,2025-03-04,ACME Corp,4823.45,Office supplies,SUPPLIES
+INV-1023,2025-03-07,Wayne Enterprises,355.10,Coffee supplies,MEALS
+INV-1024,2025-03-10,Globex Industries,9970.00,Consulting,CONSULTING
+INV-1025,2025-03-12,Cyberdyne Systems,3145.00,IT support,IT
+INV-1026,2025-03-15,Umbrella Corp,25000.00,Various items,MISC
+INV-1027,2025-03-18,Initech Solutions,7250.00,Software training,SOFTWARE
+INV-1028,2025-03-20,Stark Industries,11200.00,Major service,MAINT
+INV-1029,2025-03-22,Soylent Green LLC,99000.00,Consulting,MISC
+INV-1030,2025-03-25,Wayne Enterprises,478.65,Catering,MEALS
+INV-1031,2025-03-28,Globex Industries,4998.50,Various consulting,CONSULTING
+INV-1032,2025-04-01,ACME Corp,4823.45,Office supplies,SUPPLIES
+INV-1033,2025-04-03,Cyberdyne Systems,2675.30,IT,IT
+INV-1034,2025-04-05,Stark Industries,8950.00,Equipment,MAINT
+INV-1035,2025-04-08,Initech Solutions,9985.00,Renewal,SOFTWARE
+INV-1036,2025-04-10,Wayne Enterprises,392.40,Office snacks,MEALS
+INV-1037,2025-04-12,Globex Industries,9999.00,Consulting,CONSULTING
+INV-1038,2025-04-15,Soylent Green LLC,2500.00,Misc,MISC
+INV-1039,2025-04-18,Umbrella Corp,18000.00,Project work,MISC
+INV-1040,2025-04-20,ACME Corp,4823.45,Office supplies,SUPPLIES
