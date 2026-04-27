@@ -40,19 +40,14 @@ export function parseCsv(csvText: string, mapping: ColumnMapping): ParseResult {
   const transactions: RawTransaction[] = [];
   let skipped_rows = 0;
 
-  // Validate required column mapping targets exist in headers
-  const requiredFields: Array<keyof ColumnMapping> = ['amount', 'date', 'vendor'];
-  for (const field of requiredFields) {
-    const col = mapping[field]?.toLowerCase();
-    if (!col || !headers.includes(col)) {
-      errors.push({
-        row: 0,
-        field,
-        message: `Mapped column "${mapping[field]}" not found in CSV headers. Available: ${headers.join(', ')}`,
-      });
-    }
-  }
-  if (errors.length > 0) {
+  // Only amount is truly required — date and vendor fall back to defaults
+  const amountCol = mapping['amount']?.toLowerCase();
+  if (!amountCol || !headers.includes(amountCol)) {
+    errors.push({
+      row: 0,
+      field: 'amount',
+      message: `Could not find an amount column. Available columns: ${headers.join(', ')}`,
+    });
     return { transactions: [], errors, skipped_rows: 0 };
   }
 
@@ -61,11 +56,7 @@ export function parseCsv(csvText: string, mapping: ColumnMapping): ParseResult {
     const rowNum = i + 1; // 1-indexed for auditor-facing messages
     const values = parseCsvLine(lines[i]);
 
-    if (values.length !== headers.length) {
-      errors.push({ row: rowNum, field: '*', message: 'Column count mismatch — row skipped' });
-      skipped_rows++;
-      continue;
-    }
+    while (values.length < headers.length) values.push('');
 
     const row: CsvRow = {};
     headers.forEach((h, idx) => { row[h] = values[idx]; });
@@ -97,19 +88,14 @@ function extractTransaction(
     return null;
   }
 
-  // Date — required, must be parseable
-  const rawDate = String(row[mapping.date.toLowerCase()] ?? '').trim();
-  if (!isValidDateString(rawDate)) {
-    errors.push({ row: rowNum, field: 'date', message: `Invalid date format: "${rawDate}"` });
-    return null;
-  }
+  // Date — optional, falls back to today
+  const dateCol = mapping.date?.toLowerCase();
+  const rawDate = dateCol && headers_available(row, dateCol) ? String(row[dateCol] ?? '').trim() : '';
+  const date = isValidDateString(rawDate) ? normalizeDate(rawDate) : new Date().toISOString().split('T')[0]!;
 
-  // Vendor — required
-  const vendor = String(row[mapping.vendor.toLowerCase()] ?? '').trim();
-  if (!vendor) {
-    errors.push({ row: rowNum, field: 'vendor', message: 'Empty vendor name' });
-    return null;
-  }
+  // Vendor — optional, falls back to "Unknown"
+  const vendorCol = mapping.vendor?.toLowerCase();
+  const vendor = (vendorCol && headers_available(row, vendorCol) ? String(row[vendorCol] ?? '').trim() : '') || 'Unknown';
 
   // invoice_id — optional, auto-generate if missing
   const invoiceIdCol = mapping.invoice_id?.toLowerCase();
@@ -124,7 +110,7 @@ function extractTransaction(
 
   return {
     invoice_id,
-    date: normalizeDate(rawDate),
+    date,
     vendor,
     amount,
     description: descriptionCol ? String(row[descriptionCol] ?? '').trim() || undefined : undefined,
@@ -137,6 +123,10 @@ function extractTransaction(
  * Minimal RFC 4180-compliant CSV line parser.
  * Handles quoted fields with embedded commas and escaped quotes.
  */
+function headers_available(row: CsvRow, col: string): boolean {
+  return col in row;
+}
+
 function parseCsvLine(line: string): string[] {
   const result: string[] = [];
   let current = '';
