@@ -109,6 +109,8 @@ function extractTransaction(
   const categoryCol = mapping.category?.toLowerCase();
   const approvedByCol = mapping.approved_by?.toLowerCase();
 
+  const addressCol = mapping.address?.toLowerCase();
+
   return {
     invoice_id,
     date,
@@ -117,6 +119,7 @@ function extractTransaction(
     description: descriptionCol ? String(row[descriptionCol] ?? '').trim() || undefined : undefined,
     category: categoryCol ? String(row[categoryCol] ?? '').trim() || undefined : undefined,
     approved_by: approvedByCol ? String(row[approvedByCol] ?? '').trim() || undefined : undefined,
+    address: addressCol ? String(row[addressCol] ?? '').trim() || undefined : undefined,
   };
 }
 
@@ -218,6 +221,7 @@ export function autoDetectMapping(csvText: string): ColumnMapping {
   const vendorAliases = ['vendor', 'vendor_name', 'supplier', 'payee', 'lifnr', 'company'];
   const invoiceAliases = ['invoice_id', 'invoice_number', 'inv_num', 'reference', 'doc_number', 'belnr'];
   const descAliases = ['description', 'desc', 'memo', 'notes', 'sgtxt', 'text'];
+  const addressAliases = ['address', 'vendor_address', 'supplier_address', 'street_address', 'addr', 'location'];
 
   return {
     amount: findFirst(headers, amountAliases) ?? DEFAULT_COLUMN_MAPPING.amount,
@@ -225,6 +229,7 @@ export function autoDetectMapping(csvText: string): ColumnMapping {
     vendor: findFirst(headers, vendorAliases) ?? DEFAULT_COLUMN_MAPPING.vendor,
     invoice_id: findFirst(headers, invoiceAliases) ?? DEFAULT_COLUMN_MAPPING.invoice_id,
     description: findFirst(headers, descAliases) ?? DEFAULT_COLUMN_MAPPING.description,
+    address: findFirst(headers, addressAliases),
   };
 }
 

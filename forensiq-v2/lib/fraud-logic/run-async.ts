@@ -13,6 +13,7 @@ import { detectExactDuplicates, detectFuzzyDuplicates } from './duplicate';
 import { detectSplitInvoices } from './split-invoice';
 import { auditDescriptions } from './description-audit';
 import { assembleAnalyzedTransaction, computePortfolioRisk } from './composite-score';
+import type { ExternalVerifyResponse } from '@/app/api/external-verify/route';
 
 export interface ProgressUpdate {
   step: number;
@@ -41,6 +42,8 @@ export async function runForensicAnalysisAsync(
     'Fuzzy duplicates',
     'Split invoice clustering',
     'Description audit',
+    'EDGAR vendor verification',
+    'Address geocoding (Nominatim)',
     'Composite scoring',
   ];
   const total = STEPS.length;
@@ -80,9 +83,68 @@ export async function runForensicAnalysisAsync(
   tick(8); await yieldToUI();
   const descResults = auditDescriptions(transactions);
 
+  // ── External verification: EDGAR + Nominatim ─────────────────────
+  // Collect unique vendors and their first-seen address (per vendor)
+  const vendorToOriginal = new Map<string, string>(); // lowercase → original casing
+  const vendorToAddress = new Map<string, string>();  // lowercase → address
+
+  for (const txn of transactions) {
+    const key = txn.vendor.toLowerCase();
+    if (!vendorToOriginal.has(key)) {
+      vendorToOriginal.set(key, txn.vendor);
+    }
+    if (txn.address && !vendorToAddress.has(key)) {
+      vendorToAddress.set(key, txn.address);
+    }
+  }
+
+  const uniqueVendors = [...vendorToOriginal.values()];
+  const uniqueAddresses = [...new Set([...vendorToAddress.values()])];
+
   tick(9); await yieldToUI();
-  const analyzedTransactions: AnalyzedTransaction[] = transactions.map((txn, i) =>
-    assembleAnalyzedTransaction(txn, {
+
+  let externalData: ExternalVerifyResponse = { edgar: {}, nominatim: {} };
+  try {
+    const resp = await fetch('/api/external-verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ vendors: uniqueVendors, addresses: uniqueAddresses }),
+    });
+    if (resp.ok) {
+      externalData = (await resp.json()) as ExternalVerifyResponse;
+    }
+  } catch {
+    // External verification unreachable — analysis continues with nulls
+  }
+
+  tick(10); await yieldToUI();
+
+  // Build external_results Map keyed by lowercase vendor name
+  const external_results = new Map<
+    string,
+    { edgar_verified: boolean | null; ofac_hit: boolean | null; address_valid: boolean | null }
+  >();
+
+  for (const [vendorLower, vendorOriginal] of vendorToOriginal) {
+    const edgarResult = externalData.edgar[vendorOriginal];
+    const address = vendorToAddress.get(vendorLower);
+    const nominatimResult = address != null ? externalData.nominatim[address] : undefined;
+
+    external_results.set(vendorLower, {
+      edgar_verified: edgarResult != null ? edgarResult.matched : null,
+      ofac_hit: null,
+      address_valid: nominatimResult != null ? nominatimResult.valid : null,
+    });
+  }
+
+  tick(11); await yieldToUI();
+  const analyzedTransactions: AnalyzedTransaction[] = transactions.map((txn, i) => {
+    const extData = external_results.get(txn.vendor.toLowerCase()) ?? {
+      edgar_verified: null,
+      ofac_hit: null,
+      address_valid: null,
+    };
+    return assembleAnalyzedTransaction(txn, {
       isolation_score: risk_scores[i] ?? 0,
       is_outlier: is_outlier[i] ?? false,
       rsf: rsfResults[i] ?? { rsf: 1, rsf_flag: false, rsf_zscore: 0, vendor_median: txn.amount, vendor_count: 1 },
@@ -91,11 +153,11 @@ export async function runForensicAnalysisAsync(
       splitInvoice: splitResults[i] ?? { is_split_invoice: false, split_cluster_id: null, cluster_total: null, cluster_size: null, suspected_threshold: null },
       descriptionAudit: descResults[i] ?? { description_risk: 0, triggered_keywords: [] },
       is_round_number: roundFlags[i] ?? false,
-      edgar_verified: null,
-      ofac_hit: null,
-      address_valid: null,
-    })
-  );
+      edgar_verified: extData.edgar_verified,
+      ofac_hit: extData.ofac_hit,
+      address_valid: extData.address_valid,
+    });
+  });
 
   const portfolio = computePortfolioRisk(analyzedTransactions, benford_1st.mad);
 

@@ -13,6 +13,7 @@ export interface RawTransaction {
   amount: number;         // Always positive. Strip negatives on parse.
   description?: string;
   approved_by?: string;
+  address?: string;       // Vendor address — used for Nominatim geocoding
 }
 
 // ── Fully analyzed transaction (output of all detector layers) ───
@@ -112,6 +113,7 @@ export interface ColumnMapping {
   description?: string;
   category?: string;
   approved_by?: string;
+  address?: string;
 }
 
 // ── CSV parse result ──────────────────────────────────────────────
