@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: 222 47% 4%;
+  --color-foreground: 210 40% 98%;
+  --color-card: 222 47% 7%;
+  --color-card-foreground: 210 40% 98%;
+  --color-muted: 217 33% 12%;
+  --color-muted-foreground: 215 20% 55%;
+  --color-accent: 217 33% 17%;
+  --color-accent-foreground: 210 40% 98%;
+  --color-border: 217 33% 15%;
+  --color-ring: 160 84% 39%;
+  --color-success: 160 84% 39%;
+  --color-warning: 38 92% 50%;
+  --color-danger: 350 89% 60%;
+  --color-critical: 0 72% 51%;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: hsl(var(--color-border));
+}
+
+body {
+  background-color: hsl(var(--color-background));
+  color: hsl(var(--color-foreground));
+}
+
+/* Custom scrollbar for the analyst console feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(222 47% 7%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(217 33% 20%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(217 33% 30%);
+}
+
+/* Data table styles */
+.data-table {
+  @apply w-full text-sm;
+}
+
+.data-table th {
+  @apply text-left font-medium py-3 px-4 border-b;
+  color: hsl(var(--color-muted-foreground));
+  border-color: hsl(var(--color-border));
+}
+
+.data-table td {
+  @apply py-3 px-4 border-b;
+  border-color: hsl(var(--color-border));
+}
+
+.data-table tr:hover {
+  background-color: hsl(var(--color-accent) / 0.5);
+}
