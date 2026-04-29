@@ -73,10 +73,10 @@ export default function VendorsPage() {
     );
   }
 
-  const TH = 'px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-slate-500';
+  const TH = 'px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-gray-500 dark:text-slate-500';
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8 space-y-6 bg-gray-50 dark:bg-slate-900 min-h-screen text-gray-900 dark:text-white">
+    <div className="max-w-5xl mx-auto px-6 py-8 space-y-6 bg-gray-50 dark:bg-slate-950 min-h-screen text-gray-900 dark:text-white">
       <h1 className="text-2xl font-bold">Vendors</h1>
       <p className="text-sm text-slate-400 -mt-3">
         {vendors.length} vendors — sorted by average risk score. Click a row to expand.
@@ -105,10 +105,10 @@ export default function VendorsPage() {
       </div>
 
       {/* Vendor table */}
-      <div className="rounded-xl border border-slate-700 overflow-hidden">
+      <div className="rounded-xl border border-gray-200 dark:border-slate-800 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-800/80">
+            <thead className="bg-gray-50 dark:bg-slate-900/80">
               <tr>
                 <th className={TH}>Vendor</th>
                 <th className={TH}>Transactions</th>
@@ -124,18 +124,18 @@ export default function VendorsPage() {
                 <Fragment key={v.vendor}>
                   <tr
                     onClick={() => setExpanded(expanded === v.vendor ? null : v.vendor)}
-                    className={`border-l-[3px] ${BORDER[v.maxTier]} cursor-pointer transition-colors hover:bg-slate-800/50`}
+                    className={`border-l-[3px] ${BORDER[v.maxTier]} cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-slate-800/50`}
                   >
-                    <td className="pl-3 pr-4 py-2.5 font-medium text-slate-200">
+                    <td className="pl-3 pr-4 py-2.5 font-medium text-gray-800 dark:text-slate-200">
                       <span className="text-slate-600 mr-2">{expanded === v.vendor ? '▼' : '▶'}</span>
                       {v.vendor}
                     </td>
-                    <td className="px-4 py-2.5 text-slate-400">{v.count}</td>
-                    <td className="px-4 py-2.5 font-mono text-slate-200">{fmt(v.totalSpend)}</td>
-                    <td className="px-4 py-2.5 font-mono text-slate-400">{fmt(v.median)}</td>
-                    <td className="px-4 py-2.5 font-mono text-slate-200">{v.avgScore.toFixed(1)}</td>
+                    <td className="px-4 py-2.5 text-gray-500 dark:text-slate-400">{v.count}</td>
+                    <td className="px-4 py-2.5 font-mono text-gray-800 dark:text-slate-200">{fmt(v.totalSpend)}</td>
+                    <td className="px-4 py-2.5 font-mono text-gray-500 dark:text-slate-400">{fmt(v.median)}</td>
+                    <td className="px-4 py-2.5 font-mono text-gray-800 dark:text-slate-200">{v.avgScore.toFixed(1)}</td>
                     <td className="px-4 py-2.5">
-                      <span className={v.flagged > 0 ? 'text-amber-400 font-semibold' : 'text-slate-600'}>
+                      <span className={v.flagged > 0 ? 'text-amber-500 dark:text-amber-400 font-semibold' : 'text-gray-300 dark:text-slate-600'}>
                         {v.flagged}
                       </span>
                     </td>
@@ -145,8 +145,8 @@ export default function VendorsPage() {
                   </tr>
                   {expanded === v.vendor && (
                     <tr>
-                      <td colSpan={7} className="bg-slate-950 px-6 py-4 border-t border-slate-800">
-                        <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">
+                      <td colSpan={7} className="bg-gray-50 dark:bg-slate-950 px-6 py-4 border-t border-gray-200 dark:border-slate-800">
+                        <p className="text-xs text-gray-500 dark:text-slate-500 uppercase tracking-widest mb-3">
                           Transactions for {v.vendor}
                         </p>
                         <TransactionTable
@@ -163,7 +163,7 @@ export default function VendorsPage() {
           </table>
         </div>
         {vendors.length > 100 && (
-          <p className="text-center text-slate-600 text-xs py-3 border-t border-slate-700">
+          <p className="text-center text-gray-400 dark:text-slate-600 text-xs py-3 border-t border-gray-200 dark:border-slate-700">
             Showing top 100 of {vendors.length} vendors
           </p>
         )}

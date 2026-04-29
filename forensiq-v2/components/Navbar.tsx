@@ -32,12 +32,12 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b bg-slate-900 border-slate-700 dark:bg-slate-900 dark:border-slate-700">
+    <header className="sticky top-0 z-30 border-b bg-white border-gray-200 dark:bg-slate-950 dark:border-slate-800">
       <div className="flex items-center h-14 px-6 gap-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="text-cyan-400 text-xl leading-none">⌕</span>
-          <span className="font-bold text-white text-base">ForensiQ</span>
+          <span className="text-cyan-500 text-xl leading-none">⌕</span>
+          <span className="font-bold text-gray-900 dark:text-white text-base">ForensiQ</span>
         </Link>
 
         {/* Nav links */}
@@ -50,13 +50,13 @@ export function Navbar() {
                 href={link.href}
                 className={`relative px-3 py-1 text-sm font-medium transition-colors rounded-md ${
                   isActive
-                    ? 'text-white'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'text-gray-900 dark:text-white'
+                    : 'text-gray-500 hover:text-gray-800 dark:text-slate-400 dark:hover:text-slate-200'
                 }`}
               >
                 {link.label}
                 {isActive && (
-                  <span className="absolute bottom-[-14px] left-0 right-0 h-0.5 bg-cyan-400 rounded-full" />
+                  <span className="absolute bottom-[-14px] left-0 right-0 h-0.5 bg-cyan-500 rounded-full" />
                 )}
               </Link>
             );
@@ -65,7 +65,7 @@ export function Navbar() {
 
         {/* Light/dark toggle */}
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm text-slate-400">Light</span>
+          <span className="text-sm text-gray-500 dark:text-slate-400">{isDark ? 'Dark' : 'Light'}</span>
           <button
             role="switch"
             aria-checked={!isDark}

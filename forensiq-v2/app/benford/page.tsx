@@ -44,7 +44,7 @@ export default function BenfordPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8 space-y-8 bg-gray-50 dark:bg-slate-900 min-h-screen text-gray-900 dark:text-white">
+    <div className="max-w-5xl mx-auto px-6 py-8 space-y-8 bg-gray-50 dark:bg-slate-950 min-h-screen text-gray-900 dark:text-white">
       <h1 className="text-2xl font-bold">Benford Analysis</h1>
       <p className="text-sm text-slate-400 -mt-3">
         Natural transaction data follows Benford&apos;s distribution. Significant deviation may indicate manipulation.
@@ -53,7 +53,7 @@ export default function BenfordPage() {
       {charts.map(({ b, cat, isPass, chartData, label }) => (
         <div
           key={label}
-          className="rounded-xl border border-slate-700 bg-slate-800 dark:bg-slate-800 p-6 space-y-5"
+          className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-5"
         >
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">{label} Distribution</h2>
@@ -68,29 +68,29 @@ export default function BenfordPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="rounded-lg bg-slate-900 border border-slate-700 p-3">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">MAD</p>
-              <p className="font-mono text-lg font-bold text-white">{b.mad.toFixed(4)}</p>
+            <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">MAD</p>
+              <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{b.mad.toFixed(4)}</p>
             </div>
-            <div className="rounded-lg bg-slate-900 border border-slate-700 p-3">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Chi-Square</p>
-              <p className="font-mono text-lg font-bold text-white">{b.chi_square.toFixed(2)}</p>
+            <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Chi-Square</p>
+              <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{b.chi_square.toFixed(2)}</p>
             </div>
-            <div className="rounded-lg bg-slate-900 border border-slate-700 p-3">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Records</p>
-              <p className="font-mono text-lg font-bold text-white">{b.total_records.toLocaleString()}</p>
+            <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Records</p>
+              <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{b.total_records.toLocaleString()}</p>
             </div>
           </div>
 
           {/* Chart */}
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={chartData} margin={{ top: 4, right: 8, left: -8, bottom: 0 }}>
-              <CartesianGrid stroke="#334155" vertical={false} />
+              <CartesianGrid stroke="#e2e8f0" vertical={false} />
               <XAxis dataKey="digit" stroke="#64748b" tick={{ fontSize: 12 }} />
               <YAxis stroke="#64748b" tick={{ fontSize: 11 }} unit="%" />
               <Tooltip
-                contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8 }}
-                labelStyle={{ color: '#94a3b8' }}
+                contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, color: '#1e293b' }}
+                labelStyle={{ color: '#64748b' }}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
               <Bar dataKey="Expected" fill="#22d3ee" radius={[3, 3, 0, 0]} />
@@ -100,7 +100,7 @@ export default function BenfordPage() {
 
           {/* Conformity badge */}
           <div>
-            <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">Conformity</p>
+            <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-2">Conformity</p>
             <span
               className={`inline-block text-sm font-semibold px-3 py-1 rounded-full ${
                 isPass ? 'bg-green-900/60 text-green-400' : 'bg-red-900/60 text-red-400'
@@ -108,13 +108,13 @@ export default function BenfordPage() {
             >
               {cat.label}
             </span>
-            <p className="text-xs text-slate-500 mt-1">{cat.description ?? ''}</p>
+            <p className="text-xs text-gray-500 dark:text-slate-500 mt-1">{cat.description ?? ''}</p>
           </div>
         </div>
       ))}
 
       {/* Round numbers */}
-      <div className="rounded-xl border border-slate-700 bg-slate-800 p-6 space-y-4">
+      <div className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Round Number Analysis</h2>
           <span
@@ -126,13 +126,13 @@ export default function BenfordPage() {
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <div className="rounded-lg bg-slate-900 border border-slate-700 p-3">
-            <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Round Count</p>
-            <p className="font-mono text-lg font-bold text-white">{result.round_number.round_count}</p>
+          <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
+            <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Round Count</p>
+            <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{result.round_number.round_count}</p>
           </div>
-          <div className="rounded-lg bg-slate-900 border border-slate-700 p-3">
-            <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Rate</p>
-            <p className="font-mono text-lg font-bold text-white">
+          <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
+            <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Rate</p>
+            <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">
               {(result.round_number.round_rate * 100).toFixed(1)}%
             </p>
           </div>

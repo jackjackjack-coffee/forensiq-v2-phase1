@@ -31,7 +31,7 @@ export function ScoreRing({ score, size = 44 }: ScoreRingProps) {
           cy={cx}
           r={r}
           fill="none"
-          stroke="#334155"
+          className="stroke-slate-200 dark:stroke-slate-700"
           strokeWidth={strokeW}
         />
         <circle

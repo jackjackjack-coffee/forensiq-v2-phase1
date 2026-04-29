@@ -73,7 +73,7 @@ export default function TransactionsPage() {
   }
 
   const inputCls =
-    'bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500';
+    'bg-white border border-gray-200 text-gray-900 placeholder-gray-400 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-cyan-500';
 
   if (!result) {
     return (
@@ -87,7 +87,7 @@ export default function TransactionsPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-8 space-y-5 bg-gray-50 dark:bg-slate-900 min-h-screen text-gray-900 dark:text-white">
+    <div className="max-w-5xl mx-auto px-6 py-8 space-y-5 bg-gray-50 dark:bg-slate-950 min-h-screen text-gray-900 dark:text-white">
       <h1 className="text-2xl font-bold">Transactions</h1>
       <p className="text-sm text-slate-400 -mt-3">
         {filtered.length.toLocaleString()} shown — click any row for full detector findings.
@@ -102,7 +102,7 @@ export default function TransactionsPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
               filter === t
                 ? 'bg-cyan-600 text-white'
-                : 'bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700'
+                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 dark:bg-slate-900 dark:text-slate-400 dark:border-slate-700 dark:hover:bg-slate-800'
             }`}
           >
             {t} <span className="opacity-60">{counts[t]}</span>
@@ -144,8 +144,8 @@ export default function TransactionsPage() {
             onClick={() => toggleSort(k)}
             className={`px-2 py-0.5 rounded border transition-colors ${
               sortKey === k
-                ? 'border-cyan-500 text-cyan-400'
-                : 'border-slate-700 hover:border-slate-500'
+                ? 'border-cyan-500 text-cyan-600 dark:text-cyan-400'
+                : 'border-gray-300 text-gray-500 hover:border-gray-400 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-500'
             }`}
           >
             {k.replace('_', ' ')} {sortKey === k ? (sortDir === 'asc' ? '↑' : '↓') : ''}
@@ -164,13 +164,13 @@ export default function TransactionsPage() {
           <div className="flex gap-2">
             <button
               onClick={() => setPage(page - 1)} disabled={page === 1}
-              className="px-3 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-lg disabled:opacity-40 hover:bg-slate-700 transition-colors"
+              className="px-3 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-lg disabled:opacity-40 hover:bg-gray-50 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
             >
               ← Prev
             </button>
             <button
               onClick={() => setPage(page + 1)} disabled={page === totalPages}
-              className="px-3 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-lg disabled:opacity-40 hover:bg-slate-700 transition-colors"
+              className="px-3 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-lg disabled:opacity-40 hover:bg-gray-50 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
             >
               Next →
             </button>
