@@ -40,10 +40,8 @@ function getDetectorMessage(txn: AnalyzedTransaction, d: DetectorName): string {
         ? `Statistical outlier detected (score: ${txn.isolation_score.toFixed(0)}/100).`
         : 'Transaction is within expected distribution range.';
     case 'SPLIT_INVOICE':
-      return triggered && txn.split_cluster_id
-        ? `Part of split cluster ${txn.split_cluster_id} — combined total ${fmt(txn.cluster_total)}.`
-        : triggered
-        ? 'Possible invoice splitting detected.'
+      return triggered
+        ? 'Possible invoice splitting — cluster of same-vendor transactions near approval threshold.'
         : 'No structuring pattern detected.';
     case 'BENFORD_1ST':
       return triggered
