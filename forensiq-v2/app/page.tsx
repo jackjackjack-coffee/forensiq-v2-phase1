@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { setAnalysisResult } from '@/lib/analysis-store';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, Legend, ReferenceLine, Cell,
@@ -924,9 +925,10 @@ export default function Home() {
           return;
         }
         const r = await runForensicAnalysisAsync(parsed.transactions, setProgress);
+        setAnalysisResult(r);
         setResult(r);
         setProgress(null);
-        setSection('overview');
+        window.location.href = '/overview';
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Analysis failed.');
         setProgress(null);
@@ -947,64 +949,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen bg-slate-900 dark:bg-slate-900">
       <LoadingOverlay progress={progress} />
-      <DetailDrawer txn={drawerTxn} onClose={() => setDrawerTxn(null)} />
-
-      {/* Sidebar */}
-      <aside className="w-56 shrink-0 bg-gray-950 border-r border-gray-800 flex flex-col">
-        <div className="px-5 py-6 border-b border-gray-800">
-          <p className="text-lg font-bold tracking-tight">ForensiQ</p>
-          <p className="text-xs text-gray-500 mt-0.5">Fraud Detection</p>
-        </div>
-        <nav className="flex-1 px-2 py-4 space-y-0.5">
-          {NAV.map((item) => {
-            const disabled = !result && item.id !== 'upload';
-            return (
-              <button
-                key={item.id}
-                onClick={() => !disabled && setSection(item.id)}
-                disabled={disabled}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
-                  section === item.id
-                    ? 'bg-blue-600/20 text-blue-400'
-                    : disabled
-                    ? 'text-gray-700 cursor-not-allowed'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
-        {result && (
-          <div className="px-4 py-4 border-t border-gray-800 space-y-2">
-            <div className={`text-xs font-semibold px-2 py-1.5 rounded text-center ${TIER_BADGE[result.portfolio.tier]}`}>
-              {result.portfolio.tier} · {result.portfolio.score.toFixed(0)}/100
-            </div>
-            <button
-              onClick={handleExport}
-              className="w-full text-xs px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded transition-colors"
-            >
-              ↓ Export Report
-            </button>
-          </div>
-        )}
-      </aside>
-
-      <main className="flex-1 overflow-auto">
-        <div className="max-w-6xl mx-auto px-8 py-10">
-          {section === 'upload' && (
-            <UploadSection onDrop={handleDrop} error={error} hasResult={!!result} />
-          )}
-          {section === 'overview' && result && <OverviewSection result={result} onExport={handleExport} />}
-          {section === 'transactions' && result && <TransactionsSection transactions={result.transactions} onSelect={setDrawerTxn} />}
-          {section === 'vendors' && result && <VendorsSection transactions={result.transactions} onSelect={setDrawerTxn} />}
-          {section === 'benford' && result && <BenfordSection result={result} />}
-          {section === 'detectors' && result && <DetectorsSection transactions={result.transactions} />}
-        </div>
-      </main>
+      <UploadSection onDrop={handleDrop} error={error} hasResult={!!result} />
     </div>
   );
 }
