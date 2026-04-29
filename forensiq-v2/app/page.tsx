@@ -242,8 +242,8 @@ function UploadSection({
   return (
     <div className="max-w-2xl mx-auto py-12 space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">Upload Transaction Data</h2>
-        <p className="text-gray-400 mt-1 text-sm">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Upload Transaction Data</h2>
+        <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
           Drop any CSV. The amount column is auto-detected; date and vendor are optional.
         </p>
       </div>
@@ -251,27 +251,29 @@ function UploadSection({
       <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-2xl p-16 text-center cursor-pointer transition-all ${
-          isDragActive ? 'border-blue-500 bg-blue-950/20' : 'border-gray-700 hover:border-gray-500 hover:bg-gray-900/40'
+          isDragActive
+            ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/20'
+            : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900/40'
         }`}
       >
         <input {...getInputProps()} />
         <div className="text-5xl mb-3 select-none">⇪</div>
-        <p className="text-lg font-semibold">Drop a CSV file here</p>
+        <p className="text-lg font-semibold text-gray-900 dark:text-white">Drop a CSV file here</p>
         <p className="text-gray-500 text-sm mt-1">or click to browse</p>
       </div>
 
       {error && (
-        <div className="bg-red-950/60 border border-red-800 text-red-300 rounded-xl px-4 py-3 text-sm">{error}</div>
+        <div className="bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl px-4 py-3 text-sm">{error}</div>
       )}
       {hasResult && (
-        <div className="bg-emerald-950/60 border border-emerald-800 text-emerald-300 rounded-xl px-4 py-3 text-sm">
+        <div className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 rounded-xl px-4 py-3 text-sm">
           Analysis complete — navigate using the sidebar.
         </div>
       )}
 
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-xs text-gray-500 space-y-1">
-        <p className="font-medium text-gray-300 mb-2">Need a sample to try?</p>
-        <a href="/sample.csv" download className="text-blue-400 hover:text-blue-300 underline">Download sample-transactions.csv</a>
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs text-gray-500 space-y-1">
+        <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">Need a sample to try?</p>
+        <a href="/sample.csv" download className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline">Download sample-transactions.csv</a>
         <p className="mt-3 text-gray-500">Auto-detected columns: amount/total/value, date/invoice_date, vendor/supplier, invoice_id, description.</p>
       </div>
     </div>
@@ -949,7 +951,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900 dark:bg-slate-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       <LoadingOverlay progress={progress} />
       <UploadSection onDrop={handleDrop} error={error} hasResult={!!result} />
     </div>

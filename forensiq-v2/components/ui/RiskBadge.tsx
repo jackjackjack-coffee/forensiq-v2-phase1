@@ -8,8 +8,8 @@ const CONFIG = {
     badge: 'bg-red-950 text-red-400 border border-red-800',
   },
   High: {
-    dot: 'bg-amber-500',
-    badge: 'bg-amber-950 text-amber-400 border border-amber-800',
+    dot: 'bg-red-500',
+    badge: 'bg-red-900/70 text-red-300 border border-red-700',
   },
   Medium: {
     dot: 'bg-yellow-500',

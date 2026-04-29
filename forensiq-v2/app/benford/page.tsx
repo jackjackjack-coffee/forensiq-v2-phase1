@@ -5,7 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import { getAnalysisResult } from '@/lib/analysis-store';
-import { categorizeMad, BENFORD_1ST_CATEGORIES, BENFORD_2ND_CATEGORIES } from '@/lib/benford-categories';
+import { categorizeMad, BENFORD_1ST_CATEGORIES, BENFORD_2ND_CATEGORIES, type MadCategory } from '@/lib/benford-categories';
 import type { AnalysisResult } from '@/lib/types/transaction';
 
 export default function BenfordPage() {
@@ -109,6 +109,36 @@ export default function BenfordPage() {
               {cat.label}
             </span>
             <p className="text-xs text-gray-500 dark:text-slate-500 mt-1">{cat.description ?? ''}</p>
+          </div>
+
+          {/* MAD conformity ranges table */}
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-2">
+              MAD Conformity Ranges (Nigrini)
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {cats.map((c: MadCategory) => {
+                const isCurrent = c.label === cat.label;
+                return (
+                  <div
+                    key={c.label}
+                    className={`rounded-lg p-3 border text-xs ${
+                      isCurrent
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
+                        : 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-950'
+                    }`}
+                  >
+                    <p className={`font-semibold ${
+                      c.color === 'emerald' ? 'text-emerald-600 dark:text-emerald-300' :
+                      c.color === 'yellow'  ? 'text-yellow-600 dark:text-yellow-300'  :
+                                             'text-red-600 dark:text-red-300'
+                    }`}>{c.label}</p>
+                    <p className="font-mono text-gray-500 dark:text-slate-400 mt-1">{c.range}</p>
+                    <p className="text-gray-500 dark:text-slate-500 mt-1 leading-tight">{c.description}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       ))}

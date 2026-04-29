@@ -21,7 +21,7 @@ function toRiskLevel(tier: RiskTier): RiskLevel {
 
 const BORDER: Record<RiskTier, string> = {
   CRITICAL: 'border-l-red-500',
-  HIGH: 'border-l-amber-500',
+  HIGH: 'border-l-red-500',
   MEDIUM: 'border-l-yellow-500',
   LOW: 'border-l-green-500',
 };
@@ -74,6 +74,7 @@ export default function VendorsPage() {
   }
 
   const TH = 'px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-gray-500 dark:text-slate-500';
+  const TH_RIGHT = 'px-4 py-3 text-right text-[10px] font-semibold uppercase tracking-widest text-gray-500 dark:text-slate-500';
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8 space-y-6 bg-gray-50 dark:bg-slate-950 min-h-screen text-gray-900 dark:text-white">
@@ -112,8 +113,8 @@ export default function VendorsPage() {
               <tr>
                 <th className={TH}>Vendor</th>
                 <th className={TH}>Transactions</th>
-                <th className={TH}>Total Spend</th>
-                <th className={TH}>Median</th>
+                <th className={TH_RIGHT}>Total Spend</th>
+                <th className={TH_RIGHT}>Median</th>
                 <th className={TH}>Avg Risk</th>
                 <th className={TH}>Flagged</th>
                 <th className={TH}>Max Tier</th>
@@ -131,11 +132,11 @@ export default function VendorsPage() {
                       {v.vendor}
                     </td>
                     <td className="px-4 py-2.5 text-gray-500 dark:text-slate-400">{v.count}</td>
-                    <td className="px-4 py-2.5 font-mono text-gray-800 dark:text-slate-200">{fmt(v.totalSpend)}</td>
-                    <td className="px-4 py-2.5 font-mono text-gray-500 dark:text-slate-400">{fmt(v.median)}</td>
+                    <td className="px-4 py-2.5 font-mono text-right text-gray-800 dark:text-slate-200">{fmt(v.totalSpend)}</td>
+                    <td className="px-4 py-2.5 font-mono text-right text-gray-500 dark:text-slate-400">{fmt(v.median)}</td>
                     <td className="px-4 py-2.5 font-mono text-gray-800 dark:text-slate-200">{v.avgScore.toFixed(1)}</td>
                     <td className="px-4 py-2.5">
-                      <span className={v.flagged > 0 ? 'text-amber-500 dark:text-amber-400 font-semibold' : 'text-gray-300 dark:text-slate-600'}>
+                      <span className={v.flagged > 0 ? 'text-red-500 dark:text-red-400 font-bold' : 'text-gray-400 dark:text-slate-400 font-medium'}>
                         {v.flagged}
                       </span>
                     </td>
