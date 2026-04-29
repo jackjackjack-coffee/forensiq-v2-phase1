@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Pre-existing Codebase Analysis
+
+A full architectural analysis of this codebase lives at `/home/user/forensiq-v2-phase1/ANALYSIS.md`.
+**Read that file first** before doing any exploration or analysis — it covers all detectors, types, external integrations, test coverage gaps, critical issues, and production readiness. Do not re-analyze files that are already documented there.
+
 ## Working Directory
 
 The Next.js app lives in the `forensiq-v2/` subdirectory, **not** the repo root. All `npm` / `npx` commands must be run from there:
