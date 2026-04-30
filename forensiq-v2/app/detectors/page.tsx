@@ -19,9 +19,18 @@ export default function DetectorsPage() {
     Object.fromEntries(DETECTOR_NAMES.map((d) => [d, true])) as Record<DetectorName, boolean>,
   );
   const [tooltip, setTooltip] = useState<DetectorName | null>(null);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     setResult(getAnalysisResult());
+  }, []);
+
+  useEffect(() => {
+    const check = () => setIsDark(document.documentElement.classList.contains('dark'));
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => obs.disconnect();
   }, []);
 
   const detectorStats = useMemo(() => {
@@ -77,17 +86,17 @@ export default function DetectorsPage() {
               layout="vertical"
               margin={{ top: 0, right: 16, left: 8, bottom: 0 }}
             >
-              <CartesianGrid stroke="#cbd5e1" vertical={false} />
-              <XAxis type="number" tick={{ fontSize: 11, fill: '#374151' }} stroke="#6b7280" allowDecimals={false} />
+              <CartesianGrid stroke={isDark ? '#1e293b' : '#cbd5e1'} vertical={false} />
+              <XAxis type="number" tick={{ fontSize: 11, fill: isDark ? '#94a3b8' : '#374151' }} stroke={isDark ? '#475569' : '#6b7280'} allowDecimals={false} />
               <YAxis
                 type="category"
                 dataKey="name"
                 width={160}
-                tick={{ fontSize: 11, fill: '#374151' }}
-                stroke="#6b7280"
+                tick={{ fontSize: 11, fill: isDark ? '#94a3b8' : '#374151' }}
+                stroke={isDark ? '#475569' : '#6b7280'}
               />
               <Tooltip
-                contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, color: '#1e293b' }}
+                contentStyle={{ background: isDark ? '#0f172a' : '#ffffff', border: `1px solid ${isDark ? '#334155' : '#e2e8f0'}`, borderRadius: 8, color: isDark ? '#e2e8f0' : '#1e293b' }}
                 cursor={{ fill: 'rgba(148,163,184,0.08)' }}
               />
               <Bar dataKey="count" name="Flagged" fill="#3b82f6" radius={[0, 4, 4, 0]} maxBarSize={20} />
