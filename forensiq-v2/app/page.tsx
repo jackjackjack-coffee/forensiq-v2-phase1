@@ -31,6 +31,7 @@ interface AnalysisSummary {
 }
 
 const HISTORY_KEY = 'forensiq_history';
+const RESULT_KEY = (id: string) => `forensiq_result_${id}`;
 
 function loadHistory(): AnalysisSummary[] {
   if (typeof window === 'undefined') return [];
@@ -40,10 +41,23 @@ function loadHistory(): AnalysisSummary[] {
   } catch { return []; }
 }
 
-function appendHistory(s: AnalysisSummary): AnalysisSummary[] {
+function appendHistory(s: AnalysisSummary, result: AnalysisResult): AnalysisSummary[] {
   const updated = [s, ...loadHistory()].slice(0, 20);
   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
+  try { localStorage.setItem(RESULT_KEY(s.id), JSON.stringify(result)); } catch {}
+  // Evict oldest result if needed
+  if (updated.length === 20) {
+    const oldest = updated[19];
+    if (oldest) try { localStorage.removeItem(RESULT_KEY(oldest.id)); } catch {}
+  }
   return updated;
+}
+
+function loadStoredResult(id: string): AnalysisResult | null {
+  try {
+    const raw = localStorage.getItem(RESULT_KEY(id));
+    return raw ? (JSON.parse(raw) as AnalysisResult) : null;
+  } catch { return null; }
 }
 
 // ── Tier styling (color-blind safe with icons) ───────────────────
@@ -357,7 +371,7 @@ const HIST_TIER_CLS: Record<RiskTier, string> = {
   CRITICAL: 'text-red-600 dark:text-red-500',
 };
 
-function HistorySidebar({ history }: { history: AnalysisSummary[] }) {
+function HistorySidebar({ history, onSelect }: { history: AnalysisSummary[]; onSelect: (id: string) => void }) {
   return (
     <aside className="w-64 shrink-0 border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 min-h-screen px-4 py-6 space-y-3">
       <h3 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500">
@@ -370,7 +384,11 @@ function HistorySidebar({ history }: { history: AnalysisSummary[] }) {
       ) : (
         <div className="space-y-2">
           {history.map((h) => (
-            <div key={h.id} className="rounded-lg border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/60 p-3">
+            <button
+              key={h.id}
+              onClick={() => onSelect(h.id)}
+              className="w-full text-left rounded-lg border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/60 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 p-3 transition-colors"
+            >
               <p className="text-xs font-medium text-gray-800 dark:text-slate-200 truncate">{h.filename}</p>
               <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
                 {new Date(h.analyzedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
@@ -391,7 +409,7 @@ function HistorySidebar({ history }: { history: AnalysisSummary[] }) {
                   style={{ width: `${h.score}%` }}
                 />
               </div>
-            </div>
+            </button>
           ))}
         </div>
       )}
@@ -1062,7 +1080,7 @@ export default function Home() {
           score: r.portfolio.score,
           tier: r.portfolio.tier,
         };
-        setHistory(appendHistory(summary));
+        setHistory(appendHistory(summary, r));
         setProgress(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Analysis failed.');
@@ -1075,7 +1093,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex">
       <LoadingOverlay progress={progress} />
-      <HistorySidebar history={history} />
+      <HistorySidebar
+          history={history}
+          onSelect={(id) => {
+            const stored = loadStoredResult(id);
+            if (stored) {
+              setAnalysisResult(stored);
+              window.location.href = '/overview';
+            }
+          }}
+        />
       <main className="flex-1 overflow-auto">
         <UploadSection
           onDrop={handleDrop}
