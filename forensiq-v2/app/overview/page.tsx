@@ -13,7 +13,10 @@ import type { AnalysisResult, DetectorName } from '@/lib/types/transaction';
 
 const fmt = (n: number) =>
   n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-const fmtK = (n: number) => (n >= 1000 ? `$${(n / 1000).toFixed(0)}k` : fmt(n));
+const fmtExposure = (n: number) =>
+  n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(2)} million` :
+  n >= 1_000     ? `$${(n / 1_000).toFixed(1)}k` :
+  fmt(n);
 const pctInt = (n: number) => `${Math.round(n * 100)}%`;
 
 const DETECTOR_NAMES: DetectorName[] = [
@@ -145,7 +148,8 @@ export default function OverviewPage() {
         />
         <StatsCard
           label="EXPOSURE"
-          value={fmtK(p.estimated_exposure)}
+          value={fmtExposure(p.estimated_exposure)}
+          valueSize="text-lg"
           valueClassName="text-amber-500 dark:text-amber-400"
           subtitle="Estimated value"
         />
@@ -158,6 +162,7 @@ export default function OverviewPage() {
         <StatsCard
           label="TOP VENDOR"
           value={topVendor.vendor}
+          valueSize="text-sm"
           valueClassName="text-gray-900 dark:text-white"
           subtitle={topVendor.count > 0 ? `${topVendor.count} flags this period` : 'No flagged vendors'}
         />

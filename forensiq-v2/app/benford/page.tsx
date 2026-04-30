@@ -128,7 +128,9 @@ export default function BenfordPage() {
                     key={c.label}
                     className={`rounded-lg p-3 border text-xs ${
                       isCurrent
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
+                        ? c.color === 'emerald' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30'
+                        : c.color === 'yellow'  ? 'border-yellow-500 bg-yellow-50 dark:bg-yellow-950/30'
+                        :                         'border-red-500 bg-red-50 dark:bg-red-950/30'
                         : 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-950'
                     }`}
                   >
