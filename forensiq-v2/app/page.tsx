@@ -18,6 +18,34 @@ import type {
   AnalysisResult, AnalyzedTransaction, RiskTier, DetectorName,
 } from '@/lib/types/transaction';
 
+// ── Analysis history (localStorage) ─────────────────────────────
+
+interface AnalysisSummary {
+  id: string;
+  filename: string;
+  analyzedAt: string;
+  totalTransactions: number;
+  flaggedTransactions: number;
+  score: number;
+  tier: RiskTier;
+}
+
+const HISTORY_KEY = 'forensiq_history';
+
+function loadHistory(): AnalysisSummary[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? (JSON.parse(raw) as AnalysisSummary[]) : [];
+  } catch { return []; }
+}
+
+function appendHistory(s: AnalysisSummary): AnalysisSummary[] {
+  const updated = [s, ...loadHistory()].slice(0, 20);
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
+  return updated;
+}
+
 // ── Tier styling (color-blind safe with icons) ───────────────────
 
 const TIER_BADGE: Record<RiskTier, string> = {
@@ -229,15 +257,60 @@ function DetailDrawer({ txn, onClose }: { txn: AnalyzedTransaction | null; onClo
 // ── Section: Upload ──────────────────────────────────────────────
 
 function UploadSection({
-  onDrop, error, hasResult,
+  onDrop, error, result, filename, onViewResults,
 }: {
   onDrop: (files: File[]) => void;
   error: string | null;
-  hasResult: boolean;
+  result: AnalysisResult | null;
+  filename: string | null;
+  onViewResults: () => void;
 }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop, multiple: false,
   });
+
+  if (result) {
+    const p = result.portfolio;
+    return (
+      <div className="max-w-2xl mx-auto py-12 space-y-6">
+        <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 p-10 text-center space-y-5">
+          <div className="text-6xl select-none leading-none">✓</div>
+          <div>
+            <h2 className="text-2xl font-bold text-emerald-700 dark:text-emerald-300">Analysis Complete</h2>
+            {filename && <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{filename}</p>}
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-gray-200 dark:border-slate-700">
+              <p className="text-[10px] text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Transactions</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{p.total_transactions.toLocaleString()}</p>
+            </div>
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-gray-200 dark:border-slate-700">
+              <p className="text-[10px] text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Flagged</p>
+              <p className="text-2xl font-bold text-red-500">{p.flagged_transactions}</p>
+            </div>
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-gray-200 dark:border-slate-700">
+              <p className="text-[10px] text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Risk Score</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{p.score.toFixed(0)}<span className="text-base text-gray-400">/100</span></p>
+            </div>
+          </div>
+          <div className="flex gap-3 justify-center pt-1">
+            <button
+              onClick={onViewResults}
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold transition-colors"
+            >
+              View Results →
+            </button>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-2.5 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-lg font-semibold transition-colors"
+            >
+              Analyze Another
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto py-12 space-y-6">
@@ -265,11 +338,6 @@ function UploadSection({
       {error && (
         <div className="bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl px-4 py-3 text-sm">{error}</div>
       )}
-      {hasResult && (
-        <div className="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 rounded-xl px-4 py-3 text-sm">
-          Analysis complete — navigate using the sidebar.
-        </div>
-      )}
 
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs text-gray-500 space-y-1">
         <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">Need a sample to try?</p>
@@ -277,6 +345,57 @@ function UploadSection({
         <p className="mt-3 text-gray-500">Auto-detected columns: amount/total/value, date/invoice_date, vendor/supplier, invoice_id, description.</p>
       </div>
     </div>
+  );
+}
+
+// ── History Sidebar ──────────────────────────────────────────────
+
+const HIST_TIER_CLS: Record<RiskTier, string> = {
+  LOW: 'text-green-600 dark:text-green-400',
+  MEDIUM: 'text-yellow-600 dark:text-yellow-400',
+  HIGH: 'text-red-500 dark:text-red-400',
+  CRITICAL: 'text-red-600 dark:text-red-500',
+};
+
+function HistorySidebar({ history }: { history: AnalysisSummary[] }) {
+  return (
+    <aside className="w-64 shrink-0 border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 min-h-screen px-4 py-6 space-y-3">
+      <h3 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500">
+        Analysis History
+      </h3>
+      {history.length === 0 ? (
+        <p className="text-xs text-gray-400 dark:text-slate-500 leading-relaxed">
+          No analyses yet. Upload a CSV to get started.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {history.map((h) => (
+            <div key={h.id} className="rounded-lg border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/60 p-3">
+              <p className="text-xs font-medium text-gray-800 dark:text-slate-200 truncate">{h.filename}</p>
+              <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
+                {new Date(h.analyzedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              </p>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-[10px] text-gray-500 dark:text-slate-400">{h.totalTransactions.toLocaleString()} txns</span>
+                <span className={`text-[10px] font-bold ${HIST_TIER_CLS[h.tier]}`}>
+                  {h.tier} · {h.score.toFixed(0)}/100
+                </span>
+              </div>
+              <div className="mt-1.5 h-1 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${
+                    h.tier === 'CRITICAL' ? 'bg-red-600' :
+                    h.tier === 'HIGH'     ? 'bg-red-500' :
+                    h.tier === 'MEDIUM'   ? 'bg-yellow-500' : 'bg-green-500'
+                  }`}
+                  style={{ width: `${h.score}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </aside>
   );
 }
 
@@ -904,15 +1023,20 @@ function DetectorsSection({ transactions }: { transactions: AnalyzedTransaction[
 
 export default function Home() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [lastFilename, setLastFilename] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<ProgressUpdate | null>(null);
-  const [section, setSection] = useState<Section>('upload');
-  const [drawerTxn, setDrawerTxn] = useState<AnalyzedTransaction | null>(null);
+  const [history, setHistory] = useState<AnalysisSummary[]>([]);
+
+  useEffect(() => {
+    setHistory(loadHistory());
+  }, []);
 
   const handleDrop = useCallback((files: File[]) => {
     const file = files[0];
     if (!file) return;
     setError(null);
+    setLastFilename(file.name);
     setProgress({ step: 0, total: 10, label: 'Reading file…' });
 
     const reader = new FileReader();
@@ -929,8 +1053,17 @@ export default function Home() {
         const r = await runForensicAnalysisAsync(parsed.transactions, setProgress);
         setAnalysisResult(r);
         setResult(r);
+        const summary: AnalysisSummary = {
+          id: Date.now().toString(),
+          filename: file.name,
+          analyzedAt: new Date().toISOString(),
+          totalTransactions: r.portfolio.total_transactions,
+          flaggedTransactions: r.portfolio.flagged_transactions,
+          score: r.portfolio.score,
+          tier: r.portfolio.tier,
+        };
+        setHistory(appendHistory(summary));
         setProgress(null);
-        window.location.href = '/overview';
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Analysis failed.');
         setProgress(null);
@@ -939,21 +1072,19 @@ export default function Home() {
     reader.readAsText(file);
   }, []);
 
-  const handleExport = useCallback(() => {
-    if (result) exportRiskReport(result);
-  }, [result]);
-
-  // Close drawer with Escape key
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setDrawerTxn(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex">
       <LoadingOverlay progress={progress} />
-      <UploadSection onDrop={handleDrop} error={error} hasResult={!!result} />
+      <HistorySidebar history={history} />
+      <main className="flex-1 overflow-auto">
+        <UploadSection
+          onDrop={handleDrop}
+          error={error}
+          result={result}
+          filename={lastFilename}
+          onViewResults={() => { window.location.href = '/overview'; }}
+        />
+      </main>
     </div>
   );
 }

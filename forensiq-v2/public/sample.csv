@@ -1,41 +1,501 @@
 invoice_id,date,vendor,amount,description,category
-INV-1001,2025-01-03,ACME Corp,4823.45,Office supplies Q1,SUPPLIES
-INV-1002,2025-01-05,Globex Industries,12500.00,Consulting services,CONSULTING
-INV-1003,2025-01-08,ACME Corp,4823.45,Office supplies Q1,SUPPLIES
-INV-1004,2025-01-10,Initech Solutions,9990.00,Software license,SOFTWARE
-INV-1005,2025-01-12,Wayne Enterprises,387.22,Catering for board meeting,MEALS
-INV-1006,2025-01-15,Stark Industries,15750.50,Equipment maintenance,MAINT
-INV-1007,2025-01-18,Globex Industries,9985.00,Consulting follow-up,CONSULTING
-INV-1008,2025-01-22,ACME Corporation,4823.45,Office supplies,SUPPLIES
-INV-1009,2025-01-25,Soylent Green LLC,50000.00,Various services,MISC
-INV-1010,2025-01-28,Cyberdyne Systems,2450.75,IT support,IT
-INV-1011,2025-02-01,Wayne Enterprises,412.88,Office lunch,MEALS
-INV-1012,2025-02-03,Globex Industries,9999.00,Consulting,CONSULTING
-INV-1013,2025-02-05,Stark Industries,8350.00,Equipment service,MAINT
-INV-1014,2025-02-08,Umbrella Corp,75000.00,Special project,MISC
-INV-1015,2025-02-12,ACME Corp,5000.00,Office supplies bulk,SUPPLIES
-INV-1016,2025-02-15,Cyberdyne Systems,2890.50,IT consulting,IT
-INV-1017,2025-02-18,Wayne Enterprises,289.45,Team breakfast,MEALS
-INV-1018,2025-02-20,Initech Solutions,9988.00,Software renewal,SOFTWARE
-INV-1019,2025-02-22,Globex Industries,4995.00,Consulting,CONSULTING
-INV-1020,2025-02-25,Soylent Green LLC,4990.00,Miscellaneous services,MISC
-INV-1021,2025-03-01,Stark Industries,6720.30,Repair work,MAINT
-INV-1022,2025-03-04,ACME Corp,4823.45,Office supplies,SUPPLIES
-INV-1023,2025-03-07,Wayne Enterprises,355.10,Coffee supplies,MEALS
-INV-1024,2025-03-10,Globex Industries,9970.00,Consulting,CONSULTING
-INV-1025,2025-03-12,Cyberdyne Systems,3145.00,IT support,IT
-INV-1026,2025-03-15,Umbrella Corp,25000.00,Various items,MISC
-INV-1027,2025-03-18,Initech Solutions,7250.00,Software training,SOFTWARE
-INV-1028,2025-03-20,Stark Industries,11200.00,Major service,MAINT
-INV-1029,2025-03-22,Soylent Green LLC,99000.00,Consulting,MISC
-INV-1030,2025-03-25,Wayne Enterprises,478.65,Catering,MEALS
-INV-1031,2025-03-28,Globex Industries,4998.50,Various consulting,CONSULTING
-INV-1032,2025-04-01,ACME Corp,4823.45,Office supplies,SUPPLIES
-INV-1033,2025-04-03,Cyberdyne Systems,2675.30,IT,IT
-INV-1034,2025-04-05,Stark Industries,8950.00,Equipment,MAINT
-INV-1035,2025-04-08,Initech Solutions,9985.00,Renewal,SOFTWARE
-INV-1036,2025-04-10,Wayne Enterprises,392.40,Office snacks,MEALS
-INV-1037,2025-04-12,Globex Industries,9999.00,Consulting,CONSULTING
-INV-1038,2025-04-15,Soylent Green LLC,2500.00,Misc,MISC
-INV-1039,2025-04-18,Umbrella Corp,18000.00,Project work,MISC
-INV-1040,2025-04-20,ACME Corp,4823.45,Office supplies,SUPPLIES
+INV-1220,2024-01-02,Office Depot Business,3701.78,Janitorial supplies,SUPPLIES
+INV-1005,2024-01-03,XPO Logistics Inc,4427.75,International shipping,LOGISTICS
+INV-1409,2024-01-05,Cisco Systems Inc,545.11,Hardware procurement,IT
+INV-1010,2024-01-06,McKinsey & Company,3776.99,Change management support,CONSULTING
+INV-1174,2024-01-06,Office Depot Business,1546.02,Breakroom supplies,SUPPLIES
+INV-1274,2024-01-06,Staples Business Advantage,3289.68,Paper and stationery,SUPPLIES
+INV-1375,2024-01-06,Boston Consulting Group,9701.21,Consulting services - partial billing,CONSULTING
+INV-1071,2024-01-07,CBRE Group Inc,1751.78,Building maintenance,FACILITIES
+INV-1403,2024-01-08,IBM Corporation,3862.90,Cybersecurity tools,IT
+INV-1336,2024-01-09,PricewaterhouseCoopers LLP,29231.52,Process improvement engagement,CONSULTING
+INV-1404,2024-01-12,IBM Corporation,3862.90,Cybersecurity tools,IT
+INV-1410,2024-01-13,Cisco Systems Inc,545.11,Hardware procurement,IT
+INV-1019,2024-01-14,Robert Half International,6653.91,Benefits administration,HR
+INV-1123,2024-01-14,Accenture Federal Services,9807.01,Project management consulting,CONSULTING
+INV-1286,2024-01-14,United Airlines Inc,6250.11,Board meeting travel,TRAVEL
+INV-1190,2024-01-16,Cushman & Wakefield,623.20,Office lease management,FACILITIES
+INV-1162,2024-01-17,CDW LLC,3362.48,IT asset refresh,IT
+INV-1441,2024-01-17,KPMG Advisory Services,1500.00,Management consulting services,CONSULTING
+INV-1147,2024-01-18,Cisco Systems Inc,4443.50,Cybersecurity tools,IT
+INV-1022,2024-01-19,Aon plc,1310.52,Cyber insurance policy,INSURANCE
+INV-1272,2024-01-19,Adobe Systems Inc,1164.89,Cloud platform subscription,SOFTWARE
+INV-1278,2024-01-20,PricewaterhouseCoopers LLP,1181.76,Strategic advisory Q1,CONSULTING
+INV-1088,2024-01-22,Marsh McLennan,858.85,Cyber insurance policy,INSURANCE
+INV-1466,2024-01-22,Microsoft Corporation,132299.39,Special project - executive authorization required,SOFTWARE
+INV-1444,2024-01-23,Cushman & Wakefield,3000.00,HVAC service contract,FACILITIES
+INV-1356,2024-01-25,Accenture Federal Services,9878.56,Consulting services - partial billing,CONSULTING
+INV-1464,2024-01-25,PricewaterhouseCoopers LLP,396479.10,Special project - executive authorization required,CONSULTING
+INV-1139,2024-01-26,McKinsey & Company,2316.44,Change management support,CONSULTING
+INV-1191,2024-01-26,HP Inc,3099.62,IT asset refresh,IT
+INV-1351,2024-01-27,Ernst & Young Advisory,9781.52,Consulting services - partial billing,CONSULTING
+INV-1051,2024-01-28,Fastenal Company,12021.91,Breakroom supplies,SUPPLIES
+INV-1136,2024-01-28,Fastenal Company,954.98,Breakroom supplies,SUPPLIES
+INV-1043,2024-01-29,Salesforce Inc,1639.58,SaaS subscription renewal,SOFTWARE
+INV-1070,2024-01-29,XPO Logistics Inc,4135.89,Freight shipping,LOGISTICS
+INV-1352,2024-01-31,Ernst & Young Advisory,9885.19,Consulting services - partial billing,CONSULTING
+INV-1153,2024-02-01,CDW LLC,2712.57,Server maintenance,IT
+INV-1218,2024-02-01,FedEx Corporation,3325.80,Last-mile delivery,LOGISTICS
+INV-1233,2024-02-03,American Airlines Group,12932.61,Board meeting travel,TRAVEL
+INV-1468,2024-02-04,Deloitte Consulting LLP,149387.08,Special project - executive authorization required,CONSULTING
+INV-1380,2024-02-07,Deloitte Consulting LLP,9829.72,Consulting services - partial billing,CONSULTING
+INV-1004,2024-02-08,Salesforce Inc,16449.26,SaaS subscription renewal,SOFTWARE
+INV-1158,2024-02-08,United Airlines Inc,2396.49,Hotel conference stay,TRAVEL
+INV-1381,2024-02-08,Deloitte Consulting LLP,9548.47,Consulting services - partial billing,CONSULTING
+INV-1114,2024-02-09,XPO Logistics Inc,1940.21,Freight shipping,LOGISTICS
+INV-1287,2024-02-09,Accenture Federal Services,6790.07,Strategy development retainer,CONSULTING
+INV-1366,2024-02-09,Accenture Federal Services,9788.78,Consulting services - partial billing,CONSULTING
+INV-1322,2024-02-12,Delta Air Lines Inc,1008.47,Client site travel,TRAVEL
+INV-1078,2024-02-13,Salesforce Inc,530.83,Cloud platform subscription,SOFTWARE
+INV-1163,2024-02-13,Ernst & Young Advisory,1401.13,Management consulting services,CONSULTING
+INV-1367,2024-02-13,Accenture Federal Services,9522.96,Consulting services - partial billing,CONSULTING
+INV-1469,2024-02-15,Booz Allen Hamilton,461704.13,Special project - executive authorization required,CONSULTING
+INV-1187,2024-02-17,Staples Business Advantage,203.36,Cleaning products,SUPPLIES
+INV-1354,2024-02-18,Accenture Federal Services,9723.74,Consulting services - partial billing,CONSULTING
+INV-1413,2024-02-19,SAP America Inc,1128.67,User license expansion,SOFTWARE
+INV-1107,2024-02-20,Deloitte Consulting LLP,1939.93,Process improvement engagement,CONSULTING
+INV-1355,2024-02-20,Accenture Federal Services,9568.14,Consulting services - partial billing,CONSULTING
+INV-1038,2024-02-21,Oracle America Inc,1442.80,User license expansion,SOFTWARE
+INV-1075,2024-02-21,Adobe Systems Inc,959.45,Enterprise license agreement,SOFTWARE
+INV-1235,2024-02-22,Manpower Group Inc,1550.68,HR consulting services,HR
+INV-1332,2024-02-22,Baker McKenzie LLP,238.99,Litigation support,LEGAL
+INV-1081,2024-02-23,CDW LLC,1600.45,Infrastructure upgrade,IT
+INV-1110,2024-02-23,CBRE Group Inc,3962.78,Building maintenance,FACILITIES
+INV-1345,2024-02-23,Deloitte Consulting LLP,9794.23,Consulting services - partial billing,CONSULTING
+INV-1169,2024-02-24,ServiceNow Inc,1397.27,Enterprise license agreement,SOFTWARE
+INV-1311,2024-02-24,Delta Air Lines Inc,737.19,Business travel - NYC,TRAVEL
+INV-1395,2024-02-24,Accenture Federal Services,9789.22,Consulting services - partial billing,CONSULTING
+INV-1421,2024-02-24,HP Inc,6972.94,Server maintenance,IT
+INV-1053,2024-02-25,Salesforce Inc,1805.42,Annual software license,SOFTWARE
+INV-1122,2024-02-25,Booz Allen Hamilton,5815.26,Management consulting services,CONSULTING
+INV-1362,2024-02-26,Boston Consulting Group,9899.17,Consulting services - partial billing,CONSULTING
+INV-1144,2024-02-27,PricewaterhouseCoopers LLP,10089.59,Management consulting services,CONSULTING
+INV-1396,2024-02-27,Accenture Federal Services,9743.29,Consulting services - partial billing,CONSULTING
+INV-1011,2024-02-28,KPMG Advisory Services,2469.43,Strategy development retainer,CONSULTING
+INV-1065,2024-02-28,Boston Consulting Group,666.68,Process improvement engagement,CONSULTING
+INV-1206,2024-02-28,Delta Air Lines Inc,1779.11,Business travel - NYC,TRAVEL
+INV-1414,2024-02-28,SAP America Inc,1128.67,User license expansion,SOFTWARE
+INV-1237,2024-02-29,Workday Inc,576.38,Platform upgrade fee,SOFTWARE
+INV-1240,2024-02-29,Hilton Worldwide Holdings,12.76,Team offsite travel,TRAVEL
+INV-1407,2024-02-29,ServiceNow Inc,2740.34,Cloud platform subscription,SOFTWARE
+INV-1055,2024-03-01,XPO Logistics Inc,4047.28,International shipping,LOGISTICS
+INV-1134,2024-03-01,Hyatt Hotels Corporation,727.54,Hotel conference stay,TRAVEL
+INV-1425,2024-03-01,ServiceNow Inc,1514.67,User license expansion,SOFTWARE
+INV-1037,2024-03-02,Fastenal Company,3279.11,Cleaning products,SUPPLIES
+INV-1426,2024-03-02,ServiceNow Inc,1514.67,User license expansion,SOFTWARE
+INV-1172,2024-03-03,Publicis Groupe SA,4461.97,Brand strategy services,MARKETING
+INV-1271,2024-03-03,Office Depot Business,1742.47,Janitorial supplies,SUPPLIES
+INV-1194,2024-03-04,Omnicom Group Inc,974.73,Digital marketing campaign,MARKETING
+INV-1422,2024-03-04,HP Inc,6972.94,Server maintenance,IT
+INV-1185,2024-03-05,United Parcel Service,560.23,Warehouse storage,LOGISTICS
+INV-1223,2024-03-07,Aon plc,938.76,Cyber insurance policy,INSURANCE
+INV-1229,2024-03-07,Publicis Groupe SA,1471.63,Social media management,MARKETING
+INV-1279,2024-03-07,Deloitte Consulting LLP,829.17,Change management support,CONSULTING
+INV-1408,2024-03-09,ServiceNow Inc,2740.34,Cloud platform subscription,SOFTWARE
+INV-1061,2024-03-10,Oracle America Inc,1670.23,Software maintenance contract,SOFTWARE
+INV-1309,2024-03-12,Manpower Group Inc,4544.83,Recruitment placement fee,HR
+INV-1475,2024-03-13,Microsoft Corporation,397192.81,Special project - executive authorization required,SOFTWARE
+INV-1432,2024-03-14,Cisco Systems Inc,50000.00,Server maintenance,IT
+INV-1476,2024-03-14,Deloitte Consulting LLP,9850.00,Consulting services - partial billing,CONSULTING
+INV-1101,2024-03-15,Marriott International,4033.54,Business travel - NYC,TRAVEL
+INV-1477,2024-03-15,Deloitte Consulting LLP,9720.00,Consulting services - partial billing,CONSULTING
+INV-1105,2024-03-17,Office Depot Business,1411.65,Janitorial supplies,SUPPLIES
+INV-1236,2024-03-19,Microsoft Corporation,15678.60,Annual software license,SOFTWARE
+INV-1304,2024-03-19,Booz Allen Hamilton,27630.91,Change management support,CONSULTING
+INV-1188,2024-03-20,Hyatt Hotels Corporation,4237.34,Client site travel,TRAVEL
+INV-1436,2024-03-20,Marriott International,25000.00,Executive airfare,TRAVEL
+INV-1257,2024-03-21,Dell Technologies,6425.36,Hardware procurement,IT
+INV-1102,2024-03-22,ABM Industries Inc,1454.63,Equipment maintenance,MAINT
+INV-1086,2024-03-24,Latham & Watkins LLP,2624.91,Legal retainer monthly,LEGAL
+INV-1209,2024-03-24,Microsoft Corporation,4373.71,SaaS subscription renewal,SOFTWARE
+INV-1281,2024-03-24,Robert Half International,1105.65,Benefits administration,HR
+INV-1301,2024-03-24,United Parcel Service,11735.28,Freight shipping,LOGISTICS
+INV-1350,2024-03-24,PricewaterhouseCoopers LLP,9982.92,Consulting services - partial billing,CONSULTING
+INV-1063,2024-03-25,Deloitte Consulting LLP,4270.81,Strategy development retainer,CONSULTING
+INV-1132,2024-03-26,Booz Allen Hamilton,298.37,Change management support,CONSULTING
+INV-1171,2024-03-27,Salesforce Inc,1543.01,Enterprise license agreement,SOFTWARE
+INV-1438,2024-03-27,Salesforce Inc,75000.00,User license expansion,SOFTWARE
+INV-1269,2024-03-28,Office Depot Business,4464.23,Printer cartridges bulk,SUPPLIES
+INV-1165,2024-03-29,Staples Business Advantage,1553.76,Breakroom supplies,SUPPLIES
+INV-1170,2024-03-29,Publicis Groupe SA,1996.21,Digital marketing campaign,MARKETING
+INV-1439,2024-03-30,HP Inc,100000.00,Server maintenance,IT
+INV-1471,2024-03-30,KPMG Advisory Services,276790.11,Special project - executive authorization required,CONSULTING
+INV-1017,2024-04-02,SAP America Inc,6303.01,User license expansion,SOFTWARE
+INV-1084,2024-04-03,JPMorgan Chase & Co,2827.45,Banking services,FINANCE
+INV-1241,2024-04-04,Oracle America Inc,841.55,SaaS subscription renewal,SOFTWARE
+INV-1291,2024-04-04,SAP America Inc,2221.04,User license expansion,SOFTWARE
+INV-1302,2024-04-04,United Airlines Inc,20.78,Board meeting travel,TRAVEL
+INV-1057,2024-04-06,ServiceNow Inc,1455.22,SaaS subscription renewal,SOFTWARE
+INV-1215,2024-04-06,Sidley Austin LLP,1888.73,Contract review services,LEGAL
+INV-1192,2024-04-07,XPO Logistics Inc,1188.20,Express delivery services,LOGISTICS
+INV-1360,2024-04-07,Deloitte Consulting LLP,9715.75,Consulting services - partial billing,CONSULTING
+INV-1087,2024-04-09,W.W. Grainger Inc,3508.02,Printer cartridges bulk,SUPPLIES
+INV-1231,2024-04-09,Latham & Watkins LLP,2558.92,Contract review services,LEGAL
+INV-1373,2024-04-09,PricewaterhouseCoopers LLP,9816.84,Consulting services - partial billing,CONSULTING
+INV-1374,2024-04-11,PricewaterhouseCoopers LLP,9504.30,Consulting services - partial billing,CONSULTING
+INV-1449,2024-04-11,Robert Half International,500.00,Benefits administration,HR
+INV-1308,2024-04-12,United Airlines Inc,3100.18,Business travel - NYC,TRAVEL
+INV-1124,2024-04-13,United Parcel Service,2793.92,Last-mile delivery,LOGISTICS
+INV-1073,2024-04-14,Hilton Worldwide Holdings,1141.26,Business travel - NYC,TRAVEL
+INV-1260,2024-04-14,HP Inc,5732.03,Hardware procurement,IT
+INV-1411,2024-04-15,United Airlines Inc,5296.91,Executive airfare,TRAVEL
+INV-1267,2024-04-16,Latham & Watkins LLP,1655.03,Contract review services,LEGAL
+INV-1221,2024-04-17,PricewaterhouseCoopers LLP,2699.27,Strategy development retainer,CONSULTING
+INV-1228,2024-04-17,PricewaterhouseCoopers LLP,10124.37,Project management consulting,CONSULTING
+INV-1295,2024-04-17,ABM Industries Inc,226.67,Preventive maintenance contract,MAINT
+INV-1089,2024-04-18,Accenture Federal Services,3197.46,Strategic advisory Q1,CONSULTING
+INV-1280,2024-04-18,SAP America Inc,2860.14,User license expansion,SOFTWARE
+INV-1177,2024-04-19,WPP plc,688.56,Media buying Q1,MARKETING
+INV-1205,2024-04-21,Omnicom Group Inc,1903.03,Media buying Q1,MARKETING
+INV-1273,2024-04-21,Fastenal Company,575.64,Breakroom supplies,SUPPLIES
+INV-1412,2024-04-21,United Airlines Inc,5296.91,Executive airfare,TRAVEL
+INV-1154,2024-04-22,United Airlines Inc,4725.01,Team offsite travel,TRAVEL
+INV-1478,2024-04-22,Microsoft Corporation,15000.00,Annual software license,SOFTWARE
+INV-1012,2024-04-24,Booz Allen Hamilton,9652.31,Strategy development retainer,CONSULTING
+INV-1118,2024-04-24,Cisco Systems Inc,291.05,Infrastructure upgrade,IT
+INV-1198,2024-04-24,Marsh McLennan,1732.65,Cyber insurance policy,INSURANCE
+INV-1348,2024-04-24,Deloitte Consulting LLP,9800.05,Consulting services - partial billing,CONSULTING
+INV-1020,2024-04-26,Dell Technologies,4533.65,Server maintenance,IT
+INV-1451,2024-04-27,Marsh McLennan,500.00,Workers comp premium,INSURANCE
+INV-1032,2024-04-28,Workday Inc,29140.50,User license expansion,SOFTWARE
+INV-1104,2024-04-28,Cisco Systems Inc,2956.32,Hardware procurement,IT
+INV-1227,2024-04-28,Latham & Watkins LLP,808.63,IP counsel services,LEGAL
+INV-1349,2024-04-28,Deloitte Consulting LLP,9847.76,Consulting services - partial billing,CONSULTING
+INV-1058,2024-04-30,Ernst & Young Advisory,3937.20,Project management consulting,CONSULTING
+INV-1150,2024-04-30,HP Inc,586.70,Server maintenance,IT
+INV-1180,2024-05-01,FedEx Corporation,815.11,International shipping,LOGISTICS
+INV-1243,2024-05-02,KPMG Advisory Services,363.11,Change management support,CONSULTING
+INV-1048,2024-05-03,Microsoft Corporation,1543.27,Software maintenance contract,SOFTWARE
+INV-1239,2024-05-03,Cushman & Wakefield,108.89,Building maintenance,FACILITIES
+INV-1479,2024-05-03,Marsh McLennan,5000.00,General liability premium,INSURANCE
+INV-1156,2024-05-04,United Parcel Service,5109.63,Express delivery services,LOGISTICS
+INV-1389,2024-05-04,Deloitte Consulting LLP,9990.40,Consulting services - partial billing,CONSULTING
+INV-1458,2024-05-04,Publicis Groupe SA,50000.00,Social media management,MARKETING
+INV-1111,2024-05-05,Staples Business Advantage,624.13,Printer cartridges bulk,SUPPLIES
+INV-1299,2024-05-05,KPMG Advisory Services,10024.83,Digital transformation advisory,CONSULTING
+INV-1042,2024-05-06,Delta Air Lines Inc,2370.78,Business travel - NYC,TRAVEL
+INV-1072,2024-05-06,Staples Business Advantage,1539.18,Paper and stationery,SUPPLIES
+INV-1099,2024-05-06,W.W. Grainger Inc,2861.47,Janitorial supplies,SUPPLIES
+INV-1364,2024-05-07,Ernst & Young Advisory,9763.10,Consulting services - partial billing,CONSULTING
+INV-1131,2024-05-08,WPP plc,2247.15,Media buying Q1,MARKETING
+INV-1390,2024-05-08,Deloitte Consulting LLP,9507.59,Consulting services - partial billing,CONSULTING
+INV-1419,2024-05-08,Booz Allen Hamilton,16896.05,Strategy development retainer,CONSULTING
+INV-1036,2024-05-09,W.W. Grainger Inc,5556.81,Printer cartridges bulk,SUPPLIES
+INV-1003,2024-05-10,Manpower Group Inc,738.19,Temp staffing services,HR
+INV-1115,2024-05-10,FedEx Corporation,3437.36,Warehouse storage,LOGISTICS
+INV-1251,2024-05-10,XPO Logistics Inc,1823.60,International shipping,LOGISTICS
+INV-1252,2024-05-10,SAP America Inc,5987.28,Platform upgrade fee,SOFTWARE
+INV-1385,2024-05-10,Booz Allen Hamilton,9972.69,Consulting services - partial billing,CONSULTING
+INV-1363,2024-05-11,KPMG Advisory Services,9828.35,Consulting services - partial billing,CONSULTING
+INV-1386,2024-05-11,Booz Allen Hamilton,9608.86,Consulting services - partial billing,CONSULTING
+INV-1391,2024-05-11,McKinsey & Company,9901.19,Consulting services - partial billing,CONSULTING
+INV-1480,2024-05-11,W.W. Grainger Inc,2345.67,Safety equipment,SUPPLIES
+INV-1481,2024-05-11,W.W. Grainger Inc,2345.67,Safety equipment,SUPPLIES
+INV-1327,2024-05-12,W.W. Grainger Inc,4241.53,Printer cartridges bulk,SUPPLIES
+INV-1392,2024-05-12,McKinsey & Company,9859.41,Consulting services - partial billing,CONSULTING
+INV-1473,2024-05-14,Ernst & Young Advisory,180871.07,Special project - executive authorization required,CONSULTING
+INV-1018,2024-05-15,Baker McKenzie LLP,1295.27,Regulatory compliance advisory,LEGAL
+INV-1052,2024-05-15,FedEx Corporation,1700.47,Freight shipping,LOGISTICS
+INV-1420,2024-05-15,Booz Allen Hamilton,16896.05,Strategy development retainer,CONSULTING
+INV-1460,2024-05-15,Boston Consulting Group,20000.00,Change management support,CONSULTING
+INV-1056,2024-05-17,Robert Half International,4663.70,Recruitment placement fee,HR
+INV-1159,2024-05-17,CDW LLC,7931.55,Infrastructure upgrade,IT
+INV-1179,2024-05-17,Ernst & Young Advisory,1707.42,Process improvement engagement,CONSULTING
+INV-1238,2024-05-17,ServiceNow Inc,1308.41,Platform upgrade fee,SOFTWARE
+INV-1318,2024-05-17,Deloitte Consulting LLP,761.38,Strategy development retainer,CONSULTING
+INV-1398,2024-05-17,PricewaterhouseCoopers LLP,9861.48,Consulting services - partial billing,CONSULTING
+INV-1145,2024-05-18,Hyatt Hotels Corporation,1399.03,Hotel conference stay,TRAVEL
+INV-1285,2024-05-18,Sidley Austin LLP,4920.26,Regulatory compliance advisory,LEGAL
+INV-1181,2024-05-20,Workday Inc,20804.42,Enterprise license agreement,SOFTWARE
+INV-1261,2024-05-21,Salesforce Inc,4310.01,Enterprise license agreement,SOFTWARE
+INV-1093,2024-05-22,Aon plc,141.58,General liability premium,INSURANCE
+INV-1098,2024-05-22,ServiceNow Inc,2437.64,User license expansion,SOFTWARE
+INV-1126,2024-05-23,McKinsey & Company,1236.85,Digital transformation advisory,CONSULTING
+INV-1197,2024-05-23,United Parcel Service,7987.92,Last-mile delivery,LOGISTICS
+INV-1142,2024-05-24,Staples Business Advantage,68.08,Janitorial supplies,SUPPLIES
+INV-1085,2024-05-25,Office Depot Business,844.84,Paper and stationery,SUPPLIES
+INV-1254,2024-05-25,Marriott International,648.02,Client site travel,TRAVEL
+INV-1447,2024-05-25,Hilton Worldwide Holdings,2000.00,Team offsite travel,TRAVEL
+INV-1149,2024-05-26,United Airlines Inc,13724.83,Hotel conference stay,TRAVEL
+INV-1382,2024-05-26,Boston Consulting Group,9838.19,Consulting services - partial billing,CONSULTING
+INV-1203,2024-05-27,Aon plc,1182.46,D&O insurance renewal,INSURANCE
+INV-1383,2024-05-27,Boston Consulting Group,9861.93,Consulting services - partial billing,CONSULTING
+INV-1329,2024-05-28,PricewaterhouseCoopers LLP,2476.97,Project management consulting,CONSULTING
+INV-1079,2024-05-29,FedEx Corporation,3926.33,Freight shipping,LOGISTICS
+INV-1178,2024-05-29,HP Inc,14565.50,IT support services,IT
+INV-1433,2024-05-30,Boston Consulting Group,15000.00,Process improvement engagement,CONSULTING
+INV-1021,2024-05-31,Boston Consulting Group,1099.23,Digital transformation advisory,CONSULTING
+INV-1119,2024-05-31,Omnicom Group Inc,3356.71,Digital marketing campaign,MARKETING
+INV-1217,2024-05-31,Hyatt Hotels Corporation,1078.33,Team offsite travel,TRAVEL
+INV-1306,2024-05-31,WPP plc,615.68,Social media management,MARKETING
+INV-1417,2024-05-31,Delta Air Lines Inc,1556.82,Executive airfare,TRAVEL
+INV-1049,2024-06-01,Oracle America Inc,3259.69,SaaS subscription renewal,SOFTWARE
+INV-1050,2024-06-01,Delta Air Lines Inc,8912.54,Executive airfare,TRAVEL
+INV-1246,2024-06-01,Cushman & Wakefield,1195.90,Office lease management,FACILITIES
+INV-1277,2024-06-01,CBRE Group Inc,884.52,Facility management services,FACILITIES
+INV-1328,2024-06-01,SAP America Inc,16946.89,Software maintenance contract,SOFTWARE
+INV-1013,2024-06-02,Hilton Worldwide Holdings,1612.36,Client site travel,TRAVEL
+INV-1371,2024-06-02,PricewaterhouseCoopers LLP,9879.60,Consulting services - partial billing,CONSULTING
+INV-1276,2024-06-04,Aramark Corporation,1420.72,Building repair services,MAINT
+INV-1326,2024-06-06,Hyatt Hotels Corporation,4463.07,Client site travel,TRAVEL
+INV-1418,2024-06-06,Delta Air Lines Inc,1556.82,Executive airfare,TRAVEL
+INV-1193,2024-06-07,Adobe Systems Inc,690.99,Enterprise license agreement,SOFTWARE
+INV-1282,2024-06-07,Microsoft Corporation,4361.49,Enterprise license agreement,SOFTWARE
+INV-1482,2024-06-07,Baker McKenzie LLP,25000.00,Litigation support,LEGAL
+INV-1160,2024-06-08,United Parcel Service,685.64,Last-mile delivery,LOGISTICS
+INV-1214,2024-06-08,Booz Allen Hamilton,7345.12,Strategy development retainer,CONSULTING
+INV-1316,2024-06-08,Ernst & Young Advisory,1905.92,Strategy development retainer,CONSULTING
+INV-1183,2024-06-10,Omnicom Group Inc,11235.11,Social media management,MARKETING
+INV-1298,2024-06-11,Aon plc,45.95,Workers comp premium,INSURANCE
+INV-1210,2024-06-13,KPMG Advisory Services,568.11,Project management consulting,CONSULTING
+INV-1259,2024-06-13,Manpower Group Inc,4126.67,Recruitment placement fee,HR
+INV-1097,2024-06-14,United Parcel Service,1188.48,International shipping,LOGISTICS
+INV-1199,2024-06-14,Staples Business Advantage,2912.74,Printer cartridges bulk,SUPPLIES
+INV-1445,2024-06-14,Booz Allen Hamilton,15000.00,Strategic advisory Q1,CONSULTING
+INV-1076,2024-06-15,ServiceNow Inc,365.63,Enterprise license agreement,SOFTWARE
+INV-1168,2024-06-16,HP Inc,13924.69,IT asset refresh,IT
+INV-1361,2024-06-18,PricewaterhouseCoopers LLP,9815.88,Consulting services - partial billing,CONSULTING
+INV-1077,2024-06-19,Delta Air Lines Inc,2210.87,Team offsite travel,TRAVEL
+INV-1232,2024-06-20,Deloitte Consulting LLP,1494.64,Management consulting services,CONSULTING
+INV-1463,2024-06-20,Ernst & Young Advisory,478139.90,Special project - executive authorization required,CONSULTING
+INV-1483,2024-06-20,Accenture Federal Services,9875.00,Project management consulting,CONSULTING
+INV-1303,2024-06-21,JPMorgan Chase & Co,152.55,Banking services,FINANCE
+INV-1484,2024-06-21,Accenture Federal Services,9910.00,Project management consulting,CONSULTING
+INV-1253,2024-06-22,United Airlines Inc,3116.70,Client site travel,TRAVEL
+INV-1305,2024-06-22,Uline Inc,229.81,Breakroom supplies,SUPPLIES
+INV-1029,2024-06-24,CBRE Group Inc,3441.57,Office lease management,FACILITIES
+INV-1427,2024-06-24,Dell Technologies,1264.39,Hardware procurement,IT
+INV-1140,2024-06-25,Aon plc,784.05,General liability premium,INSURANCE
+INV-1155,2024-06-25,Omnicom Group Inc,9230.19,Social media management,MARKETING
+INV-1283,2024-06-25,Manpower Group Inc,300.29,Recruitment placement fee,HR
+INV-1116,2024-06-26,Baker McKenzie LLP,4820.79,IP counsel services,LEGAL
+INV-1148,2024-06-27,Uline Inc,1669.82,Printer cartridges bulk,SUPPLIES
+INV-1186,2024-06-27,Adobe Systems Inc,589.08,Platform upgrade fee,SOFTWARE
+INV-1046,2024-06-28,McKinsey & Company,6621.60,Strategy development retainer,CONSULTING
+INV-1164,2024-06-29,Publicis Groupe SA,4077.05,Social media management,MARKETING
+INV-1428,2024-06-29,Dell Technologies,1264.39,Hardware procurement,IT
+INV-1437,2024-06-29,Oracle America Inc,100000.00,User license expansion,SOFTWARE
+INV-1456,2024-06-30,Ernst & Young Advisory,1000.00,Organizational assessment,CONSULTING
+INV-1067,2024-07-02,Robert Half International,18346.61,Recruitment placement fee,HR
+INV-1315,2024-07-02,Workday Inc,354.55,Enterprise license agreement,SOFTWARE
+INV-1378,2024-07-02,KPMG Advisory Services,9884.40,Consulting services - partial billing,CONSULTING
+INV-1310,2024-07-03,Publicis Groupe SA,1509.09,Social media management,MARKETING
+INV-1320,2024-07-03,Ernst & Young Advisory,1709.28,Process improvement engagement,CONSULTING
+INV-1137,2024-07-05,Manpower Group Inc,285.97,HR consulting services,HR
+INV-1341,2024-07-05,Deloitte Consulting LLP,9983.77,Consulting services - partial billing,CONSULTING
+INV-1379,2024-07-05,KPMG Advisory Services,9620.74,Consulting services - partial billing,CONSULTING
+INV-1068,2024-07-06,Latham & Watkins LLP,4287.74,Legal retainer monthly,LEGAL
+INV-1133,2024-07-06,Dell Technologies,1001.10,Hardware procurement,IT
+INV-1255,2024-07-07,Publicis Groupe SA,1369.61,Social media management,MARKETING
+INV-1264,2024-07-07,Fastenal Company,1079.08,Cleaning products,SUPPLIES
+INV-1092,2024-07-08,KPMG Advisory Services,2049.61,Organizational assessment,CONSULTING
+INV-1127,2024-07-08,Deloitte Consulting LLP,4374.80,Digital transformation advisory,CONSULTING
+INV-1342,2024-07-09,Deloitte Consulting LLP,9843.37,Consulting services - partial billing,CONSULTING
+INV-1377,2024-07-09,McKinsey & Company,9824.59,Consulting services - partial billing,CONSULTING
+INV-1429,2024-07-09,HP Inc,975.10,Cybersecurity tools,IT
+INV-1485,2024-07-09,FedEx Corporation,1823.45,Express delivery services,LOGISTICS
+INV-1292,2024-07-10,Cushman & Wakefield,952.72,Facility management services,FACILITIES
+INV-1312,2024-07-10,Dell Technologies,2710.14,Hardware procurement,IT
+INV-1338,2024-07-10,Delta Air Lines Inc,3837.55,Executive airfare,TRAVEL
+INV-1044,2024-07-11,Boston Consulting Group,215.68,Management consulting services,CONSULTING
+INV-1195,2024-07-11,JPMorgan Chase & Co,4023.19,Treasury management fee,FINANCE
+INV-1258,2024-07-11,JPMorgan Chase & Co,2265.96,Treasury management fee,FINANCE
+INV-1293,2024-07-11,United Parcel Service,10400.47,Last-mile delivery,LOGISTICS
+INV-1300,2024-07-11,ABM Industries Inc,892.73,Building repair services,MAINT
+INV-1343,2024-07-11,McKinsey & Company,9720.23,Consulting services - partial billing,CONSULTING
+INV-1430,2024-07-11,HP Inc,975.10,Cybersecurity tools,IT
+INV-1401,2024-07-12,Cushman & Wakefield,9883.66,HVAC service contract,FACILITIES
+INV-1423,2024-07-12,Uline Inc,1163.18,Cleaning products,SUPPLIES
+INV-1402,2024-07-13,Cushman & Wakefield,9883.66,HVAC service contract,FACILITIES
+INV-1080,2024-07-14,CBRE Group Inc,2673.39,Office lease management,FACILITIES
+INV-1135,2024-07-14,W.W. Grainger Inc,1343.06,Breakroom supplies,SUPPLIES
+INV-1344,2024-07-14,McKinsey & Company,9689.44,Consulting services - partial billing,CONSULTING
+INV-1486,2024-07-15,JPMorgan Chase & Co,50000.00,Treasury management fee,FINANCE
+INV-1103,2024-07-16,McKinsey & Company,8701.77,Digital transformation advisory,CONSULTING
+INV-1450,2024-07-16,American Airlines Group,2000.00,Client site travel,TRAVEL
+INV-1059,2024-07-17,Baker McKenzie LLP,213.20,Contract review services,LEGAL
+INV-1424,2024-07-17,Uline Inc,1163.18,Cleaning products,SUPPLIES
+INV-1161,2024-07-18,Uline Inc,3405.98,Office supplies Q1,SUPPLIES
+INV-1340,2024-07-18,WPP plc,1078.74,Social media management,MARKETING
+INV-1060,2024-07-19,CDW LLC,9314.98,Infrastructure upgrade,IT
+INV-1368,2024-07-19,McKinsey & Company,9756.21,Consulting services - partial billing,CONSULTING
+INV-1256,2024-07-20,United Parcel Service,3885.95,Freight shipping,LOGISTICS
+INV-1405,2024-07-20,Ernst & Young Advisory,1823.80,Project management consulting,CONSULTING
+INV-1112,2024-07-21,IBM Corporation,2677.21,Server maintenance,IT
+INV-1406,2024-07-21,Ernst & Young Advisory,1823.80,Project management consulting,CONSULTING
+INV-1313,2024-07-22,Microsoft Corporation,1796.21,Enterprise license agreement,SOFTWARE
+INV-1033,2024-07-24,Oracle America Inc,8605.64,Platform upgrade fee,SOFTWARE
+INV-1025,2024-07-25,Adobe Systems Inc,6299.35,Platform upgrade fee,SOFTWARE
+INV-1335,2024-07-26,FedEx Corporation,218.37,Warehouse storage,LOGISTICS
+INV-1028,2024-07-30,Workday Inc,2084.89,Enterprise license agreement,SOFTWARE
+INV-1143,2024-07-30,Aon plc,6088.13,Workers comp premium,INSURANCE
+INV-1487,2024-07-30,Omnicom Group Inc,18750.00,Media buying Q1,MARKETING
+INV-1008,2024-07-31,Ernst & Young Advisory,766.89,Management consulting services,CONSULTING
+INV-1030,2024-07-31,WPP plc,5588.81,Brand strategy services,MARKETING
+INV-1372,2024-07-31,KPMG Advisory Services,9983.18,Consulting services - partial billing,CONSULTING
+INV-1244,2024-08-02,CDW LLC,1129.09,Infrastructure upgrade,IT
+INV-1035,2024-08-03,SAP America Inc,2259.17,User license expansion,SOFTWARE
+INV-1069,2024-08-03,Salesforce Inc,4118.03,Enterprise license agreement,SOFTWARE
+INV-1201,2024-08-03,Oracle America Inc,495.40,SaaS subscription renewal,SOFTWARE
+INV-1200,2024-08-04,Latham & Watkins LLP,3168.20,Legal retainer monthly,LEGAL
+INV-1470,2024-08-04,Accenture Federal Services,298883.40,Special project - executive authorization required,CONSULTING
+INV-1202,2024-08-05,XPO Logistics Inc,642.79,Warehouse storage,LOGISTICS
+INV-1488,2024-08-05,CBRE Group Inc,7500.00,Facility management services,FACILITIES
+INV-1094,2024-08-07,Omnicom Group Inc,45294.66,Digital marketing campaign,MARKETING
+INV-1442,2024-08-07,Staples Business Advantage,500.00,Breakroom supplies,SUPPLIES
+INV-1047,2024-08-09,Deloitte Consulting LLP,33729.43,Organizational assessment,CONSULTING
+INV-1108,2024-08-10,IBM Corporation,1038.61,Server maintenance,IT
+INV-1016,2024-08-11,American Airlines Group,1778.98,Hotel conference stay,TRAVEL
+INV-1334,2024-08-11,SAP America Inc,871.89,Annual software license,SOFTWARE
+INV-1002,2024-08-13,Boston Consulting Group,3907.22,Digital transformation advisory,CONSULTING
+INV-1184,2024-08-13,Adobe Systems Inc,593.71,Annual software license,SOFTWARE
+INV-1128,2024-08-14,JPMorgan Chase & Co,1326.72,Treasury management fee,FINANCE
+INV-1465,2024-08-14,Ernst & Young Advisory,318234.13,Special project - executive authorization required,CONSULTING
+INV-1399,2024-08-16,Accenture Federal Services,9764.01,Consulting services - partial billing,CONSULTING
+INV-1446,2024-08-17,Deloitte Consulting LLP,20000.00,Organizational assessment,CONSULTING
+INV-1324,2024-08-19,Manpower Group Inc,215.92,HR consulting services,HR
+INV-1489,2024-08-19,Latham & Watkins LLP,12400.00,Contract review services,LEGAL
+INV-1400,2024-08-20,Accenture Federal Services,9765.73,Consulting services - partial billing,CONSULTING
+INV-1455,2024-08-20,Cushman & Wakefield,20000.00,Building maintenance,FACILITIES
+INV-1490,2024-08-22,Booz Allen Hamilton,9995.00,Strategy development retainer,CONSULTING
+INV-1096,2024-08-24,ABM Industries Inc,2463.76,Preventive maintenance contract,MAINT
+INV-1461,2024-08-25,Microsoft Corporation,357674.48,Special project - executive authorization required,SOFTWARE
+INV-1212,2024-08-26,Robert Half International,2636.06,Benefits administration,HR
+INV-1307,2024-08-28,Delta Air Lines Inc,3047.89,Hotel conference stay,TRAVEL
+INV-1001,2024-08-30,Delta Air Lines Inc,273.74,Hotel conference stay,TRAVEL
+INV-1270,2024-08-31,Cisco Systems Inc,1355.61,Server maintenance,IT
+INV-1339,2024-08-31,Publicis Groupe SA,1583.48,Social media management,MARKETING
+INV-1117,2024-09-01,Accenture Federal Services,216.73,Project management consulting,CONSULTING
+INV-1230,2024-09-01,W.W. Grainger Inc,1883.95,Breakroom supplies,SUPPLIES
+INV-1026,2024-09-02,Marsh McLennan,3558.93,Cyber insurance policy,INSURANCE
+INV-1296,2024-09-02,McKinsey & Company,20619.30,Digital transformation advisory,CONSULTING
+INV-1357,2024-09-02,Boston Consulting Group,9917.65,Consulting services - partial billing,CONSULTING
+INV-1120,2024-09-03,Fastenal Company,22528.34,Office supplies Q1,SUPPLIES
+INV-1007,2024-09-04,American Airlines Group,454.22,Executive airfare,TRAVEL
+INV-1175,2024-09-04,Oracle America Inc,1467.28,User license expansion,SOFTWARE
+INV-1358,2024-09-04,Boston Consulting Group,9642.86,Consulting services - partial billing,CONSULTING
+INV-1491,2024-09-04,SAP America Inc,45000.00,Enterprise license agreement,SOFTWARE
+INV-1083,2024-09-05,PricewaterhouseCoopers LLP,830.81,Organizational assessment,CONSULTING
+INV-1457,2024-09-05,Oracle America Inc,3000.00,SaaS subscription renewal,SOFTWARE
+INV-1167,2024-09-06,Office Depot Business,557.34,Janitorial supplies,SUPPLIES
+INV-1248,2024-09-06,Baker McKenzie LLP,581.52,Regulatory compliance advisory,LEGAL
+INV-1095,2024-09-08,Publicis Groupe SA,2209.60,Digital marketing campaign,MARKETING
+INV-1138,2024-09-09,Adobe Systems Inc,4233.83,Cloud platform subscription,SOFTWARE
+INV-1492,2024-09-10,Robert Half International,3200.00,Recruitment placement fee,HR
+INV-1333,2024-09-11,Workday Inc,20320.84,User license expansion,SOFTWARE
+INV-1173,2024-09-13,Sidley Austin LLP,1221.88,Regulatory compliance advisory,LEGAL
+INV-1152,2024-09-14,Publicis Groupe SA,2394.80,Brand strategy services,MARKETING
+INV-1284,2024-09-14,United Parcel Service,124.89,Express delivery services,LOGISTICS
+INV-1222,2024-09-15,CDW LLC,6468.39,Cybersecurity tools,IT
+INV-1337,2024-09-16,Omnicom Group Inc,1050.70,Digital marketing campaign,MARKETING
+INV-1091,2024-09-17,Adobe Systems Inc,1195.86,User license expansion,SOFTWARE
+INV-1275,2024-09-17,CDW LLC,582.95,IT asset refresh,IT
+INV-1045,2024-09-18,WPP plc,273.41,Media buying Q1,MARKETING
+INV-1493,2024-09-18,United Airlines Inc,4267.33,Business travel - NYC,TRAVEL
+INV-1393,2024-09-21,KPMG Advisory Services,9770.24,Consulting services - partial billing,CONSULTING
+INV-1467,2024-09-21,Deloitte Consulting LLP,356970.10,Special project - executive authorization required,CONSULTING
+INV-1440,2024-09-22,Latham & Watkins LLP,5000.00,IP counsel services,LEGAL
+INV-1474,2024-09-22,PricewaterhouseCoopers LLP,347682.88,Special project - executive authorization required,CONSULTING
+INV-1207,2024-09-23,ServiceNow Inc,4865.24,SaaS subscription renewal,SOFTWARE
+INV-1189,2024-09-24,Publicis Groupe SA,2450.68,Digital marketing campaign,MARKETING
+INV-1353,2024-09-24,KPMG Advisory Services,9928.30,Consulting services - partial billing,CONSULTING
+INV-1394,2024-09-24,KPMG Advisory Services,9712.33,Consulting services - partial billing,CONSULTING
+INV-1297,2024-09-25,Dell Technologies,3102.61,IT asset refresh,IT
+INV-1325,2024-09-29,W.W. Grainger Inc,1908.81,Printer cartridges bulk,SUPPLIES
+INV-1431,2024-09-29,FedEx Corporation,5000.00,International shipping,LOGISTICS
+INV-1453,2024-09-29,United Airlines Inc,1000.00,Executive airfare,TRAVEL
+INV-1247,2024-09-30,Omnicom Group Inc,2859.68,Brand strategy services,MARKETING
+INV-1263,2024-09-30,IBM Corporation,601.23,Server maintenance,IT
+INV-1074,2024-10-01,CDW LLC,98.20,Cybersecurity tools,IT
+INV-1176,2024-10-01,Oracle America Inc,2894.14,Software maintenance contract,SOFTWARE
+INV-1062,2024-10-02,Marriott International,488.83,Business travel - NYC,TRAVEL
+INV-1494,2024-10-02,Aramark Corporation,2890.50,Janitorial services,MAINT
+INV-1211,2024-10-03,FedEx Corporation,910.19,Freight shipping,LOGISTICS
+INV-1415,2024-10-03,Accenture Federal Services,8212.36,Organizational assessment,CONSULTING
+INV-1129,2024-10-08,Oracle America Inc,3161.85,SaaS subscription renewal,SOFTWARE
+INV-1009,2024-10-09,Uline Inc,3736.93,Printer cartridges bulk,SUPPLIES
+INV-1369,2024-10-09,Boston Consulting Group,9743.80,Consulting services - partial billing,CONSULTING
+INV-1443,2024-10-09,Aramark Corporation,1500.00,Building repair services,MAINT
+INV-1023,2024-10-10,Office Depot Business,829.98,Paper and stationery,SUPPLIES
+INV-1024,2024-10-11,Delta Air Lines Inc,535.75,Client site travel,TRAVEL
+INV-1125,2024-10-11,Deloitte Consulting LLP,735.66,Project management consulting,CONSULTING
+INV-1370,2024-10-11,Boston Consulting Group,9552.42,Consulting services - partial billing,CONSULTING
+INV-1416,2024-10-11,Accenture Federal Services,8212.36,Organizational assessment,CONSULTING
+INV-1015,2024-10-13,Workday Inc,18334.06,User license expansion,SOFTWARE
+INV-1249,2024-10-13,Staples Business Advantage,1060.06,Janitorial supplies,SUPPLIES
+INV-1321,2024-10-13,Cisco Systems Inc,2653.44,Server maintenance,IT
+INV-1054,2024-10-14,Fastenal Company,922.92,Printer cartridges bulk,SUPPLIES
+INV-1082,2024-10-14,Sidley Austin LLP,372.21,Contract review services,LEGAL
+INV-1495,2024-10-14,Workday Inc,22500.00,SaaS subscription renewal,SOFTWARE
+INV-1496,2024-10-14,Workday Inc,22500.00,SaaS subscription renewal,SOFTWARE
+INV-1216,2024-10-15,ABM Industries Inc,515.64,Preventive maintenance contract,MAINT
+INV-1031,2024-10-16,United Parcel Service,1062.17,International shipping,LOGISTICS
+INV-1121,2024-10-16,XPO Logistics Inc,8487.20,Last-mile delivery,LOGISTICS
+INV-1234,2024-10-16,Adobe Systems Inc,1334.11,Software maintenance contract,SOFTWARE
+INV-1266,2024-10-16,PricewaterhouseCoopers LLP,1309.24,Strategic advisory Q1,CONSULTING
+INV-1196,2024-10-17,PricewaterhouseCoopers LLP,639.36,Management consulting services,CONSULTING
+INV-1376,2024-10-17,McKinsey & Company,9724.32,Consulting services - partial billing,CONSULTING
+INV-1027,2024-10-18,Oracle America Inc,4688.15,SaaS subscription renewal,SOFTWARE
+INV-1040,2024-10-18,United Airlines Inc,3911.08,Hotel conference stay,TRAVEL
+INV-1109,2024-10-21,Adobe Systems Inc,19803.36,Annual software license,SOFTWARE
+INV-1146,2024-10-21,American Airlines Group,2969.70,Client site travel,TRAVEL
+INV-1208,2024-10-22,Sidley Austin LLP,641.32,Legal retainer monthly,LEGAL
+INV-1265,2024-10-22,Uline Inc,8036.92,Paper and stationery,SUPPLIES
+INV-1317,2024-10-23,Marsh McLennan,974.86,Workers comp premium,INSURANCE
+INV-1064,2024-10-24,Oracle America Inc,1089.52,Annual software license,SOFTWARE
+INV-1100,2024-10-24,Hilton Worldwide Holdings,3121.31,Hotel conference stay,TRAVEL
+INV-1224,2024-10-24,Manpower Group Inc,1669.91,Benefits administration,HR
+INV-1034,2024-10-25,WPP plc,680.35,Creative production,MARKETING
+INV-1250,2024-10-25,Delta Air Lines Inc,414.66,Hotel conference stay,TRAVEL
+INV-1387,2024-10-25,PricewaterhouseCoopers LLP,9783.00,Consulting services - partial billing,CONSULTING
+INV-1106,2024-10-26,Baker McKenzie LLP,1169.96,Litigation support,LEGAL
+INV-1213,2024-10-26,Omnicom Group Inc,602.72,Social media management,MARKETING
+INV-1384,2024-10-27,PricewaterhouseCoopers LLP,9832.73,Consulting services - partial billing,CONSULTING
+INV-1388,2024-10-28,PricewaterhouseCoopers LLP,9530.94,Consulting services - partial billing,CONSULTING
+INV-1166,2024-10-29,Workday Inc,866.40,Annual software license,SOFTWARE
+INV-1039,2024-10-30,FedEx Corporation,175.12,International shipping,LOGISTICS
+INV-1041,2024-10-30,PricewaterhouseCoopers LLP,407.13,Change management support,CONSULTING
+INV-1365,2024-10-30,Booz Allen Hamilton,9805.75,Consulting services - partial billing,CONSULTING
+INV-1262,2024-11-01,SAP America Inc,122.81,Enterprise license agreement,SOFTWARE
+INV-1434,2024-11-02,Hilton Worldwide Holdings,3000.00,Executive airfare,TRAVEL
+INV-1497,2024-11-05,Cushman & Wakefield,100000.00,Office lease management,FACILITIES
+INV-1459,2024-11-10,Microsoft Corporation,1000.00,User license expansion,SOFTWARE
+INV-1242,2024-11-11,Omnicom Group Inc,1360.70,Social media management,MARKETING
+INV-1454,2024-11-11,Microsoft Corporation,1500.00,Software maintenance contract,SOFTWARE
+INV-1014,2024-11-12,Aon plc,3948.13,D&O insurance renewal,INSURANCE
+INV-1346,2024-11-12,Booz Allen Hamilton,9944.75,Consulting services - partial billing,CONSULTING
+INV-1151,2024-11-14,CDW LLC,8756.74,Server maintenance,IT
+INV-1347,2024-11-15,Booz Allen Hamilton,9719.58,Consulting services - partial billing,CONSULTING
+INV-1448,2024-11-17,Baker McKenzie LLP,1000.00,Contract review services,LEGAL
+INV-1498,2024-11-18,Manpower Group Inc,6750.00,Temp staffing services,HR
+INV-1226,2024-11-19,Booz Allen Hamilton,1555.19,Change management support,CONSULTING
+INV-1290,2024-11-20,Oracle America Inc,1669.17,User license expansion,SOFTWARE
+INV-1397,2024-11-20,McKinsey & Company,9857.58,Consulting services - partial billing,CONSULTING
+INV-1294,2024-11-21,Oracle America Inc,1827.10,User license expansion,SOFTWARE
+INV-1359,2024-11-22,Ernst & Young Advisory,9801.00,Consulting services - partial billing,CONSULTING
+INV-1319,2024-11-24,Booz Allen Hamilton,1248.10,Organizational assessment,CONSULTING
+INV-1141,2024-11-26,Dell Technologies,289.46,Infrastructure upgrade,IT
+INV-1182,2024-11-26,Cisco Systems Inc,2650.90,Infrastructure upgrade,IT
+INV-1435,2024-11-27,Cushman & Wakefield,7500.00,Building maintenance,FACILITIES
+INV-1130,2024-12-01,Manpower Group Inc,1574.07,Temp staffing services,HR
+INV-1219,2024-12-02,FedEx Corporation,545.65,Warehouse storage,LOGISTICS
+INV-1268,2024-12-02,Booz Allen Hamilton,4702.92,Project management consulting,CONSULTING
+INV-1499,2024-12-02,Aon plc,10000.00,D&O insurance renewal,INSURANCE
+INV-1331,2024-12-03,CDW LLC,2823.91,Network equipment,IT
+INV-1314,2024-12-05,HP Inc,1396.19,Server maintenance,IT
+INV-1113,2024-12-06,Cushman & Wakefield,1773.42,Office lease management,FACILITIES
+INV-1472,2024-12-07,Boston Consulting Group,208442.29,Special project - executive authorization required,CONSULTING
+INV-1006,2024-12-08,Publicis Groupe SA,1755.90,Creative production,MARKETING
+INV-1289,2024-12-08,PricewaterhouseCoopers LLP,21141.34,Organizational assessment,CONSULTING
+INV-1330,2024-12-08,Manpower Group Inc,991.63,Recruitment placement fee,HR
+INV-1204,2024-12-09,ServiceNow Inc,7710.68,Platform upgrade fee,SOFTWARE
+INV-1288,2024-12-09,Cushman & Wakefield,1670.68,Building maintenance,FACILITIES
+INV-1462,2024-12-09,Boston Consulting Group,295133.55,Special project - executive authorization required,CONSULTING
+INV-1500,2024-12-10,Boston Consulting Group,9980.00,Organizational assessment,CONSULTING
+INV-1245,2024-12-11,Sidley Austin LLP,7728.21,Litigation support,LEGAL
+INV-1225,2024-12-13,Uline Inc,4713.48,Printer cartridges bulk,SUPPLIES
+INV-1452,2024-12-13,Office Depot Business,2500.00,Breakroom supplies,SUPPLIES
+INV-1323,2024-12-15,McKinsey & Company,4250.53,Digital transformation advisory,CONSULTING
+INV-1066,2024-12-16,PricewaterhouseCoopers LLP,1498.63,Strategy development retainer,CONSULTING
+INV-1090,2024-12-17,ServiceNow Inc,1243.24,Annual software license,SOFTWARE
+INV-1157,2024-12-19,United Parcel Service,2226.40,International shipping,LOGISTICS

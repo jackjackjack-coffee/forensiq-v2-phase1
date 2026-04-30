@@ -25,8 +25,8 @@ export default function BenfordPage() {
       const isPass = cat.label === cats[0]?.label; // ACCEPTABLE / CLOSE TO ACCEPTABLE
       const chartData = Object.keys(b.expected).map((digit) => ({
         digit,
-        Expected: parseFloat((b.expected[Number(digit)] ?? 0).toFixed(2)),
-        Actual: parseFloat((b.observed[Number(digit)] ?? 0).toFixed(2)),
+        Expected: parseFloat(((b.expected[Number(digit)] ?? 0) / 100).toFixed(4)),
+        Actual: parseFloat(((b.observed[Number(digit)] ?? 0) / 100).toFixed(4)),
       }));
       return { b, cats, cat, isPass, chartData, label, position };
     });
@@ -87,7 +87,7 @@ export default function BenfordPage() {
             <BarChart data={chartData} margin={{ top: 4, right: 8, left: -8, bottom: 0 }}>
               <CartesianGrid stroke="#e2e8f0" vertical={false} />
               <XAxis dataKey="digit" stroke="#64748b" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#64748b" tick={{ fontSize: 11 }} unit="%" />
+              <YAxis stroke="#64748b" tick={{ fontSize: 11 }} tickFormatter={(v: number) => v.toFixed(2)} />
               <Tooltip
                 contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, color: '#1e293b' }}
                 labelStyle={{ color: '#64748b' }}
