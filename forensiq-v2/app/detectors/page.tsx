@@ -77,14 +77,14 @@ export default function DetectorsPage() {
               layout="vertical"
               margin={{ top: 0, right: 16, left: 8, bottom: 0 }}
             >
-              <CartesianGrid stroke="#f1f5f9" className="dark:[stroke:#1e293b]" horizontal={false} />
-              <XAxis type="number" tick={{ fontSize: 11 }} stroke="#94a3b8" allowDecimals={false} />
+              <CartesianGrid stroke="#cbd5e1" vertical={false} />
+              <XAxis type="number" tick={{ fontSize: 11, fill: '#374151' }} stroke="#6b7280" allowDecimals={false} />
               <YAxis
                 type="category"
                 dataKey="name"
                 width={160}
-                tick={{ fontSize: 11 }}
-                stroke="#94a3b8"
+                tick={{ fontSize: 11, fill: '#374151' }}
+                stroke="#6b7280"
               />
               <Tooltip
                 contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, color: '#1e293b' }}

@@ -21,7 +21,7 @@ export default function BenfordPage() {
       { b: result.benford_1st, cats: BENFORD_1ST_CATEGORIES, position: 1 as const, label: '1st Digit' },
       { b: result.benford_2nd, cats: BENFORD_2ND_CATEGORIES, position: 2 as const, label: '2nd Digit' },
     ].map(({ b, cats, position, label }) => {
-      const cat = categorizeMad(b.mad, position);
+      const cat = categorizeMad(b.mad / 100, position);
       const isPass = cat.label === cats[0]?.label; // ACCEPTABLE / CLOSE TO ACCEPTABLE
       const chartData = Object.keys(b.expected).map((digit) => ({
         digit,
@@ -59,10 +59,12 @@ export default function BenfordPage() {
             <h2 className="text-lg font-semibold">{label} Distribution</h2>
             <span
               className={`text-xs font-bold px-3 py-1 rounded-full ${
-                isPass ? 'bg-green-900 text-green-400' : 'bg-red-900 text-red-400'
+                cat.color === 'emerald' ? 'bg-green-900 text-green-400' :
+                cat.color === 'yellow'  ? 'bg-yellow-900 text-yellow-300' :
+                                          'bg-red-900 text-red-400'
               }`}
             >
-              {isPass ? 'PASS' : 'FAIL'} — {cat.label}
+              {cat.color === 'red' ? 'FAIL' : cat.color === 'yellow' ? 'MARGINAL' : 'PASS'} — {cat.label}
             </span>
           </div>
 
@@ -70,7 +72,7 @@ export default function BenfordPage() {
           <div className="grid grid-cols-3 gap-4">
             <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
               <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">MAD</p>
-              <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{b.mad.toFixed(4)}</p>
+              <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{(b.mad / 100).toFixed(4)}</p>
             </div>
             <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
               <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Chi-Square</p>
@@ -103,7 +105,9 @@ export default function BenfordPage() {
             <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-2">Conformity</p>
             <span
               className={`inline-block text-sm font-semibold px-3 py-1 rounded-full ${
-                isPass ? 'bg-green-900/60 text-green-400' : 'bg-red-900/60 text-red-400'
+                cat.color === 'emerald' ? 'bg-green-900/60 text-green-400' :
+                cat.color === 'yellow'  ? 'bg-yellow-900/60 text-yellow-300' :
+                                          'bg-red-900/60 text-red-400'
               }`}
             >
               {cat.label}

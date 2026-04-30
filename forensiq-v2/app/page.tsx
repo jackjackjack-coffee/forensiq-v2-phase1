@@ -60,6 +60,13 @@ function loadStoredResult(id: string): AnalysisResult | null {
   } catch { return null; }
 }
 
+function deleteHistoryItem(id: string): AnalysisSummary[] {
+  const updated = loadHistory().filter((h) => h.id !== id);
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
+  try { localStorage.removeItem(RESULT_KEY(id)); } catch {}
+  return updated;
+}
+
 // ── Tier styling (color-blind safe with icons) ───────────────────
 
 const TIER_BADGE: Record<RiskTier, string> = {
@@ -371,12 +378,37 @@ const HIST_TIER_CLS: Record<RiskTier, string> = {
   CRITICAL: 'text-red-600 dark:text-red-500',
 };
 
-function HistorySidebar({ history, onSelect }: { history: AnalysisSummary[]; onSelect: (id: string) => void }) {
+function HistorySidebar({
+  history,
+  onSelect,
+  onDelete,
+}: {
+  history: AnalysisSummary[];
+  onSelect: (id: string) => void;
+  onDelete: (id: string) => void;
+}) {
+  const [missingId, setMissingId] = useState<string | null>(null);
+
+  function handleSelect(id: string) {
+    const stored = loadStoredResult(id);
+    if (stored) {
+      setMissingId(null);
+      onSelect(id);
+    } else {
+      setMissingId(id);
+    }
+  }
+
   return (
     <aside className="w-64 shrink-0 border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 min-h-screen px-4 py-6 space-y-3">
       <h3 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500">
         Analysis History
       </h3>
+      {missingId && (
+        <p className="text-[10px] text-amber-600 dark:text-amber-400 leading-snug bg-amber-50 dark:bg-amber-950/30 rounded-lg px-2 py-1.5 border border-amber-200 dark:border-amber-800">
+          Result data not available. Please re-upload the file to re-analyze.
+        </p>
+      )}
       {history.length === 0 ? (
         <p className="text-xs text-gray-400 dark:text-slate-500 leading-relaxed">
           No analyses yet. Upload a CSV to get started.
@@ -384,32 +416,45 @@ function HistorySidebar({ history, onSelect }: { history: AnalysisSummary[]; onS
       ) : (
         <div className="space-y-2">
           {history.map((h) => (
-            <button
-              key={h.id}
-              onClick={() => onSelect(h.id)}
-              className="w-full text-left rounded-lg border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/60 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 p-3 transition-colors"
-            >
-              <p className="text-xs font-medium text-gray-800 dark:text-slate-200 truncate">{h.filename}</p>
-              <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
-                {new Date(h.analyzedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-              </p>
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-[10px] text-gray-500 dark:text-slate-400">{h.totalTransactions.toLocaleString()} txns</span>
-                <span className={`text-[10px] font-bold ${HIST_TIER_CLS[h.tier]}`}>
-                  {h.tier} · {h.score.toFixed(0)}/100
-                </span>
-              </div>
-              <div className="mt-1.5 h-1 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full ${
-                    h.tier === 'CRITICAL' ? 'bg-red-600' :
-                    h.tier === 'HIGH'     ? 'bg-red-500' :
-                    h.tier === 'MEDIUM'   ? 'bg-yellow-500' : 'bg-green-500'
-                  }`}
-                  style={{ width: `${h.score}%` }}
-                />
-              </div>
-            </button>
+            <div key={h.id} className="relative group">
+              <button
+                onClick={() => handleSelect(h.id)}
+                className={`w-full text-left rounded-lg border bg-gray-50 dark:bg-slate-800/60 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 p-3 transition-colors ${
+                  missingId === h.id
+                    ? 'border-amber-400 dark:border-amber-600'
+                    : 'border-gray-100 dark:border-slate-700'
+                }`}
+              >
+                <p className="text-xs font-medium text-gray-800 dark:text-slate-200 truncate pr-5">{h.filename}</p>
+                <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
+                  {new Date(h.analyzedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </p>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-[10px] text-gray-500 dark:text-slate-400">{h.totalTransactions.toLocaleString()} txns</span>
+                  <span className={`text-[10px] font-bold ${HIST_TIER_CLS[h.tier]}`}>
+                    {h.tier} · {h.score.toFixed(0)}/100
+                  </span>
+                </div>
+                <div className="mt-1.5 h-1 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${
+                      h.tier === 'CRITICAL' ? 'bg-red-600' :
+                      h.tier === 'HIGH'     ? 'bg-red-500' :
+                      h.tier === 'MEDIUM'   ? 'bg-yellow-500' : 'bg-green-500'
+                    }`}
+                    style={{ width: `${h.score}%` }}
+                  />
+                </div>
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); if (missingId === h.id) setMissingId(null); onDelete(h.id); }}
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 flex items-center justify-center rounded text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40"
+                aria-label="Delete analysis"
+                title="Delete analysis"
+              >
+                ×
+              </button>
+            </div>
           ))}
         </div>
       )}
@@ -1101,6 +1146,9 @@ export default function Home() {
               setAnalysisResult(stored);
               window.location.href = '/overview';
             }
+          }}
+          onDelete={(id) => {
+            setHistory(deleteHistoryItem(id));
           }}
         />
       <main className="flex-1 overflow-auto">
