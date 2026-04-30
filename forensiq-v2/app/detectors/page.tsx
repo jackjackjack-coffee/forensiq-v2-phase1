@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
 import { getAnalysisResult } from '@/lib/analysis-store';
 import { DETECTOR_INFO } from '@/lib/detector-info';
@@ -90,11 +90,7 @@ export default function DetectorsPage() {
                 contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, color: '#1e293b' }}
                 cursor={{ fill: 'rgba(148,163,184,0.08)' }}
               />
-              <Bar dataKey="count" name="Flagged" radius={[0, 4, 4, 0]} maxBarSize={20}>
-                {chartData.map((entry, i) => (
-                  <Cell key={i} fill={entry.isPassing ? '#22c55e' : '#f97316'} />
-                ))}
-              </Bar>
+              <Bar dataKey="count" name="Flagged" fill="#3b82f6" radius={[0, 4, 4, 0]} maxBarSize={20} />
             </BarChart>
           </ResponsiveContainer>
         </div>

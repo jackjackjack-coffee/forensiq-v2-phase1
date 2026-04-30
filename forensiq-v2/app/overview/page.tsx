@@ -8,6 +8,7 @@ import {
 import { StatsCard } from '@/components/ui/StatsCard';
 import { getAnalysisResult } from '@/lib/analysis-store';
 import { DETECTOR_INFO } from '@/lib/detector-info';
+import { exportRiskReport } from '@/lib/export';
 import type { AnalysisResult, DetectorName } from '@/lib/types/transaction';
 
 const fmt = (n: number) =>
@@ -22,7 +23,7 @@ const DETECTOR_NAMES: DetectorName[] = [
 
 const TIER_COLOR: Record<string, string> = {
   CRITICAL: '#ef4444',
-  HIGH: '#f97316',
+  HIGH: '#dc2626',
   MEDIUM: '#eab308',
   LOW: '#22c55e',
 };
@@ -117,6 +118,17 @@ export default function OverviewPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8 space-y-8 bg-gray-50 dark:bg-slate-950 min-h-screen text-gray-900 dark:text-white">
+      {/* Export button */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => exportRiskReport(result)}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-semibold transition-colors shadow"
+          title="Export full results as Excel workbook with separate tabs"
+        >
+          <span>⬇</span> Export Results (Excel)
+        </button>
+      </div>
+
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         <StatsCard

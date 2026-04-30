@@ -5,7 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
 import { getAnalysisResult } from '@/lib/analysis-store';
-import { categorizeMad, BENFORD_1ST_CATEGORIES, BENFORD_2ND_CATEGORIES } from '@/lib/benford-categories';
+import { categorizeMad, BENFORD_1ST_CATEGORIES, BENFORD_2ND_CATEGORIES, type MadCategory } from '@/lib/benford-categories';
 import type { AnalysisResult } from '@/lib/types/transaction';
 
 export default function BenfordPage() {
@@ -25,8 +25,8 @@ export default function BenfordPage() {
       const isPass = cat.label === cats[0]?.label; // ACCEPTABLE / CLOSE TO ACCEPTABLE
       const chartData = Object.keys(b.expected).map((digit) => ({
         digit,
-        Expected: parseFloat((b.expected[Number(digit)] ?? 0).toFixed(2)),
-        Actual: parseFloat((b.observed[Number(digit)] ?? 0).toFixed(2)),
+        Expected: parseFloat(((b.expected[Number(digit)] ?? 0) / 100).toFixed(4)),
+        Actual: parseFloat(((b.observed[Number(digit)] ?? 0) / 100).toFixed(4)),
       }));
       return { b, cats, cat, isPass, chartData, label, position };
     });
@@ -50,7 +50,7 @@ export default function BenfordPage() {
         Natural transaction data follows Benford&apos;s distribution. Significant deviation may indicate manipulation.
       </p>
 
-      {charts.map(({ b, cat, isPass, chartData, label }) => (
+      {charts.map(({ b, cats, cat, isPass, chartData, label }) => (
         <div
           key={label}
           className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-5"
@@ -87,7 +87,7 @@ export default function BenfordPage() {
             <BarChart data={chartData} margin={{ top: 4, right: 8, left: -8, bottom: 0 }}>
               <CartesianGrid stroke="#e2e8f0" vertical={false} />
               <XAxis dataKey="digit" stroke="#64748b" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#64748b" tick={{ fontSize: 11 }} unit="%" />
+              <YAxis stroke="#64748b" tick={{ fontSize: 11 }} tickFormatter={(v: number) => v.toFixed(2)} />
               <Tooltip
                 contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, color: '#1e293b' }}
                 labelStyle={{ color: '#64748b' }}
@@ -109,6 +109,36 @@ export default function BenfordPage() {
               {cat.label}
             </span>
             <p className="text-xs text-gray-500 dark:text-slate-500 mt-1">{cat.description ?? ''}</p>
+          </div>
+
+          {/* MAD conformity ranges table */}
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-2">
+              MAD Conformity Ranges (Nigrini)
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {cats.map((c: MadCategory) => {
+                const isCurrent = c.label === cat.label;
+                return (
+                  <div
+                    key={c.label}
+                    className={`rounded-lg p-3 border text-xs ${
+                      isCurrent
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
+                        : 'border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-950'
+                    }`}
+                  >
+                    <p className={`font-semibold ${
+                      c.color === 'emerald' ? 'text-emerald-600 dark:text-emerald-300' :
+                      c.color === 'yellow'  ? 'text-yellow-600 dark:text-yellow-300'  :
+                                             'text-red-600 dark:text-red-300'
+                    }`}>{c.label}</p>
+                    <p className="font-mono text-gray-500 dark:text-slate-400 mt-1">{c.range}</p>
+                    <p className="text-gray-500 dark:text-slate-500 mt-1 leading-tight">{c.description}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       ))}

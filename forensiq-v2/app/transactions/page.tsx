@@ -128,9 +128,9 @@ export default function TransactionsPage() {
           className={inputCls}
         />
         <div className="flex gap-1">
-          <input type="date" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }}
+          <input type="date" lang="en" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }}
             className={`flex-1 min-w-0 ${inputCls}`} />
-          <input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }}
+          <input type="date" lang="en" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }}
             className={`flex-1 min-w-0 ${inputCls}`} />
         </div>
       </div>
