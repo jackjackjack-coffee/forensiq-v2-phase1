@@ -50,7 +50,7 @@ export default function BenfordPage() {
         Natural transaction data follows Benford&apos;s distribution. Significant deviation may indicate manipulation.
       </p>
 
-      {charts.map(({ b, cat, isPass, chartData, label }) => (
+      {charts.map(({ b, cats, cat, isPass, chartData, label }) => (
         <div
           key={label}
           className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-5"
