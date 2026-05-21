@@ -360,13 +360,13 @@ function UploadSection({
               onClick={onViewResults}
               className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-colors rounded-lg"
             >
-              View Results →
+              VIEW RESULTS →
             </button>
             <button
               onClick={() => window.location.reload()}
               className="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold transition-colors rounded-lg"
             >
-              Analyze Another
+              ANALYZE ANOTHER
             </button>
           </div>
         </div>
@@ -404,9 +404,9 @@ function UploadSection({
 
         <button
           onClick={onStartAnalysis}
-          className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-colors"
+          className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-mono font-bold uppercase tracking-widest text-sm transition-colors rounded"
         >
-          Start Analysis →
+          RUN FORENSIC ANALYSIS →
         </button>
       </div>
     );
