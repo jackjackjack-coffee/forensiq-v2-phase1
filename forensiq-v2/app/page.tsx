@@ -43,6 +43,20 @@ function loadHistory(): AnalysisSummary[] {
   } catch { return []; }
 }
 
+// Chunked base64 encode — avoids "Maximum call stack" errors that
+// `String.fromCharCode(...bytes)` throws for arrays larger than ~65k elements.
+function uint8ToBase64(bytes: Uint8Array): string {
+  const CHUNK = 0x8000;
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode.apply(
+      null,
+      Array.from(bytes.subarray(i, i + CHUNK)) as number[],
+    );
+  }
+  return btoa(binary);
+}
+
 function appendHistory(s: AnalysisSummary, result: AnalysisResult): AnalysisSummary[] {
   const prev = loadHistory();
   const updated = [s, ...prev].slice(0, 20);
@@ -53,7 +67,7 @@ function appendHistory(s: AnalysisSummary, result: AnalysisResult): AnalysisSumm
   try {
     const json = JSON.stringify(result);
     const compressed = pako.gzip(json);
-    const b64 = btoa(String.fromCharCode(...Array.from(compressed)));
+    const b64 = uint8ToBase64(compressed);
     localStorage.setItem(RESULT_KEY(s.id), b64);
   } catch { /* quota exceeded even with compression — session cache still works */ }
   return updated;
