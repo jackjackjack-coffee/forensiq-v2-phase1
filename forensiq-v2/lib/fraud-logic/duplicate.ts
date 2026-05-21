@@ -127,21 +127,15 @@ export function detectFuzzyDuplicates(transactions: RawTransaction[]): FuzzyDupl
         // Skip exact duplicates (handled by exactDuplicate check)
         if (buildExactKey(txnA) === buildExactKey(txnB)) continue;
 
-        // Check vendor name similarity
+        // Check vendor name similarity only.
+        // Invoice ID is intentionally excluded: sequential IDs (INV-1001 vs
+        // INV-1002) differ by 1 character and would cause mass false positives.
         const vendorDist = levenshtein(
           txnA.vendor.toLowerCase(),
           txnB.vendor.toLowerCase()
         );
 
-        // Check invoice ID similarity
-        const invoiceDist = levenshtein(
-          txnA.invoice_id.toLowerCase(),
-          txnB.invoice_id.toLowerCase()
-        );
-
-        const isFuzzyMatch =
-          (vendorDist <= LEVENSHTEIN_THRESHOLD && vendorDist > 0) ||
-          (invoiceDist <= LEVENSHTEIN_THRESHOLD && invoiceDist > 0 && txnA.vendor === txnB.vendor);
+        const isFuzzyMatch = vendorDist <= LEVENSHTEIN_THRESHOLD && vendorDist > 0;
 
         if (isFuzzyMatch) {
           const pairKey = `${Math.min(idxA, idxB)}-${Math.max(idxA, idxB)}`;
@@ -151,7 +145,7 @@ export function detectFuzzyDuplicates(transactions: RawTransaction[]): FuzzyDupl
 
             const resultA = results[idxA];
             const resultB = results[idxB];
-            const distance = Math.min(vendorDist, invoiceDist);
+            const distance = vendorDist;
 
             if (resultA) {
               resultA.fuzzy_dup_group = groupId;
