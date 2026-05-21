@@ -138,10 +138,10 @@ function TierPill({ tier }: { tier: RiskTier }) {
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="bg-[#0e0e0e] border border-[#1c1c1c] rounded p-5">
-      <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">{label}</p>
-      <p className="text-2xl font-mono font-bold text-white">{value}</p>
-      {sub && <p className="text-[10px] font-mono text-[#4a4a4a] mt-1">{sub}</p>}
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
+      <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">{label}</p>
+      <p className="text-2xl font-bold text-white">{value}</p>
+      {sub && <p className="text-xs text-slate-500 mt-1">{sub}</p>}
     </div>
   );
 }
@@ -166,24 +166,24 @@ function LoadingOverlay({ progress }: { progress: ProgressUpdate | null }) {
   if (!progress) return null;
   const pctDone = (progress.step / progress.total) * 100;
   return (
-    <div className="fixed inset-0 z-50 bg-[#050505]/95 backdrop-blur-sm flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center">
       <div className="w-full max-w-md px-8 space-y-6">
         <div className="flex items-center justify-center">
-          <div className="w-10 h-10 rounded-full border border-[#2a2a2a] border-t-amber-500 animate-spin" />
+          <div className="w-10 h-10 rounded-full border border-slate-700 border-t-cyan-500 animate-spin" />
         </div>
         <div>
           <div className="flex items-center justify-between text-sm mb-2 font-mono">
-            <span className="text-[#d4d4d4] text-xs uppercase tracking-widest">{progress.label}</span>
-            <span className="text-[#4a4a4a] tabular-nums text-xs">{progress.step} / {progress.total}</span>
+            <span className="text-slate-300 text-xs uppercase tracking-widest">{progress.label}</span>
+            <span className="text-slate-500 tabular-nums text-xs">{progress.step} / {progress.total}</span>
           </div>
-          <div className="h-px bg-[#1c1c1c] overflow-hidden">
+          <div className="h-px bg-slate-800 overflow-hidden">
             <div
-              className="h-full bg-amber-500 transition-all duration-300 ease-out"
+              className="h-full bg-cyan-500 transition-all duration-300 ease-out"
               style={{ width: `${pctDone}%` }}
             />
           </div>
         </div>
-        <p className="text-center text-[10px] font-mono text-[#3a3a3a] uppercase tracking-widest">RUNNING FORENSIC ANALYSIS</p>
+        <p className="text-center text-[10px] font-mono text-slate-500 uppercase tracking-widest">RUNNING FORENSIC ANALYSIS</p>
       </div>
     </div>
   );
@@ -316,43 +316,43 @@ function UploadSection({
     const p = result.portfolio;
     return (
       <div className="max-w-2xl mx-auto py-16 space-y-6">
-        <p className="text-[10px] font-mono text-green-500 uppercase tracking-widest">
+        <p className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest">
           ◈ ANALYSIS COMPLETE — RESULTS READY
         </p>
-        <div className="border border-[#1c1c1c] bg-[#0e0e0e] rounded-lg p-8 space-y-6">
+        <div className="border border-slate-800 bg-slate-900 rounded-lg p-8 space-y-6">
           <div className="flex items-center gap-3">
-            <span className="font-mono text-green-500 text-2xl">✓</span>
+            <span className="font-mono text-emerald-400 text-2xl">✓</span>
             <div>
               <h2 className="font-mono font-bold text-white text-xl tracking-tight">Forensic Analysis Complete</h2>
-              {filename && <p className="text-[11px] font-mono text-[#6b6b6b] mt-0.5">{filename}</p>}
+              {filename && <p className="text-[11px] font-mono text-slate-400 mt-0.5">{filename}</p>}
             </div>
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <div className="bg-[#141414] border border-[#1c1c1c] rounded p-4">
-              <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">TRANSACTIONS</p>
+            <div className="bg-slate-950 border border-slate-800 rounded p-4">
+              <p className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mb-1">TRANSACTIONS</p>
               <p className="font-mono text-2xl font-bold text-white">{p.total_transactions.toLocaleString()}</p>
             </div>
-            <div className="bg-[#141414] border border-[#1c1c1c] rounded p-4">
-              <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">FLAGGED</p>
+            <div className="bg-slate-950 border border-slate-800 rounded p-4">
+              <p className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mb-1">FLAGGED</p>
               <p className="font-mono text-2xl font-bold text-red-400">{p.flagged_transactions}</p>
             </div>
-            <div className="bg-[#141414] border border-[#1c1c1c] rounded p-4">
-              <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">RISK SCORE</p>
-              <p className="font-mono text-2xl font-bold text-amber-400">{p.score.toFixed(0)}<span className="text-sm text-[#4a4a4a]">/100</span></p>
+            <div className="bg-slate-950 border border-slate-800 rounded p-4">
+              <p className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mb-1">RISK SCORE</p>
+              <p className="font-mono text-2xl font-bold text-cyan-400">{p.score.toFixed(0)}<span className="text-sm text-slate-500">/100</span></p>
             </div>
           </div>
           <div className="flex gap-3 pt-1">
             <button
               onClick={onViewResults}
-              className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-mono font-bold uppercase tracking-widest text-xs transition-colors rounded"
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-colors rounded-lg"
             >
-              VIEW RESULTS →
+              View Results →
             </button>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-2.5 border border-[#2a2a2a] hover:border-[#404040] text-[#6b6b6b] hover:text-[#d4d4d4] font-mono uppercase tracking-widest text-xs transition-colors rounded"
+              className="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold transition-colors rounded-lg"
             >
-              ANALYZE ANOTHER
+              Analyze Another
             </button>
           </div>
         </div>
@@ -364,35 +364,35 @@ function UploadSection({
   if (pendingFilename && pendingCount !== null) {
     return (
       <div className="max-w-2xl mx-auto py-16 space-y-6">
-        <p className="text-[10px] font-mono text-amber-500 uppercase tracking-widest">
+        <p className="text-[10px] font-mono text-cyan-500 uppercase tracking-widest">
           ◈ FILE LOADED — READY TO ANALYZE
         </p>
-        <div className="border border-[#2a2a2a] bg-[#0e0e0e] rounded-lg p-5 flex items-center justify-between gap-4">
+        <div className="border border-slate-700 bg-slate-900 rounded-lg p-5 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <span className="font-mono text-amber-500 text-lg shrink-0 select-none">[ ▪ ]</span>
+            <span className="font-mono text-cyan-500 text-lg shrink-0 select-none">[ ▪ ]</span>
             <div className="min-w-0">
               <p className="font-mono text-sm text-white truncate">{pendingFilename}</p>
-              <p className="text-[11px] font-mono text-[#6b6b6b] mt-0.5">{pendingCount.toLocaleString()} TRANSACTIONS LOADED</p>
+              <p className="text-[11px] font-mono text-slate-400 mt-0.5">{pendingCount.toLocaleString()} TRANSACTIONS LOADED</p>
             </div>
           </div>
           <button
             onClick={onClearFile}
             aria-label="Remove file"
-            className="w-7 h-7 flex items-center justify-center text-[#4a4a4a] hover:text-[#d4d4d4] font-mono transition-colors shrink-0"
+            className="w-7 h-7 flex items-center justify-center text-slate-500 hover:text-slate-200 font-mono transition-colors shrink-0"
           >
             ✕
           </button>
         </div>
 
         {error && (
-          <div className="border border-red-900 bg-red-950/30 text-red-400 rounded px-4 py-3 text-xs font-mono">{error}</div>
+          <div className="border border-red-800 bg-red-950/40 text-red-300 rounded-lg px-4 py-3 text-sm">{error}</div>
         )}
 
         <button
           onClick={onStartAnalysis}
-          className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-mono font-bold uppercase tracking-widest text-sm transition-colors rounded"
+          className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-colors"
         >
-          RUN FORENSIC ANALYSIS →
+          Start Analysis →
         </button>
       </div>
     );
@@ -401,11 +401,11 @@ function UploadSection({
   return (
     <div className="max-w-2xl mx-auto py-16 space-y-8">
       <div className="space-y-2">
-        <p className="text-[10px] font-mono text-amber-500 uppercase tracking-widest">
+        <p className="text-[10px] font-mono text-cyan-500 uppercase tracking-widest">
           ◈ FORENSIQ AUDIT ENGINE / TRANSACTION RISK ANALYSIS
         </p>
         <h2 className="text-3xl font-mono font-bold text-white tracking-tight">Upload Transaction Data</h2>
-        <p className="text-sm font-mono text-[#6b6b6b]">
+        <p className="text-sm font-mono text-slate-400">
           Drop any CSV — amount column auto-detected; date and vendor optional.
         </p>
       </div>
@@ -414,36 +414,36 @@ function UploadSection({
         {...getRootProps()}
         className={`border rounded-lg p-16 text-center cursor-pointer transition-all font-mono ${
           isDragActive
-            ? 'border-amber-500 bg-amber-500/5'
-            : 'border-[#2a2a2a] hover:border-[#404040] hover:bg-[#0e0e0e]'
+            ? 'border-cyan-500 bg-cyan-500/5'
+            : 'border-slate-700 hover:border-slate-500 hover:bg-slate-900/40'
         }`}
       >
         <input {...getInputProps()} />
-        <div className="text-4xl mb-4 text-amber-500/50 select-none font-mono">[ ↑ ]</div>
-        <p className="text-base font-mono text-[#d4d4d4] uppercase tracking-wider">DROP CSV FILE</p>
-        <p className="text-xs font-mono text-[#4a4a4a] mt-1">or click to browse filesystem</p>
+        <div className="text-4xl mb-4 text-cyan-500/60 select-none font-mono">[ ↑ ]</div>
+        <p className="text-base font-mono text-slate-200 uppercase tracking-wider">DROP CSV FILE</p>
+        <p className="text-xs font-mono text-slate-500 mt-1">or click to browse filesystem</p>
       </div>
 
       {error && (
-        <div className="border border-red-900 bg-red-950/30 text-red-400 rounded px-4 py-3 text-xs font-mono">{error}</div>
+        <div className="border border-red-800 bg-red-950/40 text-red-300 rounded-lg px-4 py-3 text-sm">{error}</div>
       )}
 
-      <div className="border border-[#1c1c1c] bg-[#0e0e0e] rounded-lg p-4 font-mono">
+      <div className="border border-slate-800 bg-slate-900 rounded-lg p-4 font-mono">
         <div className="flex items-center justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-[10px] text-[#6b6b6b] uppercase tracking-widest mb-1">No data? Generate a sample</p>
-            <p className="text-[11px] text-[#3a3a3a] leading-relaxed">
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">No data? Generate a sample</p>
+            <p className="text-[11px] text-slate-500 leading-relaxed">
               500–10,000 transactions · Real company names (Microsoft, Goldman Sachs…) · Embedded fraud patterns
             </p>
           </div>
           <button
             onClick={onGenerateSample}
-            className="shrink-0 px-4 py-2 border border-amber-500/40 text-amber-400 text-[11px] uppercase tracking-widest hover:bg-amber-500/10 transition-colors rounded"
+            className="shrink-0 px-4 py-2 border border-cyan-500/40 text-cyan-400 text-[11px] uppercase tracking-widest hover:bg-cyan-500/10 transition-colors rounded"
           >
             GENERATE ↓
           </button>
         </div>
-        <p className="text-[10px] text-[#2a2a2a] mt-3 border-t border-[#1c1c1c] pt-3">
+        <p className="text-[10px] text-slate-600 mt-3 border-t border-slate-800 pt-3">
           AUTO-DETECTED COLS: amount/total/value · date/invoice_date · vendor/supplier · invoice_id · description
         </p>
       </div>
@@ -482,17 +482,17 @@ function HistorySidebar({
   }
 
   return (
-    <aside className="w-52 shrink-0 border-r border-[#1c1c1c] bg-[#050505] min-h-screen px-3 py-5 space-y-3">
-      <p className="text-[9px] font-mono uppercase tracking-widest text-[#3a3a3a] px-1">
+    <aside className="w-52 shrink-0 border-r border-slate-800 bg-slate-950 min-h-screen px-3 py-5 space-y-3">
+      <p className="text-[9px] font-mono uppercase tracking-widest text-slate-500 px-1">
         ANALYSIS LOG
       </p>
       {missingId && (
-        <p className="text-[10px] font-mono text-amber-400 leading-snug bg-amber-950/20 rounded px-2 py-1.5 border border-amber-900/50">
+        <p className="text-[10px] font-mono text-amber-400 leading-snug bg-amber-950/30 rounded px-2 py-1.5 border border-amber-800">
           Data not found. Re-upload to re-analyze.
         </p>
       )}
       {history.length === 0 ? (
-        <p className="text-[11px] font-mono text-[#3a3a3a] leading-relaxed px-1">
+        <p className="text-[11px] font-mono text-slate-500 leading-relaxed px-1">
           No analyses yet.
         </p>
       ) : (
@@ -503,21 +503,21 @@ function HistorySidebar({
                 onClick={() => handleSelect(h.id)}
                 className={`w-full text-left border rounded p-2.5 transition-colors font-mono ${
                   missingId === h.id
-                    ? 'border-amber-900/60 bg-amber-950/10'
-                    : 'border-[#1c1c1c] bg-[#0e0e0e] hover:border-[#2a2a2a] hover:bg-[#141414]'
+                    ? 'border-amber-700 bg-amber-950/20'
+                    : 'border-slate-800 bg-slate-900 hover:border-cyan-700 hover:bg-slate-800/60'
                 }`}
               >
-                <p className="text-[11px] text-[#d4d4d4] truncate pr-5">{h.filename}</p>
-                <p className="text-[9px] text-[#3a3a3a] mt-0.5">
+                <p className="text-[11px] text-slate-200 truncate pr-5">{h.filename}</p>
+                <p className="text-[9px] text-slate-500 mt-0.5">
                   {new Date(h.analyzedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                 </p>
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-[9px] text-[#4a4a4a]">{h.totalTransactions.toLocaleString()} txns</span>
+                  <span className="text-[9px] text-slate-400">{h.totalTransactions.toLocaleString()} txns</span>
                   <span className={`text-[9px] font-bold ${HIST_TIER_CLS[h.tier]}`}>
                     {h.score.toFixed(0)}/100
                   </span>
                 </div>
-                <div className="mt-1.5 h-px bg-[#1c1c1c] overflow-hidden">
+                <div className="mt-1.5 h-px bg-slate-700 overflow-hidden">
                   <div
                     className={`h-full ${
                       h.tier === 'CRITICAL' ? 'bg-red-500' :
@@ -530,7 +530,7 @@ function HistorySidebar({
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); if (missingId === h.id) setMissingId(null); onDelete(h.id); }}
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-4 h-4 flex items-center justify-center text-[#3a3a3a] hover:text-red-400 font-mono text-xs"
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-4 h-4 flex items-center justify-center text-slate-500 hover:text-red-400 font-mono text-xs"
                 aria-label="Delete analysis"
                 title="Delete analysis"
               >
@@ -1300,7 +1300,7 @@ export default function Home() {
   }, [pendingTxns, pendingFilename]);
 
   return (
-    <div className="min-h-screen bg-[#050505] flex">
+    <div className="min-h-screen bg-slate-950 flex">
       <LoadingOverlay progress={progress} />
       <HistorySidebar
           history={history}
