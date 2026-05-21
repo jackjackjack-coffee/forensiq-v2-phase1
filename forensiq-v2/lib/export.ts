@@ -46,9 +46,9 @@ export function exportRiskReport(result: AnalysisResult, fileName = 'forensiq-ri
     { Metric: 'RSF Flag Rate',          Value: `${(p.rsf_flag_rate * 100).toFixed(2)}%` },
     { Metric: 'Duplicate Rate',         Value: `${(p.duplicate_rate * 100).toFixed(2)}%` },
     { Metric: 'Round Number Rate',      Value: `${(p.round_number_rate * 100).toFixed(2)}%` },
-    { Metric: 'Benford 1st-digit MAD',  Value: Number(p.benford_mad.toFixed(4)) },
+    { Metric: 'Benford 1st-digit MAD',  Value: Number((p.benford_mad / 100).toFixed(4)) },
     { Metric: 'Benford 1st conformity', Value: categorizeMad(result.benford_1st.mad / 100, 1).label },
-    { Metric: 'Benford 2nd-digit MAD',  Value: Number(result.benford_2nd.mad.toFixed(4)) },
+    { Metric: 'Benford 2nd-digit MAD',  Value: Number((result.benford_2nd.mad / 100).toFixed(4)) },
     { Metric: 'Benford 2nd conformity', Value: categorizeMad(result.benford_2nd.mad / 100, 2).label },
   ];
   XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(summaryRows), 'Executive Summary');
@@ -83,11 +83,37 @@ export function exportRiskReport(result: AnalysisResult, fileName = 'forensiq-ri
   XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(explanations), 'Detector Explanations');
 
   // ── Tab 5: Benford Detail ────────────────────────────────────
+  // Chi-square critical values (Nigrini): 1st digit df=8 → 15.51 (α=0.05); 2nd digit df=9 → 16.92 (α=0.05)
+  const CHI_CRITICAL: Record<1 | 2, number> = { 1: 15.51, 2: 16.92 };
   const cat1 = categorizeMad(result.benford_1st.mad / 100, 1);
   const cat2 = categorizeMad(result.benford_2nd.mad / 100, 2);
+  const chiNote =
+    'Chi-square statistic measures total deviation of observed digit frequencies from Benford\'s expected distribution. ' +
+    'A higher value means greater divergence. Critical values (α=0.05): 1st digit = 15.51 (df=8), 2nd digit = 16.92 (df=9). ' +
+    'Values above the critical threshold indicate statistically significant non-conformity.';
   const benfordRows = [
-    { Position: '1st digit', MAD: Number(result.benford_1st.mad.toFixed(4)), Category: cat1.label, Range: cat1.range, Interpretation: cat1.description },
-    { Position: '2nd digit', MAD: Number(result.benford_2nd.mad.toFixed(4)), Category: cat2.label, Range: cat2.range, Interpretation: cat2.description },
+    {
+      Position: '1st digit',
+      MAD: Number((result.benford_1st.mad / 100).toFixed(4)),
+      'MAD Category': cat1.label,
+      'MAD Range (Nigrini)': cat1.range,
+      'MAD Interpretation': cat1.description,
+      'Chi-Square': Number(result.benford_1st.chi_square.toFixed(4)),
+      'Chi-Square Critical (α=0.05)': CHI_CRITICAL[1],
+      'Chi-Square Significant': result.benford_1st.chi_square > CHI_CRITICAL[1] ? 'YES' : 'NO',
+      'Chi-Square Note': chiNote,
+    },
+    {
+      Position: '2nd digit',
+      MAD: Number((result.benford_2nd.mad / 100).toFixed(4)),
+      'MAD Category': cat2.label,
+      'MAD Range (Nigrini)': cat2.range,
+      'MAD Interpretation': cat2.description,
+      'Chi-Square': Number(result.benford_2nd.chi_square.toFixed(4)),
+      'Chi-Square Critical (α=0.05)': CHI_CRITICAL[2],
+      'Chi-Square Significant': result.benford_2nd.chi_square > CHI_CRITICAL[2] ? 'YES' : 'NO',
+      'Chi-Square Note': chiNote,
+    },
   ];
   XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(benfordRows), 'Benford Analysis');
 

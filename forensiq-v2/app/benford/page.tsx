@@ -50,7 +50,7 @@ export default function BenfordPage() {
         Natural transaction data follows Benford&apos;s distribution. Significant deviation may indicate manipulation.
       </p>
 
-      {charts.map(({ b, cats, cat, isPass, chartData, label }) => (
+      {charts.map(({ b, cats, cat, isPass, chartData, label, position }) => (
         <div
           key={label}
           className="rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 space-y-5"
@@ -75,8 +75,21 @@ export default function BenfordPage() {
               <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{(b.mad / 100).toFixed(4)}</p>
             </div>
             <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
-              <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Chi-Square</p>
+              <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">
+                Chi-Square
+                <span
+                  title={`Measures total deviation of observed digit frequencies from Benford's expected distribution. Critical value (α=0.05): ${position === 1 ? '15.51 (df=8)' : '16.92 (df=9)'}. Values above the critical threshold indicate statistically significant non-conformity.`}
+                  className="ml-1 cursor-help text-gray-400 dark:text-slate-600"
+                >ⓘ</span>
+              </p>
               <p className="font-mono text-lg font-bold text-gray-900 dark:text-white">{b.chi_square.toFixed(2)}</p>
+              <p className="text-[10px] text-gray-400 dark:text-slate-600 mt-0.5">
+                critical: {position === 1 ? '15.51' : '16.92'}
+                {' '}
+                <span className={b.chi_square > (position === 1 ? 15.51 : 16.92) ? 'text-red-500' : 'text-emerald-500'}>
+                  {b.chi_square > (position === 1 ? 15.51 : 16.92) ? '▲ sig.' : '✓ ok'}
+                </span>
+              </p>
             </div>
             <div className="rounded-lg bg-gray-50 border border-gray-200 dark:bg-slate-950 dark:border-slate-700 p-3">
               <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-slate-500 mb-1">Records</p>

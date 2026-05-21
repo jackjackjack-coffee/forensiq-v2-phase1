@@ -232,13 +232,16 @@ export function computePortfolioRisk(
   const duplicate_rate   = analyzed.filter((t) => t.is_exact_duplicate).length / n;
   const round_number_rate = analyzed.filter((t) => t.is_round_number).length / n;
 
-  // Portfolio score (mirrors v1 weighting, updated for v2 signals)
+  // Mean per-transaction composite risk is the primary driver so that
+  // different fraud profiles (controlled by sample-generator variance) produce
+  // meaningfully different portfolio scores.  Benford MAD and duplicate rate
+  // are additive boosts on top of the mean.
+  const meanRisk = analyzed.reduce((s, t) => s + t.composite_risk, 0) / n;
   const score = Math.min(
     100,
-    Math.min(outlier_rate * 100 * 2, 30) +
-    Math.min(rsf_flag_rate * 100 * 1.5, 25) +
-    Math.min(duplicate_rate * 100 * 3, 25) +
-    Math.min(benford_mad * 2, 20)
+    Math.min(meanRisk * 1.8, 60) +            // primary: avg per-txn risk (0–60)
+    Math.min(duplicate_rate * 100 * 2, 20) +  // duplicate pattern boost (0–20)
+    Math.min(benford_mad * 1.5, 20)           // Benford deviation boost (0–20)
   );
 
   const flagged = analyzed.filter(

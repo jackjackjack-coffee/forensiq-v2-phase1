@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const NAV_LINKS = [
@@ -9,35 +8,21 @@ const NAV_LINKS = [
   { href: '/overview', label: 'Overview' },
   { href: '/transactions', label: 'Transactions' },
   { href: '/vendors', label: 'Vendors' },
-  { href: '/benford', label: 'Benford Analysis' },
+  { href: '/benford', label: 'Benford' },
   { href: '/detectors', label: 'Detectors' },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
-  const [isDark, setIsDark] = useState(true);
-
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
-
-  function toggleDark() {
-    const html = document.documentElement;
-    if (isDark) {
-      html.classList.remove('dark');
-    } else {
-      html.classList.add('dark');
-    }
-    setIsDark(!isDark);
-  }
 
   return (
-    <header className="sticky top-0 z-30 border-b bg-white border-gray-200 dark:bg-slate-950 dark:border-slate-800">
-      <div className="flex items-center h-14 px-6 gap-6">
+    <header className="sticky top-0 z-30 border-b bg-[#050505] border-[#1c1c1c]">
+      <div className="flex items-center h-12 px-6 gap-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="text-cyan-500 text-xl leading-none">⌕</span>
-          <span className="font-bold text-gray-900 dark:text-white text-base">ForensiQ</span>
+          <span className="text-amber-500 font-mono text-base select-none">◈</span>
+          <span className="font-mono font-bold text-white text-sm tracking-widest uppercase">ForensiQ</span>
+          <span className="text-[9px] font-mono text-amber-500/50 ml-0.5 tracking-wider">v2</span>
         </Link>
 
         {/* Nav links */}
@@ -48,38 +33,25 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-3 py-1 text-sm font-medium transition-colors rounded-md ${
+                className={`relative px-3 py-1 text-[11px] font-mono uppercase tracking-widest transition-colors ${
                   isActive
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-500 hover:text-gray-800 dark:text-slate-400 dark:hover:text-slate-200'
+                    ? 'text-white'
+                    : 'text-[#6b6b6b] hover:text-[#d4d4d4]'
                 }`}
               >
                 {link.label}
                 {isActive && (
-                  <span className="absolute bottom-[-14px] left-0 right-0 h-0.5 bg-cyan-500 rounded-full" />
+                  <span className="absolute bottom-[-12px] left-0 right-0 h-px bg-amber-500" />
                 )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Light/dark toggle */}
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm text-gray-500 dark:text-slate-400">{isDark ? 'Dark' : 'Light'}</span>
-          <button
-            role="switch"
-            aria-checked={!isDark}
-            onClick={toggleDark}
-            className={`w-10 h-5 rounded-full relative transition-colors ${
-              isDark ? 'bg-slate-600' : 'bg-cyan-500'
-            }`}
-          >
-            <span
-              className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
-                isDark ? 'left-0.5' : 'left-5'
-              }`}
-            />
-          </button>
+        {/* Live status indicator */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+          <span className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest">LIVE</span>
         </div>
       </div>
     </header>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect, Fragment } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { setAnalysisResult } from '@/lib/analysis-store';
 import { generateSampleCsv, triggerCsvDownload } from '@/lib/sample-generator';
@@ -15,6 +15,7 @@ import { DETECTOR_INFO } from '@/lib/detector-info';
 import {
   categorizeMad, BENFORD_1ST_CATEGORIES, BENFORD_2ND_CATEGORIES,
 } from '@/lib/benford-categories';
+import pako from 'pako';
 import type {
   AnalysisResult, AnalyzedTransaction, RawTransaction, RiskTier, DetectorName,
 } from '@/lib/types/transaction';
@@ -43,21 +44,33 @@ function loadHistory(): AnalysisSummary[] {
 }
 
 function appendHistory(s: AnalysisSummary, result: AnalysisResult): AnalysisSummary[] {
-  const updated = [s, ...loadHistory()].slice(0, 20);
-  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
-  try { localStorage.setItem(RESULT_KEY(s.id), JSON.stringify(result)); } catch {}
-  // Evict oldest result if needed
-  if (updated.length === 20) {
-    const oldest = updated[19];
-    if (oldest) try { localStorage.removeItem(RESULT_KEY(oldest.id)); } catch {}
+  const prev = loadHistory();
+  const updated = [s, ...prev].slice(0, 20);
+  for (const old of prev.slice(2)) {
+    try { localStorage.removeItem(RESULT_KEY(old.id)); } catch {}
   }
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
+  try {
+    const json = JSON.stringify(result);
+    const compressed = pako.gzip(json);
+    const b64 = btoa(String.fromCharCode(...Array.from(compressed)));
+    localStorage.setItem(RESULT_KEY(s.id), b64);
+  } catch { /* quota exceeded even with compression — session cache still works */ }
   return updated;
 }
 
 function loadStoredResult(id: string): AnalysisResult | null {
   try {
     const raw = localStorage.getItem(RESULT_KEY(id));
-    return raw ? (JSON.parse(raw) as AnalysisResult) : null;
+    if (!raw) return null;
+    try {
+      const bytes = Uint8Array.from(atob(raw), (c) => c.charCodeAt(0));
+      const json = pako.ungzip(bytes, { to: 'string' });
+      return JSON.parse(json) as AnalysisResult;
+    } catch {
+      // Fallback: legacy uncompressed entry
+      return JSON.parse(raw) as AnalysisResult;
+    }
   } catch { return null; }
 }
 
@@ -125,10 +138,10 @@ function TierPill({ tier }: { tier: RiskTier }) {
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-      <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">{label}</p>
-      <p className="text-2xl font-bold text-white">{value}</p>
-      {sub && <p className="text-xs text-gray-500 mt-1">{sub}</p>}
+    <div className="bg-[#0e0e0e] border border-[#1c1c1c] rounded p-5">
+      <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">{label}</p>
+      <p className="text-2xl font-mono font-bold text-white">{value}</p>
+      {sub && <p className="text-[10px] font-mono text-[#4a4a4a] mt-1">{sub}</p>}
     </div>
   );
 }
@@ -153,24 +166,24 @@ function LoadingOverlay({ progress }: { progress: ProgressUpdate | null }) {
   if (!progress) return null;
   const pctDone = (progress.step / progress.total) * 100;
   return (
-    <div className="fixed inset-0 z-50 bg-gray-950/90 backdrop-blur-sm flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-[#050505]/95 backdrop-blur-sm flex items-center justify-center">
       <div className="w-full max-w-md px-8 space-y-6">
         <div className="flex items-center justify-center">
-          <div className="w-12 h-12 rounded-full border-2 border-gray-700 border-t-blue-500 animate-spin" />
+          <div className="w-10 h-10 rounded-full border border-[#2a2a2a] border-t-amber-500 animate-spin" />
         </div>
         <div>
-          <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-gray-300 font-medium">{progress.label}</span>
-            <span className="text-gray-500 tabular-nums">{progress.step} / {progress.total}</span>
+          <div className="flex items-center justify-between text-sm mb-2 font-mono">
+            <span className="text-[#d4d4d4] text-xs uppercase tracking-widest">{progress.label}</span>
+            <span className="text-[#4a4a4a] tabular-nums text-xs">{progress.step} / {progress.total}</span>
           </div>
-          <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
+          <div className="h-px bg-[#1c1c1c] overflow-hidden">
             <div
-              className="h-full bg-blue-500 transition-all duration-300 ease-out"
+              className="h-full bg-amber-500 transition-all duration-300 ease-out"
               style={{ width: `${pctDone}%` }}
             />
           </div>
         </div>
-        <p className="text-center text-xs text-gray-500">Running forensic analysis…</p>
+        <p className="text-center text-[10px] font-mono text-[#3a3a3a] uppercase tracking-widest">RUNNING FORENSIC ANALYSIS</p>
       </div>
     </div>
   );
@@ -302,39 +315,44 @@ function UploadSection({
   if (result) {
     const p = result.portfolio;
     return (
-      <div className="max-w-2xl mx-auto py-12 space-y-6">
-        <div className="rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 p-10 text-center space-y-5">
-          <div className="text-6xl select-none leading-none">✓</div>
-          <div>
-            <h2 className="text-2xl font-bold text-emerald-700 dark:text-emerald-300">Analysis Complete</h2>
-            {filename && <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{filename}</p>}
+      <div className="max-w-2xl mx-auto py-16 space-y-6">
+        <p className="text-[10px] font-mono text-green-500 uppercase tracking-widest">
+          ◈ ANALYSIS COMPLETE — RESULTS READY
+        </p>
+        <div className="border border-[#1c1c1c] bg-[#0e0e0e] rounded-lg p-8 space-y-6">
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-green-500 text-2xl">✓</span>
+            <div>
+              <h2 className="font-mono font-bold text-white text-xl tracking-tight">Forensic Analysis Complete</h2>
+              {filename && <p className="text-[11px] font-mono text-[#6b6b6b] mt-0.5">{filename}</p>}
+            </div>
           </div>
           <div className="grid grid-cols-3 gap-3">
-            <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-gray-200 dark:border-slate-700">
-              <p className="text-[10px] text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Transactions</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{p.total_transactions.toLocaleString()}</p>
+            <div className="bg-[#141414] border border-[#1c1c1c] rounded p-4">
+              <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">TRANSACTIONS</p>
+              <p className="font-mono text-2xl font-bold text-white">{p.total_transactions.toLocaleString()}</p>
             </div>
-            <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-gray-200 dark:border-slate-700">
-              <p className="text-[10px] text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Flagged</p>
-              <p className="text-2xl font-bold text-red-500">{p.flagged_transactions}</p>
+            <div className="bg-[#141414] border border-[#1c1c1c] rounded p-4">
+              <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">FLAGGED</p>
+              <p className="font-mono text-2xl font-bold text-red-400">{p.flagged_transactions}</p>
             </div>
-            <div className="bg-white dark:bg-slate-900 rounded-xl p-4 border border-gray-200 dark:border-slate-700">
-              <p className="text-[10px] text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-1">Risk Score</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{p.score.toFixed(0)}<span className="text-base text-gray-400">/100</span></p>
+            <div className="bg-[#141414] border border-[#1c1c1c] rounded p-4">
+              <p className="text-[9px] font-mono text-[#4a4a4a] uppercase tracking-widest mb-1">RISK SCORE</p>
+              <p className="font-mono text-2xl font-bold text-amber-400">{p.score.toFixed(0)}<span className="text-sm text-[#4a4a4a]">/100</span></p>
             </div>
           </div>
-          <div className="flex gap-3 justify-center pt-1">
+          <div className="flex gap-3 pt-1">
             <button
               onClick={onViewResults}
-              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-semibold transition-colors"
+              className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-mono font-bold uppercase tracking-widest text-xs transition-colors rounded"
             >
-              View Results →
+              VIEW RESULTS →
             </button>
             <button
               onClick={() => window.location.reload()}
-              className="px-6 py-2.5 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-lg font-semibold transition-colors"
+              className="px-6 py-2.5 border border-[#2a2a2a] hover:border-[#404040] text-[#6b6b6b] hover:text-[#d4d4d4] font-mono uppercase tracking-widest text-xs transition-colors rounded"
             >
-              Analyze Another
+              ANALYZE ANOTHER
             </button>
           </div>
         </div>
@@ -345,82 +363,89 @@ function UploadSection({
   // Pending state — file loaded but not analyzed yet
   if (pendingFilename && pendingCount !== null) {
     return (
-      <div className="max-w-2xl mx-auto py-12 space-y-6">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Ready to Analyze</h2>
-          <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
-            Review the loaded file and click Start Analysis when ready.
-          </p>
-        </div>
-
-        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 flex items-center justify-between gap-4">
+      <div className="max-w-2xl mx-auto py-16 space-y-6">
+        <p className="text-[10px] font-mono text-amber-500 uppercase tracking-widest">
+          ◈ FILE LOADED — READY TO ANALYZE
+        </p>
+        <div className="border border-[#2a2a2a] bg-[#0e0e0e] rounded-lg p-5 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl flex-shrink-0">📄</div>
+            <span className="font-mono text-amber-500 text-lg shrink-0 select-none">[ ▪ ]</span>
             <div className="min-w-0">
-              <p className="font-medium text-gray-900 dark:text-white truncate">{pendingFilename}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{pendingCount.toLocaleString()} transactions loaded</p>
+              <p className="font-mono text-sm text-white truncate">{pendingFilename}</p>
+              <p className="text-[11px] font-mono text-[#6b6b6b] mt-0.5">{pendingCount.toLocaleString()} TRANSACTIONS LOADED</p>
             </div>
           </div>
           <button
             onClick={onClearFile}
             aria-label="Remove file"
-            className="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex-shrink-0 transition-colors"
+            className="w-7 h-7 flex items-center justify-center text-[#4a4a4a] hover:text-[#d4d4d4] font-mono transition-colors shrink-0"
           >
             ✕
           </button>
         </div>
 
         {error && (
-          <div className="bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl px-4 py-3 text-sm">{error}</div>
+          <div className="border border-red-900 bg-red-950/30 text-red-400 rounded px-4 py-3 text-xs font-mono">{error}</div>
         )}
 
         <button
           onClick={onStartAnalysis}
-          className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-colors"
+          className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-black font-mono font-bold uppercase tracking-widest text-sm transition-colors rounded"
         >
-          Start Analysis →
+          RUN FORENSIC ANALYSIS →
         </button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto py-12 space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Upload Transaction Data</h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
-          Drop any CSV. The amount column is auto-detected; date and vendor are optional.
+    <div className="max-w-2xl mx-auto py-16 space-y-8">
+      <div className="space-y-2">
+        <p className="text-[10px] font-mono text-amber-500 uppercase tracking-widest">
+          ◈ FORENSIQ AUDIT ENGINE / TRANSACTION RISK ANALYSIS
+        </p>
+        <h2 className="text-3xl font-mono font-bold text-white tracking-tight">Upload Transaction Data</h2>
+        <p className="text-sm font-mono text-[#6b6b6b]">
+          Drop any CSV — amount column auto-detected; date and vendor optional.
         </p>
       </div>
 
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-2xl p-16 text-center cursor-pointer transition-all ${
+        className={`border rounded-lg p-16 text-center cursor-pointer transition-all font-mono ${
           isDragActive
-            ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/20'
-            : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900/40'
+            ? 'border-amber-500 bg-amber-500/5'
+            : 'border-[#2a2a2a] hover:border-[#404040] hover:bg-[#0e0e0e]'
         }`}
       >
         <input {...getInputProps()} />
-        <div className="text-5xl mb-3 select-none">⇪</div>
-        <p className="text-lg font-semibold text-gray-900 dark:text-white">Drop a CSV file here</p>
-        <p className="text-gray-500 text-sm mt-1">or click to browse</p>
+        <div className="text-4xl mb-4 text-amber-500/50 select-none font-mono">[ ↑ ]</div>
+        <p className="text-base font-mono text-[#d4d4d4] uppercase tracking-wider">DROP CSV FILE</p>
+        <p className="text-xs font-mono text-[#4a4a4a] mt-1">or click to browse filesystem</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl px-4 py-3 text-sm">{error}</div>
+        <div className="border border-red-900 bg-red-950/30 text-red-400 rounded px-4 py-3 text-xs font-mono">{error}</div>
       )}
 
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs text-gray-500 space-y-1">
-        <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">Need a sample to try?</p>
-        <button
-          onClick={onGenerateSample}
-          className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline text-left"
-        >
-          Generate random sample-transactions.csv
-        </button>
-        <p className="text-gray-400 dark:text-gray-600 text-xs">The CSV will download and also load into the app — click Start Analysis when ready. Real company names (Microsoft, Goldman Sachs, etc.) and 500–10,000 transactions per generation.</p>
-        <p className="mt-3 text-gray-500">Auto-detected columns: amount/total/value, date/invoice_date, vendor/supplier, invoice_id, description.</p>
+      <div className="border border-[#1c1c1c] bg-[#0e0e0e] rounded-lg p-4 font-mono">
+        <div className="flex items-center justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-[10px] text-[#6b6b6b] uppercase tracking-widest mb-1">No data? Generate a sample</p>
+            <p className="text-[11px] text-[#3a3a3a] leading-relaxed">
+              500–10,000 transactions · Real company names (Microsoft, Goldman Sachs…) · Embedded fraud patterns
+            </p>
+          </div>
+          <button
+            onClick={onGenerateSample}
+            className="shrink-0 px-4 py-2 border border-amber-500/40 text-amber-400 text-[11px] uppercase tracking-widest hover:bg-amber-500/10 transition-colors rounded"
+          >
+            GENERATE ↓
+          </button>
+        </div>
+        <p className="text-[10px] text-[#2a2a2a] mt-3 border-t border-[#1c1c1c] pt-3">
+          AUTO-DETECTED COLS: amount/total/value · date/invoice_date · vendor/supplier · invoice_id · description
+        </p>
       </div>
     </div>
   );
@@ -429,10 +454,10 @@ function UploadSection({
 // ── History Sidebar ──────────────────────────────────────────────
 
 const HIST_TIER_CLS: Record<RiskTier, string> = {
-  LOW: 'text-green-600 dark:text-green-400',
-  MEDIUM: 'text-yellow-600 dark:text-yellow-400',
-  HIGH: 'text-red-500 dark:text-red-400',
-  CRITICAL: 'text-red-600 dark:text-red-500',
+  LOW: 'text-green-400',
+  MEDIUM: 'text-yellow-400',
+  HIGH: 'text-orange-400',
+  CRITICAL: 'text-red-400',
 };
 
 function HistorySidebar({
@@ -457,46 +482,46 @@ function HistorySidebar({
   }
 
   return (
-    <aside className="w-64 shrink-0 border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 min-h-screen px-4 py-6 space-y-3">
-      <h3 className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-slate-500">
-        Analysis History
-      </h3>
+    <aside className="w-52 shrink-0 border-r border-[#1c1c1c] bg-[#050505] min-h-screen px-3 py-5 space-y-3">
+      <p className="text-[9px] font-mono uppercase tracking-widest text-[#3a3a3a] px-1">
+        ANALYSIS LOG
+      </p>
       {missingId && (
-        <p className="text-[10px] text-amber-600 dark:text-amber-400 leading-snug bg-amber-50 dark:bg-amber-950/30 rounded-lg px-2 py-1.5 border border-amber-200 dark:border-amber-800">
-          Result data not available. Please re-upload the file to re-analyze.
+        <p className="text-[10px] font-mono text-amber-400 leading-snug bg-amber-950/20 rounded px-2 py-1.5 border border-amber-900/50">
+          Data not found. Re-upload to re-analyze.
         </p>
       )}
       {history.length === 0 ? (
-        <p className="text-xs text-gray-400 dark:text-slate-500 leading-relaxed">
-          No analyses yet. Upload a CSV to get started.
+        <p className="text-[11px] font-mono text-[#3a3a3a] leading-relaxed px-1">
+          No analyses yet.
         </p>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {history.map((h) => (
             <div key={h.id} className="relative group">
               <button
                 onClick={() => handleSelect(h.id)}
-                className={`w-full text-left rounded-lg border bg-gray-50 dark:bg-slate-800/60 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 p-3 transition-colors ${
+                className={`w-full text-left border rounded p-2.5 transition-colors font-mono ${
                   missingId === h.id
-                    ? 'border-amber-400 dark:border-amber-600'
-                    : 'border-gray-100 dark:border-slate-700'
+                    ? 'border-amber-900/60 bg-amber-950/10'
+                    : 'border-[#1c1c1c] bg-[#0e0e0e] hover:border-[#2a2a2a] hover:bg-[#141414]'
                 }`}
               >
-                <p className="text-xs font-medium text-gray-800 dark:text-slate-200 truncate pr-5">{h.filename}</p>
-                <p className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
+                <p className="text-[11px] text-[#d4d4d4] truncate pr-5">{h.filename}</p>
+                <p className="text-[9px] text-[#3a3a3a] mt-0.5">
                   {new Date(h.analyzedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                 </p>
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-[10px] text-gray-500 dark:text-slate-400">{h.totalTransactions.toLocaleString()} txns</span>
-                  <span className={`text-[10px] font-bold ${HIST_TIER_CLS[h.tier]}`}>
-                    {h.tier} · {h.score.toFixed(0)}/100
+                  <span className="text-[9px] text-[#4a4a4a]">{h.totalTransactions.toLocaleString()} txns</span>
+                  <span className={`text-[9px] font-bold ${HIST_TIER_CLS[h.tier]}`}>
+                    {h.score.toFixed(0)}/100
                   </span>
                 </div>
-                <div className="mt-1.5 h-1 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                <div className="mt-1.5 h-px bg-[#1c1c1c] overflow-hidden">
                   <div
-                    className={`h-full rounded-full ${
-                      h.tier === 'CRITICAL' ? 'bg-red-600' :
-                      h.tier === 'HIGH'     ? 'bg-red-500' :
+                    className={`h-full ${
+                      h.tier === 'CRITICAL' ? 'bg-red-500' :
+                      h.tier === 'HIGH'     ? 'bg-orange-500' :
                       h.tier === 'MEDIUM'   ? 'bg-yellow-500' : 'bg-green-500'
                     }`}
                     style={{ width: `${h.score}%` }}
@@ -505,7 +530,7 @@ function HistorySidebar({
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); if (missingId === h.id) setMissingId(null); onDelete(h.id); }}
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 flex items-center justify-center rounded text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40"
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-4 h-4 flex items-center justify-center text-[#3a3a3a] hover:text-red-400 font-mono text-xs"
                 aria-label="Delete analysis"
                 title="Delete analysis"
               >
@@ -1188,6 +1213,8 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<ProgressUpdate | null>(null);
   const [history, setHistory] = useState<AnalysisSummary[]>([]);
+  // In-memory cache: keeps ALL results from this session regardless of localStorage quota
+  const sessionCache = useRef<Map<string, AnalysisResult>>(new Map());
 
   // Loaded but not-yet-analyzed file
   const [pendingTxns, setPendingTxns]         = useState<RawTransaction[] | null>(null);
@@ -1261,6 +1288,7 @@ export default function Home() {
         score: r.portfolio.score,
         tier: r.portfolio.tier,
       };
+      sessionCache.current.set(summary.id, r);
       setHistory(appendHistory(summary, r));
       setPendingTxns(null);
       setPendingFilename(null);
@@ -1272,14 +1300,16 @@ export default function Home() {
   }, [pendingTxns, pendingFilename]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex">
+    <div className="min-h-screen bg-[#050505] flex">
       <LoadingOverlay progress={progress} />
       <HistorySidebar
           history={history}
           onSelect={(id) => {
-            const stored = loadStoredResult(id);
-            if (stored) {
-              setAnalysisResult(stored);
+            // Session cache (in-memory) takes priority; localStorage is fallback
+            const r = sessionCache.current.get(id) ?? loadStoredResult(id);
+            if (r) {
+              setAnalysisResult(r);
+              setResult(r);
               window.location.href = '/overview';
             }
           }}
