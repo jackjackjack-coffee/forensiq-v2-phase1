@@ -643,6 +643,9 @@ function TransactionsSection({
   const [dateTo, setDateTo] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('composite_risk');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+  const [page, setPage] = useState(1);
+
+  const PAGE_SIZE = 50;
 
   const filtered = useMemo(() => {
     const min = minAmount ? parseFloat(minAmount) : -Infinity;
@@ -670,6 +673,12 @@ function TransactionsSection({
         return sortDir === 'asc' ? cmp : -cmp;
       });
   }, [transactions, filter, search, minAmount, maxAmount, dateFrom, dateTo, sortKey, sortDir]);
+
+  // Reset to page 1 whenever the filtered set changes
+  useEffect(() => { setPage(1); }, [filtered]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const counts = useMemo(() => ({
     ALL: transactions.length,
@@ -754,7 +763,7 @@ function TransactionsSection({
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-800">
-              {filtered.slice(0, 500).map((txn) => (
+              {paginated.map((txn) => (
                 <tr
                   key={txn.invoice_id}
                   onClick={() => onSelect(txn)}
@@ -790,11 +799,43 @@ function TransactionsSection({
             </tbody>
           </table>
         </div>
-        {filtered.length > 500 && (
-          <p className="text-center text-gray-600 text-xs py-3 border-t border-gray-800">
-            Showing 500 of {filtered.length.toLocaleString()} transactions
-          </p>
-        )}
+        {/* Pagination controls */}
+        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-800 text-xs text-gray-500">
+          <span>
+            {filtered.length === 0 ? 'No results' : (
+              <>
+                {((page - 1) * PAGE_SIZE + 1).toLocaleString()}–{Math.min(page * PAGE_SIZE, filtered.length).toLocaleString()} of {filtered.length.toLocaleString()} transactions
+              </>
+            )}
+          </span>
+          {totalPages > 1 && (
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setPage(1)}
+                disabled={page === 1}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >«</button>
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >‹</button>
+              <span className="px-3 py-1 text-gray-400">
+                Page {page} / {totalPages}
+              </span>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >›</button>
+              <button
+                onClick={() => setPage(totalPages)}
+                disabled={page === totalPages}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >»</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,501 +1,782 @@
-invoice_id,date,vendor,amount,description,category
-INV-1001,2024-01-06,Juniper Systems Ltd,16273.42,HR consulting engagement,FACILITIES
-INV-1002,2024-01-20,Ridgeline Construction,35731.33,HR consulting engagement,CONSULTING
-INV-1003,2024-03-27,Juniper Systems Ltd,289.14,Network infrastructure upgrade,OPERATIONS
-INV-1004,2024-02-29,Sterling Financial Advisors,778.73,Travel and accommodations,LEGAL
-INV-1005,2024-02-27,Quantum Cloud Services,352.25,Software development sprint,FACILITIES
-INV-1006,2024-03-24,Yellowstone Equipment Rental,67.25,HR consulting engagement,CONSULTING
-INV-1007,2024-04-18,Evergreen Office Supply,50473.79,Equipment maintenance contract,LEGAL
-INV-1008,2024-04-01,Titan Security Corp,141.46,Network infrastructure upgrade,FINANCE
-INV-1009,2024-01-03,Lakeview Catering Co,777.32,Marketing campaign Q2,IT
-INV-1010,2024-01-27,Vantage Point Marketing,35981.78,Freight and delivery charges,LOGISTICS
-INV-1011,2024-04-17,Apex Consulting Group,5994.83,Freight and delivery charges,IT
-INV-1012,2024-02-20,Blue Ridge Staffing,962.05,Cloud infrastructure costs,LEGAL
-INV-1013,2024-02-08,Ridgeline Construction,288.6,Office supplies restocking,SECURITY
-INV-1014,2024-04-19,Delta Freight Partners,39739.49,Print collateral production,CONSULTING
-INV-1015,2024-02-01,Cascade Digital Solutions,3445.37,Catering for board meeting,SUPPLIES
-INV-1016,2024-02-24,Evergreen Office Supply,101.28,Legal retainer monthly fee,LEGAL
-INV-1017,2024-02-02,Juniper Systems Ltd,718.56,Office supplies restocking,IT
-INV-1018,2024-03-30,Cascade Digital Solutions,458.38,Office supplies restocking,LOGISTICS
-INV-1019,2024-03-24,Northpoint Logistics,1958.17,HR consulting engagement,IT
-INV-1020,2024-02-01,Delta Freight Partners,13087.87,Facilities management fee,LOGISTICS
-INV-1021,2024-03-14,Vantage Point Marketing,2930.52,Professional services Q1,LEGAL
-INV-1022,2024-04-12,Iron Bridge Engineering,74.5,Print collateral production,IT
-INV-1023,2024-04-16,Titan Security Corp,4938.56,Data analytics platform,LOGISTICS
-INV-1024,2024-04-28,Oakwood Print & Design,5308.74,Facilities management fee,MARKETING
-INV-1025,2024-01-03,Meridian Legal Services,1112.74,Office supplies restocking,MARKETING
-INV-1026,2024-04-25,Titan Security Corp,987.38,HR consulting engagement,IT
-INV-1027,2024-01-03,Frontier Tech Services,3296.79,Marketing campaign Q2,FACILITIES
-INV-1028,2024-01-25,Meridian Legal Services,28985.85,Staff augmentation services,CONSULTING
-INV-1029,2024-01-19,Quantum Cloud Services,51.47,Financial advisory services,LEGAL
-INV-1030,2024-03-24,Meridian Legal Services,129527.33,Annual license renewal,IT
-INV-1031,2024-04-05,Delta Freight Partners,9708.56,Legal retainer monthly fee,LOGISTICS
-INV-1032,2024-01-31,Pacific Rim Trading,760.74,Catering for board meeting,IT
-INV-1033,2024-02-28,Meridian Legal Services,351.53,Marketing campaign Q2,LEGAL
-INV-1034,2024-03-05,Frontier Tech Services,917.41,Network infrastructure upgrade,MARKETING
-INV-1035,2024-03-01,Yellowstone Equipment Rental,699.42,Marketing campaign Q2,CONSULTING
-INV-1036,2024-01-08,Titan Security Corp,286.27,Facilities management fee,OPERATIONS
-INV-1037,2024-01-26,Westbrook Associates,17409.87,Freight and delivery charges,CONSULTING
-INV-1038,2024-03-13,Glacier Media Inc,752.92,Data analytics platform,IT
-INV-1039,2024-04-03,Lakeview Catering Co,261.55,Catering for board meeting,MARKETING
-INV-1040,2024-01-20,Juniper Systems Ltd,71.9,Cloud infrastructure costs,FINANCE
-INV-1041,2024-04-16,Unity Health Consulting,55.77,Marketing campaign Q2,LOGISTICS
-INV-1042,2024-03-15,Vantage Point Marketing,1019.38,Travel and accommodations,IT
-INV-1043,2024-03-16,Xylem Data Solutions,21330.78,Equipment maintenance contract,LEGAL
-INV-1044,2024-03-12,Delta Freight Partners,55571.9,Marketing campaign Q2,CONSULTING
-INV-1045,2024-01-14,Cascade Digital Solutions,6264.54,Office supplies restocking,SUPPLIES
-INV-1046,2024-03-20,Iron Bridge Engineering,24962.9,Legal retainer monthly fee,MARKETING
-INV-1047,2024-01-28,Oakwood Print & Design,68.63,Office supplies restocking,CONSULTING
-INV-1048,2024-02-03,Glacier Media Inc,34451.39,Facilities management fee,SUPPLIES
-INV-1049,2024-04-29,Delta Freight Partners,150.93,Office supplies restocking,LOGISTICS
-INV-1050,2024-03-26,Frontier Tech Services,3674.14,Legal retainer monthly fee,LEGAL
-INV-1051,2024-01-13,Lakeview Catering Co,500,Software development sprint,MARKETING
-INV-1052,2024-04-29,Evergreen Office Supply,9999,Data analytics platform,SECURITY
-INV-1053,2024-02-07,Northpoint Logistics,28000.72,Security audit services,FINANCE
-INV-1054,2024-02-29,Sterling Financial Advisors,540.3,Facilities management fee,LOGISTICS
-INV-1055,2024-03-11,Apex Consulting Group,8048.5,Facilities management fee,FINANCE
-INV-1056,2024-01-26,Meridian Legal Services,583.36,Catering for board meeting,LOGISTICS
-INV-1057,2024-04-08,Xylem Data Solutions,118668.04,Staff augmentation services,SUPPLIES
-INV-1058,2024-03-05,Vantage Point Marketing,4560.85,Professional services Q1,LEGAL
-INV-1059,2024-02-10,Yellowstone Equipment Rental,1386.15,Travel and accommodations,LEGAL
-INV-1060,2024-02-29,Frontier Tech Services,1348.63,Travel and accommodations,SECURITY
-INV-1061,2024-04-10,Iron Bridge Engineering,2742.22,Print collateral production,LOGISTICS
-INV-1062,2024-04-19,Yellowstone Equipment Rental,117.82,Print collateral production,OPERATIONS
-INV-1063,2024-02-25,Xylem Data Solutions,465.57,Legal retainer monthly fee,FACILITIES
-INV-1064,2024-03-03,Pacific Rim Trading,4141.93,Facilities management fee,OPERATIONS
-INV-1065,2024-01-16,Glacier Media Inc,225.5,Freight and delivery charges,LOGISTICS
-INV-1066,2024-04-09,Iron Bridge Engineering,66.03,HR consulting engagement,LEGAL
-INV-1067,2024-01-31,Evergreen Office Supply,107.74,Cloud infrastructure costs,CONSULTING
-INV-1068,2024-04-09,Yellowstone Equipment Rental,9995,Travel and accommodations,CONSULTING
-INV-1069,2024-04-06,Unity Health Consulting,1170.8,Equipment maintenance contract,IT
-INV-1070,2024-04-21,Northpoint Logistics,50000,Legal retainer monthly fee,CONSULTING
-INV-1071,2024-03-17,Vantage Point Marketing,1431.75,Travel and accommodations,FINANCE
-INV-1072,2024-01-08,Blue Ridge Staffing,232.08,Annual license renewal,FINANCE
-INV-1073,2024-01-08,Sterling Financial Advisors,53.71,Travel and accommodations,LEGAL
-INV-1074,2024-02-07,Vantage Point Marketing,11678.03,Marketing campaign Q2,MARKETING
-INV-1075,2024-02-25,Meridian Legal Services,5231.29,Software development sprint,SUPPLIES
-INV-1076,2024-04-18,Apex Consulting Group,23944.8,Legal retainer monthly fee,FACILITIES
-INV-1077,2024-02-12,Lakeview Catering Co,190.48,Print collateral production,OPERATIONS
-INV-1078,2024-01-02,Sterling Financial Advisors,129.49,Equipment maintenance contract,LOGISTICS
-INV-1079,2024-02-29,Northpoint Logistics,150.62,Staff augmentation services,OPERATIONS
-INV-1080,2024-03-28,Iron Bridge Engineering,11460.17,Legal retainer monthly fee,FINANCE
-INV-1081,2024-04-22,Westbrook Associates,84312.75,Software development sprint,LOGISTICS
-INV-1082,2024-01-09,Frontier Tech Services,5649.64,Cloud infrastructure costs,IT
-INV-1083,2024-04-23,Frontier Tech Services,2886.15,Print collateral production,SECURITY
-INV-1084,2024-02-02,Westbrook Associates,393.12,Data analytics platform,SECURITY
-INV-1085,2024-04-09,Titan Security Corp,15467.11,Software development sprint,SECURITY
-INV-1086,2024-04-10,Unity Health Consulting,10640.35,Training and development,FINANCE
-INV-1087,2024-03-23,Oakwood Print & Design,3906.64,Print collateral production,SECURITY
-INV-1088,2024-03-05,Xylem Data Solutions,3464.17,Staff augmentation services,SECURITY
-INV-1089,2024-04-05,Keystone Facilities Mgmt,345.76,Equipment maintenance contract,CONSULTING
-INV-1090,2024-04-17,Horizon Analytics LLC,1012.52,Cloud infrastructure costs,LEGAL
-INV-1091,2024-01-13,Evergreen Office Supply,694.32,Facilities management fee,OPERATIONS
-INV-1092,2024-04-14,Vantage Point Marketing,50000,Cloud infrastructure costs,SECURITY
-INV-1093,2024-04-20,Titan Security Corp,52101.06,Cloud infrastructure costs,CONSULTING
-INV-1094,2024-02-10,Delta Freight Partners,113.89,Professional services Q1,MARKETING
-INV-1095,2024-03-31,Pacific Rim Trading,43812.48,HR consulting engagement,FACILITIES
-INV-1096,2024-02-15,Titan Security Corp,2916.86,Security audit services,MARKETING
-INV-1097,2024-01-18,Cascade Digital Solutions,606.97,Catering for board meeting,SUPPLIES
-INV-1098,2024-02-27,Glacier Media Inc,736.25,Network infrastructure upgrade,MARKETING
-INV-1099,2024-03-27,Keystone Facilities Mgmt,355.56,Facilities management fee,SUPPLIES
-INV-1100,2024-04-03,Evergreen Office Supply,4998.75,Software development sprint,SECURITY
-INV-1101,2024-03-14,Quantum Cloud Services,228.63,Staff augmentation services,FACILITIES
-INV-1102,2024-04-08,Lakeview Catering Co,634.76,Office supplies restocking,CONSULTING
-INV-1103,2024-01-10,Yellowstone Equipment Rental,703.98,Print collateral production,LOGISTICS
-INV-1104,2024-03-16,Quantum Cloud Services,16114.73,Office supplies restocking,SECURITY
-INV-1105,2024-04-20,Juniper Systems Ltd,14386.11,Print collateral production,SUPPLIES
-INV-1106,2024-02-21,Westbrook Associates,36750.68,Facilities management fee,FINANCE
-INV-1107,2024-02-15,Oakwood Print & Design,7368.84,Freight and delivery charges,MARKETING
-INV-1108,2024-04-08,Unity Health Consulting,104820.41,Software development sprint,IT
-INV-1109,2024-01-06,Titan Security Corp,731.13,Cloud infrastructure costs,FINANCE
-INV-1110,2024-02-27,Yellowstone Equipment Rental,129481.89,Marketing campaign Q2,LEGAL
-INV-1111,2024-02-03,Vantage Point Marketing,58064.6,Equipment maintenance contract,SUPPLIES
-INV-1112,2024-02-26,Blue Ridge Staffing,46383.43,Data analytics platform,LOGISTICS
-INV-1113,2024-04-27,Delta Freight Partners,1230.58,Cloud infrastructure costs,FACILITIES
-INV-1114,2024-04-07,Titan Security Corp,100.41,HR consulting engagement,LOGISTICS
-INV-1115,2024-01-17,Frontier Tech Services,71299.57,Staff augmentation services,LOGISTICS
-INV-1116,2024-04-17,Iron Bridge Engineering,22868.36,Freight and delivery charges,MARKETING
-INV-1117,2024-01-26,Cascade Digital Solutions,562.2,Network infrastructure upgrade,FINANCE
-INV-1118,2024-03-15,Xylem Data Solutions,9003.62,Marketing campaign Q2,CONSULTING
-INV-1119,2024-04-22,Delta Freight Partners,147694.06,Equipment maintenance contract,FACILITIES
-INV-1120,2024-04-10,Oakwood Print & Design,1818.73,Network infrastructure upgrade,FINANCE
-INV-1121,2024-01-22,Yellowstone Equipment Rental,132453.43,Equipment maintenance contract,LOGISTICS
-INV-1122,2024-04-29,Titan Security Corp,479.15,Marketing campaign Q2,MARKETING
-INV-1123,2024-03-23,Ridgeline Construction,94981.91,Legal retainer monthly fee,LOGISTICS
-INV-1124,2024-01-04,Oakwood Print & Design,4747.61,Freight and delivery charges,CONSULTING
-INV-1125,2024-03-02,Ridgeline Construction,182.91,Freight and delivery charges,SUPPLIES
-INV-1126,2024-02-13,Lakeview Catering Co,1039.68,Freight and delivery charges,CONSULTING
-INV-1127,2024-02-21,Titan Security Corp,1529.74,Travel and accommodations,MARKETING
-INV-1128,2024-03-16,Horizon Analytics LLC,761.53,Staff augmentation services,SECURITY
-INV-1129,2024-03-30,Oakwood Print & Design,729.28,Data analytics platform,IT
-INV-1130,2024-03-02,Juniper Systems Ltd,150.52,Legal retainer monthly fee,LEGAL
-INV-1131,2024-02-20,Evergreen Office Supply,1257.41,Data analytics platform,CONSULTING
-INV-1132,2024-01-25,Westbrook Associates,24028.55,Financial advisory services,LOGISTICS
-INV-1133,2024-04-29,Titan Security Corp,206.64,Software development sprint,LOGISTICS
-INV-1134,2024-03-17,Meridian Legal Services,764.07,Marketing campaign Q2,LEGAL
-INV-1135,2024-04-05,Meridian Legal Services,33193.08,Cloud infrastructure costs,SECURITY
-INV-1136,2024-02-17,Juniper Systems Ltd,23359.54,Facilities management fee,MARKETING
-INV-1137,2024-03-03,Horizon Analytics LLC,127.87,Security audit services,MARKETING
-INV-1138,2024-02-09,Lakeview Catering Co,2318.63,Legal retainer monthly fee,SECURITY
-INV-1139,2024-03-20,Ridgeline Construction,24999,Legal retainer monthly fee,SECURITY
-INV-1140,2024-04-22,Oakwood Print & Design,1063.11,Staff augmentation services,IT
-INV-1141,2024-02-13,Yellowstone Equipment Rental,104.02,HR consulting engagement,MARKETING
-INV-1142,2024-01-26,Ridgeline Construction,181.68,Marketing campaign Q2,IT
-INV-1143,2024-02-11,Titan Security Corp,6987.66,Office supplies restocking,LOGISTICS
-INV-1144,2024-03-15,Pacific Rim Trading,1307.41,Security audit services,IT
-INV-1145,2024-04-09,Lakeview Catering Co,57.84,Equipment maintenance contract,LEGAL
-INV-1146,2024-04-11,Horizon Analytics LLC,12541.6,Staff augmentation services,IT
-INV-1147,2024-04-07,Quantum Cloud Services,147444.57,Facilities management fee,MARKETING
-INV-1148,2024-03-16,Titan Security Corp,44291.29,Cloud infrastructure costs,MARKETING
-INV-1149,2024-03-30,Sterling Financial Advisors,1000,Training and development,FACILITIES
-INV-1150,2024-01-28,Cascade Digital Solutions,112014.93,Office supplies restocking,IT
-INV-1151,2024-03-03,Unity Health Consulting,161.81,Facilities management fee,SUPPLIES
-INV-1152,2024-01-28,Unity Health Consulting,40192.4,Catering for board meeting,IT
-INV-1153,2024-03-06,Frontier Tech Services,664.99,Facilities management fee,FINANCE
-INV-1154,2024-04-12,Titan Security Corp,418.71,Equipment maintenance contract,MARKETING
-INV-1155,2024-03-08,Keystone Facilities Mgmt,10000,Annual license renewal,LOGISTICS
-INV-1156,2024-03-22,Iron Bridge Engineering,500,Office supplies restocking,FINANCE
-INV-1157,2024-04-26,Sterling Financial Advisors,2103.87,Freight and delivery charges,LEGAL
-INV-1158,2024-04-16,Keystone Facilities Mgmt,1469.38,Data analytics platform,SUPPLIES
-INV-1159,2024-03-21,Evergreen Office Supply,10341.44,Security audit services,FACILITIES
-INV-1160,2024-01-03,Frontier Tech Services,50949.79,Equipment maintenance contract,LOGISTICS
-INV-1161,2024-04-06,Meridian Legal Services,1505.54,Legal retainer monthly fee,OPERATIONS
-INV-1162,2024-04-13,Oakwood Print & Design,8473.72,Financial advisory services,MARKETING
-INV-1163,2024-01-19,Frontier Tech Services,1781.42,Professional services Q1,CONSULTING
-INV-1164,2024-04-16,Ridgeline Construction,12788.38,Software development sprint,SECURITY
-INV-1165,2024-04-23,Quantum Cloud Services,18970.23,Print collateral production,LEGAL
-INV-1166,2024-04-23,Ridgeline Construction,1777.61,Staff augmentation services,SUPPLIES
-INV-1167,2024-04-29,Sterling Financial Advisors,227.92,Print collateral production,LOGISTICS
-INV-1168,2024-02-05,Juniper Systems Ltd,67525.71,Annual license renewal,MARKETING
-INV-1169,2024-04-06,Iron Bridge Engineering,12106.12,Travel and accommodations,LEGAL
-INV-1170,2024-04-14,Oakwood Print & Design,7714.78,Office supplies restocking,SECURITY
-INV-1171,2024-02-27,Evergreen Office Supply,24582.32,Freight and delivery charges,SUPPLIES
-INV-1172,2024-04-01,Titan Security Corp,454.35,Security audit services,IT
-INV-1173,2024-04-19,Blue Ridge Staffing,370.19,Equipment maintenance contract,LOGISTICS
-INV-1174,2024-04-18,Sterling Financial Advisors,542.44,Software development sprint,FINANCE
-INV-1175,2024-02-05,Glacier Media Inc,7180.87,Legal retainer monthly fee,LEGAL
-INV-1176,2024-04-20,Northpoint Logistics,1482.75,Software development sprint,SUPPLIES
-INV-1177,2024-01-15,Meridian Legal Services,686.18,HR consulting engagement,IT
-INV-1178,2024-04-11,Quantum Cloud Services,274.29,Print collateral production,FINANCE
-INV-1179,2024-03-03,Oakwood Print & Design,61032.24,Cloud infrastructure costs,CONSULTING
-INV-1180,2024-03-08,Westbrook Associates,606.12,Facilities management fee,OPERATIONS
-INV-1181,2024-02-24,Ridgeline Construction,26604.91,Financial advisory services,MARKETING
-INV-1182,2024-03-05,Quantum Cloud Services,1886.91,Freight and delivery charges,OPERATIONS
-INV-1183,2024-02-24,Blue Ridge Staffing,22573.19,Office supplies restocking,FACILITIES
-INV-1184,2024-02-13,Evergreen Office Supply,177.06,Office supplies restocking,FACILITIES
-INV-1185,2024-01-25,Lakeview Catering Co,2500,Marketing campaign Q2,FACILITIES
-INV-1186,2024-03-18,Blue Ridge Staffing,4303.77,Software development sprint,MARKETING
-INV-1187,2024-01-07,Frontier Tech Services,234.38,Annual license renewal,SECURITY
-INV-1188,2024-03-01,Lakeview Catering Co,15778.63,Training and development,MARKETING
-INV-1189,2024-01-10,Xylem Data Solutions,623.34,Catering for board meeting,IT
-INV-1190,2024-03-01,Xylem Data Solutions,1889.86,Travel and accommodations,LOGISTICS
-INV-1191,2024-04-11,Westbrook Associates,114,Annual license renewal,SUPPLIES
-INV-1192,2024-04-30,Unity Health Consulting,1285.68,Training and development,FINANCE
-INV-1193,2024-04-30,Yellowstone Equipment Rental,148.71,Cloud infrastructure costs,IT
-INV-1194,2024-02-16,Blue Ridge Staffing,92.67,Annual license renewal,FACILITIES
-INV-1195,2024-03-24,Frontier Tech Services,10000,Network infrastructure upgrade,SUPPLIES
-INV-1196,2024-01-29,Oakwood Print & Design,1204.32,Print collateral production,LOGISTICS
-INV-1197,2024-03-26,Lakeview Catering Co,6050.66,HR consulting engagement,OPERATIONS
-INV-1198,2024-04-28,Ridgeline Construction,1755.89,Freight and delivery charges,CONSULTING
-INV-1199,2024-01-15,Ridgeline Construction,23790.77,Equipment maintenance contract,LEGAL
-INV-1200,2024-03-22,Keystone Facilities Mgmt,2451.73,Print collateral production,SUPPLIES
-INV-1201,2024-03-16,Northpoint Logistics,2524.91,Marketing campaign Q2,IT
-INV-1202,2024-04-11,Pacific Rim Trading,7531.18,Software development sprint,CONSULTING
-INV-1203,2024-04-20,Northpoint Logistics,2500,Office supplies restocking,OPERATIONS
-INV-1204,2024-04-09,Westbrook Associates,76.24,Annual license renewal,LEGAL
-INV-1205,2024-04-21,Northpoint Logistics,389.45,Equipment maintenance contract,OPERATIONS
-INV-1206,2024-04-19,Glacier Media Inc,2681.55,Annual license renewal,IT
-INV-1207,2024-02-29,Horizon Analytics LLC,2443.93,Legal retainer monthly fee,SECURITY
-INV-1208,2024-01-28,Ridgeline Construction,56.38,Travel and accommodations,FACILITIES
-INV-1209,2024-04-19,Oakwood Print & Design,25717.34,Software development sprint,MARKETING
-INV-1210,2024-01-08,Meridian Legal Services,139698.11,Training and development,SUPPLIES
-INV-1211,2024-04-29,Iron Bridge Engineering,208.98,Travel and accommodations,IT
-INV-1212,2024-03-05,Keystone Facilities Mgmt,1458.63,Freight and delivery charges,SUPPLIES
-INV-1213,2024-01-13,Northpoint Logistics,1248.74,Freight and delivery charges,SUPPLIES
-INV-1214,2024-04-05,Titan Security Corp,1336.15,Security audit services,MARKETING
-INV-1215,2024-03-25,Northpoint Logistics,872.63,Professional services Q1,IT
-INV-1216,2024-01-31,Westbrook Associates,106.56,Freight and delivery charges,SUPPLIES
-INV-1217,2024-04-03,Iron Bridge Engineering,138.38,Print collateral production,FINANCE
-INV-1218,2024-02-20,Horizon Analytics LLC,5561.1,Catering for board meeting,CONSULTING
-INV-1219,2024-02-18,Lakeview Catering Co,20998.75,Software development sprint,MARKETING
-INV-1220,2024-03-01,Frontier Tech Services,2131.91,Network infrastructure upgrade,CONSULTING
-INV-1221,2024-03-11,Meridian Legal Services,31831.02,Catering for board meeting,SUPPLIES
-INV-1222,2024-03-21,Lakeview Catering Co,5633.93,HR consulting engagement,LEGAL
-INV-1223,2024-01-12,Glacier Media Inc,69.18,Cloud infrastructure costs,LEGAL
-INV-1224,2024-01-04,Keystone Facilities Mgmt,116.71,Security audit services,FACILITIES
-INV-1225,2024-01-10,Lakeview Catering Co,104767.99,Staff augmentation services,MARKETING
-INV-1226,2024-04-28,Unity Health Consulting,40688.67,Data analytics platform,FINANCE
-INV-1227,2024-02-06,Titan Security Corp,20173.83,Print collateral production,SECURITY
-INV-1228,2024-04-12,Titan Security Corp,36260.83,Financial advisory services,LEGAL
-INV-1229,2024-02-24,Glacier Media Inc,3266.29,Legal retainer monthly fee,LEGAL
-INV-1230,2024-02-28,Vantage Point Marketing,1669.48,Network infrastructure upgrade,LEGAL
-INV-1231,2024-04-17,Sterling Financial Advisors,48298.09,Training and development,IT
-INV-1232,2024-04-01,Northpoint Logistics,142961.12,Office supplies restocking,LOGISTICS
-INV-1233,2024-02-09,Horizon Analytics LLC,7902.2,Equipment maintenance contract,MARKETING
-INV-1234,2024-04-13,Glacier Media Inc,51.72,Cloud infrastructure costs,LOGISTICS
-INV-1235,2024-04-10,Ridgeline Construction,73.22,Annual license renewal,IT
-INV-1236,2024-01-10,Keystone Facilities Mgmt,14891.3,Print collateral production,SUPPLIES
-INV-1237,2024-04-26,Iron Bridge Engineering,3239.82,Software development sprint,FACILITIES
-INV-1238,2024-01-14,Lakeview Catering Co,82537.71,Annual license renewal,SUPPLIES
-INV-1239,2024-02-13,Yellowstone Equipment Rental,3943.68,Annual license renewal,IT
-INV-1240,2024-03-25,Apex Consulting Group,24999,Professional services Q1,IT
-INV-1241,2024-01-06,Ridgeline Construction,142.66,Software development sprint,OPERATIONS
-INV-1242,2024-01-06,Frontier Tech Services,56435.86,Freight and delivery charges,SUPPLIES
-INV-1243,2024-03-26,Cascade Digital Solutions,483,Office supplies restocking,MARKETING
-INV-1244,2024-01-18,Westbrook Associates,11626.16,Facilities management fee,IT
-INV-1245,2024-04-28,Keystone Facilities Mgmt,5158.43,Software development sprint,SECURITY
-INV-1246,2024-01-16,Juniper Systems Ltd,25000,Facilities management fee,CONSULTING
-INV-1247,2024-04-06,Vantage Point Marketing,80.5,Legal retainer monthly fee,IT
-INV-1248,2024-01-12,Juniper Systems Ltd,306.72,Security audit services,SECURITY
-INV-1249,2024-02-23,Titan Security Corp,853.94,Data analytics platform,CONSULTING
-INV-1250,2024-04-24,Cascade Digital Solutions,19148.12,Legal retainer monthly fee,CONSULTING
-INV-1251,2024-03-15,Delta Freight Partners,1002.78,Freight and delivery charges,MARKETING
-INV-1252,2024-01-21,Frontier Tech Services,106841.36,Annual license renewal,MARKETING
-INV-1253,2024-01-24,Meridian Legal Services,3156.59,Training and development,FINANCE
-INV-1254,2024-04-10,Sterling Financial Advisors,1360.69,Facilities management fee,MARKETING
-INV-1255,2024-01-29,Yellowstone Equipment Rental,132636,Catering for board meeting,LEGAL
-INV-1256,2024-04-25,Cascade Digital Solutions,145,Training and development,SUPPLIES
-INV-1257,2024-04-18,Iron Bridge Engineering,140.92,Travel and accommodations,SUPPLIES
-INV-1258,2024-03-17,Cascade Digital Solutions,104012.94,Travel and accommodations,MARKETING
-INV-1259,2024-03-20,Apex Consulting Group,21703.08,Training and development,OPERATIONS
-INV-1260,2024-03-17,Oakwood Print & Design,38669.4,Print collateral production,FACILITIES
-INV-1261,2024-03-13,Cascade Digital Solutions,820.54,HR consulting engagement,OPERATIONS
-INV-1262,2024-02-17,Keystone Facilities Mgmt,1276.03,Travel and accommodations,OPERATIONS
-INV-1263,2024-01-03,Cascade Digital Solutions,1744.9,Catering for board meeting,SECURITY
-INV-1264,2024-01-09,Blue Ridge Staffing,7987.76,Legal retainer monthly fee,SECURITY
-INV-1265,2024-04-18,Westbrook Associates,70.84,Catering for board meeting,CONSULTING
-INV-1266,2024-03-06,Westbrook Associates,377.33,Cloud infrastructure costs,FACILITIES
-INV-1267,2024-03-31,Sterling Financial Advisors,138109.05,Legal retainer monthly fee,MARKETING
-INV-1268,2024-01-14,Vantage Point Marketing,2153.13,Staff augmentation services,OPERATIONS
-INV-1269,2024-02-11,Horizon Analytics LLC,167.31,HR consulting engagement,IT
-INV-1270,2024-01-07,Evergreen Office Supply,9998.5,Software development sprint,MARKETING
-INV-1271,2024-02-11,Quantum Cloud Services,25257.8,Office supplies restocking,LOGISTICS
-INV-1272,2024-04-05,Blue Ridge Staffing,55.72,Professional services Q1,LEGAL
-INV-1273,2024-04-26,Delta Freight Partners,105097.3,Security audit services,LOGISTICS
-INV-1274,2024-03-15,Evergreen Office Supply,292.18,Marketing campaign Q2,IT
-INV-1275,2024-03-27,Pacific Rim Trading,112.46,Facilities management fee,CONSULTING
-INV-1276,2024-01-26,Oakwood Print & Design,58111.73,Software development sprint,LEGAL
-INV-1277,2024-02-09,Meridian Legal Services,170.24,Security audit services,CONSULTING
-INV-1278,2024-04-02,Sterling Financial Advisors,85306.08,Security audit services,SUPPLIES
-INV-1279,2024-03-31,Meridian Legal Services,7382.22,HR consulting engagement,FACILITIES
-INV-1280,2024-02-10,Horizon Analytics LLC,116943.87,Catering for board meeting,SUPPLIES
-INV-1281,2024-01-18,Blue Ridge Staffing,6600.93,HR consulting engagement,FACILITIES
-INV-1282,2024-02-12,Frontier Tech Services,84.2,Data analytics platform,SUPPLIES
-INV-1283,2024-01-28,Evergreen Office Supply,1000,Facilities management fee,LOGISTICS
-INV-1284,2024-01-09,Pacific Rim Trading,22615.3,Software development sprint,SECURITY
-INV-1285,2024-02-20,Quantum Cloud Services,1357.17,Professional services Q1,FACILITIES
-INV-1286,2024-02-25,Quantum Cloud Services,500,Office supplies restocking,FACILITIES
-INV-1287,2024-01-29,Westbrook Associates,351.35,Staff augmentation services,SECURITY
-INV-1288,2024-01-10,Delta Freight Partners,117.9,Facilities management fee,LOGISTICS
-INV-1289,2024-01-18,Pacific Rim Trading,511.63,Catering for board meeting,SECURITY
-INV-1290,2024-03-13,Ridgeline Construction,20607.21,Financial advisory services,FINANCE
-INV-1291,2024-01-25,Keystone Facilities Mgmt,26531.55,Freight and delivery charges,LEGAL
-INV-1292,2024-03-03,Evergreen Office Supply,2185.56,Training and development,IT
-INV-1293,2024-03-28,Lakeview Catering Co,14728.89,Security audit services,FINANCE
-INV-1294,2024-03-12,Evergreen Office Supply,135.74,Software development sprint,CONSULTING
-INV-1295,2024-01-03,Sterling Financial Advisors,112.81,Catering for board meeting,FINANCE
-INV-1296,2024-01-08,Unity Health Consulting,61.12,Security audit services,MARKETING
-INV-1297,2024-01-11,Juniper Systems Ltd,7468.14,Legal retainer monthly fee,SUPPLIES
-INV-1298,2024-01-27,Glacier Media Inc,4999.5,Network infrastructure upgrade,FACILITIES
-INV-1299,2024-02-06,Yellowstone Equipment Rental,109346.92,Catering for board meeting,FINANCE
-INV-1300,2024-04-28,Evergreen Office Supply,22803.08,Software development sprint,IT
-INV-1301,2024-03-02,Meridian Legal Services,7557.51,Financial advisory services,MARKETING
-INV-1302,2024-04-30,Delta Freight Partners,364.46,Staff augmentation services,FACILITIES
-INV-1303,2024-04-24,Sterling Financial Advisors,89074.96,Security audit services,IT
-INV-1304,2024-02-04,Meridian Legal Services,87652.77,Software development sprint,OPERATIONS
-INV-1305,2024-04-02,Xylem Data Solutions,1405.78,Marketing campaign Q2,FACILITIES
-INV-1306,2024-04-21,Sterling Financial Advisors,75.9,Cloud infrastructure costs,OPERATIONS
-INV-1307,2024-01-16,Xylem Data Solutions,2989.39,Professional services Q1,MARKETING
-INV-1308,2024-04-02,Apex Consulting Group,499.73,Marketing campaign Q2,FINANCE
-INV-1309,2024-01-13,Juniper Systems Ltd,950.65,Security audit services,FINANCE
-INV-1310,2024-02-08,Cascade Digital Solutions,1000,Software development sprint,FACILITIES
-INV-1311,2024-04-22,Iron Bridge Engineering,66205.8,Legal retainer monthly fee,IT
-INV-1312,2024-04-08,Pacific Rim Trading,131611.47,Equipment maintenance contract,LOGISTICS
-INV-1313,2024-01-13,Lakeview Catering Co,64.01,Travel and accommodations,IT
-INV-1314,2024-02-04,Horizon Analytics LLC,106817.31,Network infrastructure upgrade,SECURITY
-INV-1315,2024-01-28,Apex Consulting Group,744.04,Security audit services,CONSULTING
-INV-1316,2024-04-30,Meridian Legal Services,5390.77,Training and development,MARKETING
-INV-1317,2024-02-19,Titan Security Corp,114.85,Data analytics platform,SUPPLIES
-INV-1318,2024-01-11,Cascade Digital Solutions,2597.28,Marketing campaign Q2,LEGAL
-INV-1319,2024-01-14,Oakwood Print & Design,5673.47,Network infrastructure upgrade,OPERATIONS
-INV-1320,2024-03-21,Xylem Data Solutions,182.73,Travel and accommodations,IT
-INV-1321,2024-04-28,Delta Freight Partners,264.33,Software development sprint,SUPPLIES
-INV-1322,2024-03-26,Cascade Digital Solutions,34306.77,Catering for board meeting,OPERATIONS
-INV-1323,2024-02-21,Juniper Systems Ltd,364.04,Staff augmentation services,OPERATIONS
-INV-1324,2024-01-29,Oakwood Print & Design,247.17,Security audit services,LEGAL
-INV-1325,2024-04-17,Yellowstone Equipment Rental,41640.85,Catering for board meeting,SUPPLIES
-INV-1326,2024-01-24,Blue Ridge Staffing,56.29,Professional services Q1,SECURITY
-INV-1327,2024-02-17,Meridian Legal Services,628.7,Software development sprint,CONSULTING
-INV-1328,2024-01-08,Northpoint Logistics,523.71,Network infrastructure upgrade,SUPPLIES
-INV-1329,2024-01-17,Frontier Tech Services,728.06,Freight and delivery charges,IT
-INV-1330,2024-03-31,Horizon Analytics LLC,133138.79,Annual license renewal,MARKETING
-INV-1331,2024-04-16,Unity Health Consulting,25000,Catering for board meeting,MARKETING
-INV-1332,2024-02-26,Juniper Systems Ltd,26372.54,Cloud infrastructure costs,LOGISTICS
-INV-1333,2024-02-05,Iron Bridge Engineering,500,Freight and delivery charges,FINANCE
-INV-1334,2024-04-30,Delta Freight Partners,6767.01,Data analytics platform,FACILITIES
-INV-1335,2024-03-27,Yellowstone Equipment Rental,125308.11,Freight and delivery charges,SUPPLIES
-INV-1336,2024-04-09,Frontier Tech Services,5000,Marketing campaign Q2,CONSULTING
-INV-1337,2024-01-03,Xylem Data Solutions,36158.43,Network infrastructure upgrade,MARKETING
-INV-1338,2024-02-05,Quantum Cloud Services,809.01,Travel and accommodations,OPERATIONS
-INV-1339,2024-04-19,Northpoint Logistics,1290.49,Facilities management fee,IT
-INV-1340,2024-02-07,Quantum Cloud Services,6647.3,Software development sprint,SUPPLIES
-INV-1341,2024-04-11,Oakwood Print & Design,56.5,Annual license renewal,MARKETING
-INV-1342,2024-03-16,Vantage Point Marketing,117217.69,Facilities management fee,CONSULTING
-INV-1343,2024-01-07,Xylem Data Solutions,1293.18,Catering for board meeting,SUPPLIES
-INV-1344,2024-01-25,Evergreen Office Supply,62582.66,Equipment maintenance contract,LOGISTICS
-INV-1345,2024-02-24,Keystone Facilities Mgmt,1646.57,Travel and accommodations,LEGAL
-INV-1346,2024-04-02,Ridgeline Construction,2502.11,Network infrastructure upgrade,IT
-INV-1347,2024-01-03,Frontier Tech Services,923.64,Professional services Q1,LEGAL
-INV-1348,2024-03-26,Juniper Systems Ltd,43246.56,Data analytics platform,LEGAL
-INV-1349,2024-01-04,Juniper Systems Ltd,453.76,Travel and accommodations,SUPPLIES
-INV-1350,2024-04-07,Glacier Media Inc,61.61,Security audit services,CONSULTING
-INV-1351,2024-02-27,Cascade Digital Solutions,710.26,Legal retainer monthly fee,LEGAL
-INV-1352,2024-02-10,Delta Freight Partners,403.94,Office supplies restocking,SECURITY
-INV-1353,2024-03-07,Quantum Cloud Services,946.41,Security audit services,OPERATIONS
-INV-1354,2024-01-07,Yellowstone Equipment Rental,95.16,Security audit services,FINANCE
-INV-1355,2024-02-21,Frontier Tech Services,58175.26,HR consulting engagement,LOGISTICS
-INV-1356,2024-02-19,Vantage Point Marketing,19988.81,Financial advisory services,LEGAL
-INV-1357,2024-04-25,Westbrook Associates,3552.11,Print collateral production,FACILITIES
-INV-1358,2024-02-24,Titan Security Corp,6702.52,Catering for board meeting,CONSULTING
-INV-1359,2024-04-26,Xylem Data Solutions,52.79,Travel and accommodations,FACILITIES
-INV-1360,2024-02-10,Horizon Analytics LLC,3035.49,Annual license renewal,IT
-INV-1361,2024-02-23,Pacific Rim Trading,45623.54,Network infrastructure upgrade,LOGISTICS
-INV-1362,2024-03-17,Horizon Analytics LLC,62090.38,Freight and delivery charges,FINANCE
-INV-1363,2024-01-10,Evergreen Office Supply,3077.13,Marketing campaign Q2,LOGISTICS
-INV-1364,2024-04-20,Lakeview Catering Co,5263.09,Freight and delivery charges,LEGAL
-INV-1365,2024-02-20,Titan Security Corp,5000,Security audit services,LOGISTICS
-INV-1366,2024-04-02,Xylem Data Solutions,43437.18,Annual license renewal,SUPPLIES
-INV-1367,2024-04-30,Westbrook Associates,86115.91,Freight and delivery charges,MARKETING
-INV-1368,2024-02-27,Meridian Legal Services,20363.68,Staff augmentation services,FACILITIES
-INV-1369,2024-04-04,Xylem Data Solutions,1386.78,Training and development,LOGISTICS
-INV-1370,2024-03-20,Cascade Digital Solutions,30587.87,Legal retainer monthly fee,IT
-INV-1371,2024-01-21,Cascade Digital Solutions,773.34,Data analytics platform,SECURITY
-INV-1372,2024-02-22,Iron Bridge Engineering,70.29,Annual license renewal,FINANCE
-INV-1373,2024-02-08,Unity Health Consulting,212.31,Print collateral production,OPERATIONS
-INV-1374,2024-02-10,Juniper Systems Ltd,72.63,Facilities management fee,OPERATIONS
-INV-1375,2024-03-31,Unity Health Consulting,552.89,Security audit services,CONSULTING
-INV-1376,2024-02-13,Unity Health Consulting,12142.94,Network infrastructure upgrade,OPERATIONS
-INV-1377,2024-02-09,Glacier Media Inc,83948.18,Staff augmentation services,IT
-INV-1378,2024-01-27,Oakwood Print & Design,57.29,HR consulting engagement,IT
-INV-1379,2024-01-15,Blue Ridge Staffing,786.91,Software development sprint,MARKETING
-INV-1380,2024-03-24,Northpoint Logistics,17349.21,Marketing campaign Q2,MARKETING
-INV-1381,2024-02-07,Keystone Facilities Mgmt,226.49,Marketing campaign Q2,LEGAL
-INV-1382,2024-02-29,Vantage Point Marketing,120.11,Freight and delivery charges,IT
-INV-1383,2024-02-22,Westbrook Associates,132610.56,Financial advisory services,MARKETING
-INV-1384,2024-03-12,Delta Freight Partners,22589.48,Network infrastructure upgrade,MARKETING
-INV-1385,2024-02-22,Cascade Digital Solutions,27839.84,Marketing campaign Q2,LOGISTICS
-INV-1386,2024-04-17,Vantage Point Marketing,110.12,Security audit services,FINANCE
-INV-1387,2024-03-21,Oakwood Print & Design,201.48,Legal retainer monthly fee,FINANCE
-INV-1388,2024-02-22,Ridgeline Construction,21085.9,Training and development,SUPPLIES
-INV-1389,2024-03-08,Horizon Analytics LLC,2055.93,Print collateral production,CONSULTING
-INV-1390,2024-02-26,Evergreen Office Supply,655.19,Training and development,IT
-INV-1391,2024-01-03,Evergreen Office Supply,3846.91,Professional services Q1,LOGISTICS
-INV-1392,2024-04-15,Xylem Data Solutions,78.3,Catering for board meeting,SECURITY
-INV-1393,2024-03-28,Titan Security Corp,617.81,Data analytics platform,LOGISTICS
-INV-1394,2024-02-10,Horizon Analytics LLC,278.56,Data analytics platform,IT
-INV-1395,2024-04-14,Yellowstone Equipment Rental,9995,Catering for board meeting,FINANCE
-INV-1396,2024-04-08,Westbrook Associates,40010.88,Marketing campaign Q2,CONSULTING
-INV-1397,2024-02-10,Vantage Point Marketing,129983.06,Print collateral production,FINANCE
-INV-1398,2024-03-26,Delta Freight Partners,69630.81,Cloud infrastructure costs,SUPPLIES
-INV-1399,2024-03-20,Keystone Facilities Mgmt,677.41,Professional services Q1,LEGAL
-INV-1400,2024-01-02,Juniper Systems Ltd,1965.57,Equipment maintenance contract,LEGAL
-INV-1401,2024-04-23,Xylem Data Solutions,311.75,HR consulting engagement,LOGISTICS
-INV-1402,2024-01-22,Vantage Point Marketing,9995,Equipment maintenance contract,OPERATIONS
-INV-1403,2024-04-21,Frontier Tech Services,163.96,Print collateral production,OPERATIONS
-INV-1404,2024-03-30,Juniper Systems Ltd,508.97,Travel and accommodations,LOGISTICS
-INV-1405,2024-04-17,Sterling Financial Advisors,1159.57,Legal retainer monthly fee,LEGAL
-INV-1406,2024-03-04,Horizon Analytics LLC,999.01,Data analytics platform,FINANCE
-INV-1407,2024-04-15,Northpoint Logistics,70604.8,Freight and delivery charges,LOGISTICS
-INV-1408,2024-04-09,Westbrook Associates,935.82,Security audit services,FACILITIES
-INV-1409,2024-01-13,Cascade Digital Solutions,509.71,Facilities management fee,LEGAL
-INV-1410,2024-04-09,Glacier Media Inc,3278.32,Staff augmentation services,SUPPLIES
-INV-1411,2024-01-07,Cascade Digital Solutions,3483.8,Training and development,LEGAL
-INV-1412,2024-02-07,Titan Security Corp,3714.56,Catering for board meeting,FINANCE
-INV-1413,2024-04-25,Delta Freight Partners,611.99,Data analytics platform,CONSULTING
-INV-1414,2024-01-15,Apex Consulting Group,108.08,Facilities management fee,FINANCE
-INV-1415,2024-04-06,Westbrook Associates,3191.95,Cloud infrastructure costs,OPERATIONS
-INV-1416,2024-02-14,Apex Consulting Group,3264.42,Print collateral production,FACILITIES
-INV-1417,2024-04-09,Blue Ridge Staffing,66600.55,Catering for board meeting,CONSULTING
-INV-1418,2024-02-25,Iron Bridge Engineering,501.75,Equipment maintenance contract,SECURITY
-INV-1419,2024-02-02,Juniper Systems Ltd,1003.33,Network infrastructure upgrade,FINANCE
-INV-1420,2024-04-17,Unity Health Consulting,1371.03,Staff augmentation services,FACILITIES
-INV-1421,2024-02-19,Horizon Analytics LLC,138999.67,Software development sprint,SECURITY
-INV-1422,2024-02-05,Blue Ridge Staffing,296.74,Office supplies restocking,LOGISTICS
-INV-1423,2024-01-17,Evergreen Office Supply,3279.73,Travel and accommodations,FINANCE
-INV-1424,2024-02-21,Apex Consulting Group,78.61,Network infrastructure upgrade,FINANCE
-INV-1425,2024-02-04,Frontier Tech Services,209.17,Cloud infrastructure costs,IT
-INV-1426,2024-04-07,Horizon Analytics LLC,1212.26,Travel and accommodations,SECURITY
-INV-1427,2024-01-17,Vantage Point Marketing,452.23,Staff augmentation services,SUPPLIES
-INV-1428,2024-04-22,Iron Bridge Engineering,31091.6,Annual license renewal,CONSULTING
-INV-1429,2024-01-25,Unity Health Consulting,161.69,Travel and accommodations,LOGISTICS
-INV-1430,2024-04-28,Oakwood Print & Design,4941.42,Legal retainer monthly fee,CONSULTING
-INV-1431,2024-04-21,Apex Consulting Group,36095.83,Training and development,IT
-INV-1432,2024-03-12,Xylem Data Solutions,109.25,Catering for board meeting,IT
-INV-1433,2024-04-09,Lakeview Catering Co,5125.48,Software development sprint,SECURITY
-INV-1434,2024-01-09,Meridian Legal Services,57.64,Office supplies restocking,FACILITIES
-INV-1435,2024-03-06,Keystone Facilities Mgmt,3809.99,Travel and accommodations,FACILITIES
-INV-1436,2024-04-17,Unity Health Consulting,348.59,Security audit services,IT
-INV-1437,2024-03-26,Northpoint Logistics,50000,Staff augmentation services,SUPPLIES
-INV-1438,2024-01-30,Horizon Analytics LLC,438.43,Facilities management fee,IT
-INV-1439,2024-03-27,Titan Security Corp,224.37,Software development sprint,LEGAL
-INV-1440,2024-01-21,Horizon Analytics LLC,850.16,Annual license renewal,FINANCE
-INV-1441,2024-03-02,Xylem Data Solutions,4725.4,Freight and delivery charges,LEGAL
-INV-1442,2024-04-01,Lakeview Catering Co,729.77,Financial advisory services,IT
-INV-1443,2024-03-14,Juniper Systems Ltd,2500,Cloud infrastructure costs,MARKETING
-INV-1444,2024-02-14,Juniper Systems Ltd,142.24,Data analytics platform,FACILITIES
-INV-1445,2024-02-04,Unity Health Consulting,8016.71,Freight and delivery charges,SECURITY
-INV-1446,2024-02-20,Vantage Point Marketing,18418.41,Catering for board meeting,FINANCE
-INV-1447,2024-01-20,Xylem Data Solutions,229.12,Network infrastructure upgrade,IT
-INV-1448,2024-03-19,Meridian Legal Services,103.64,Annual license renewal,OPERATIONS
-INV-1449,2024-04-22,Iron Bridge Engineering,131.95,Network infrastructure upgrade,OPERATIONS
-INV-1450,2024-03-03,Sterling Financial Advisors,470.78,Cloud infrastructure costs,SECURITY
-INV-1451,2024-02-22,Quantum Cloud Services,30987,Security audit services,LEGAL
-INV-1452,2024-01-15,Quantum Cloud Services,176.61,Software development sprint,SUPPLIES
-INV-1453,2024-04-10,Vantage Point Marketing,48195.95,Marketing campaign Q2,LEGAL
-INV-1454,2024-04-26,Cascade Digital Solutions,13924.27,Network infrastructure upgrade,FACILITIES
-INV-1455,2024-02-19,Cascade Digital Solutions,22865.42,Facilities management fee,SUPPLIES
-INV-1456,2024-04-24,Frontier Tech Services,1234.71,Office supplies restocking,CONSULTING
-INV-1457,2024-01-31,Lakeview Catering Co,50000,Financial advisory services,SUPPLIES
-INV-1458,2024-02-02,Meridian Legal Services,69.1,Equipment maintenance contract,LEGAL
-INV-1459,2024-01-24,Quantum Cloud Services,47388.13,Office supplies restocking,IT
-INV-1460,2024-01-08,Horizon Analytics LLC,7517.67,HR consulting engagement,CONSULTING
-INV-1461,2024-03-12,Glacier Media Inc,1067.34,Office supplies restocking,CONSULTING
-INV-1462,2024-01-16,Evergreen Office Supply,22502.06,Cloud infrastructure costs,MARKETING
-INV-1463,2024-04-01,Frontier Tech Services,130259.34,Facilities management fee,LEGAL
-INV-1464,2024-01-31,Lakeview Catering Co,153.92,Equipment maintenance contract,IT
-INV-1465,2024-01-16,Meridian Legal Services,499.52,Facilities management fee,SUPPLIES
-INV-1466,2024-01-30,Ridgeline Construction,246.02,Catering for board meeting,CONSULTING
-INV-1467,2024-03-06,Horizon Analytics LLC,79232.38,Professional services Q1,MARKETING
-INV-1468,2024-01-07,Cascade Digital Solutions,5436.38,HR consulting engagement,FINANCE
-INV-1469,2024-02-19,Juniper Systems Ltd,5107.95,Software development sprint,OPERATIONS
-INV-1470,2024-04-23,Frontier Tech Services,81.12,Legal retainer monthly fee,SUPPLIES
-INV-1471,2024-02-09,Westbrook Associates,11518.61,Equipment maintenance contract,MARKETING
-INV-1472,2024-04-06,Titan Security Corp,1837.21,Annual license renewal,OPERATIONS
-INV-1473,2024-02-27,Lakeview Catering Co,463.71,Staff augmentation services,FACILITIES
-INV-1474,2024-01-19,Meridian Legal Services,915.79,HR consulting engagement,FINANCE
-INV-1475,2024-02-03,Yellowstone Equipment Rental,1063.23,Training and development,LEGAL
-INV-1476,2024-01-18,Frontier Tech Services,19578.11,Annual license renewal,CONSULTING
-INV-1477,2024-02-10,Apex Consulting Group,2040.48,Annual license renewal,SUPPLIES
-INV-1478,2024-01-28,Glacier Media Inc,700.11,Legal retainer monthly fee,FINANCE
-INV-1479,2024-02-24,Juniper Systems Ltd,136406.44,Catering for board meeting,SECURITY
-INV-1480,2024-01-29,Meridian Legal Services,5909.02,Catering for board meeting,FINANCE
-INV-1481,2024-03-27,Lakeview Catering Co,23666.14,Annual license renewal,CONSULTING
-INV-1482,2024-04-21,Unity Health Consulting,320.92,Network infrastructure upgrade,LOGISTICS
-INV-1483,2024-02-19,Titan Security Corp,24999,Freight and delivery charges,LEGAL
-INV-1484,2024-02-25,Xylem Data Solutions,5939.69,Print collateral production,CONSULTING
-INV-1485,2024-02-10,Keystone Facilities Mgmt,21111.53,Equipment maintenance contract,OPERATIONS
-INV-1486,2024-04-10,Northpoint Logistics,9999,Data analytics platform,SUPPLIES
-INV-1487,2024-01-05,Lakeview Catering Co,11160.6,Print collateral production,SECURITY
-INV-1488,2024-01-09,Sterling Financial Advisors,2327.03,Print collateral production,SUPPLIES
-INV-1489,2024-04-21,Meridian Legal Services,125864.34,Marketing campaign Q2,MARKETING
-INV-1490,2024-03-11,Frontier Tech Services,817.4,Equipment maintenance contract,LEGAL
-INV-1491,2024-03-27,Glacier Media Inc,500,Marketing campaign Q2,IT
-INV-1492,2024-01-16,Evergreen Office Supply,3012.07,Facilities management fee,IT
-INV-1493,2024-04-28,Pacific Rim Trading,73355.18,Print collateral production,MARKETING
-INV-1494,2024-03-22,Titan Security Corp,8863.31,Legal retainer monthly fee,SECURITY
-INV-1495,2024-01-25,Delta Freight Partners,5071.82,Freight and delivery charges,LEGAL
-INV-1496,2024-01-06,Juniper Systems Ltd,16273.42,HR consulting engagement,FACILITIES
-INV-1497,2024-01-20,Ridgeline Construction,35731.33,HR consulting engagement,CONSULTING
-INV-1498,2024-03-27,Juniper Systems Ltd,289.14,Network infrastructure upgrade,OPERATIONS
-INV-1499,2024-02-29,Sterling Financial Advisors,778.73,Travel and accommodations,LEGAL
-INV-1500,2024-02-27,Quantum Cloud Services,352.25,Software development sprint,FACILITIES
+invoice_id,date,vendor,amount,description,category,approved_by
+INV-1672-02,2024-08-02,Harbor Light Consulting,9511.95,Partial payment 2/3 — project milestone,CONSULTING,J.Harrison
+INV-1191,2024-05-29,Harbor Light Consulting,34607.49,Warehouse storage and fulfillment services Q4,CONSULTING,A.Reeves
+INV-1485,2024-07-01,Crestview Supplies Ltd,1725.44,Annual maintenance and support contract renewal,SUPPLIES,L.Torres
+INV-1250,2024-03-06,Unity Healthcare Partners,6974.05,Payroll processing services — monthly retainer,OPERATIONS,D.Okafor
+INV-1671-02,2024-08-18,Apex Technology Solutions,24856.81,Partial payment 2/3 — project milestone,IT,J.Harrison
+INV-1170,2024-04-06,Apex Technology Solutions,9966.87,Benefits administration platform — annual fee,IT,M.Chen
+INV-1541,2024-12-07,Northpoint Marketing Agency,2681.93,Equipment lease payment — fiscal Q3,MARKETING,A.Reeves
+INV-1389,2024-01-12,Silverstone IT Services,4601.71,Security camera installation — warehouse expansion,IT,A.Reeves
+INV-1241,2024-04-11,Quantum Cloud Infrastructure,12023.63,Correction — prior period,IT,J.Harrison
+INV-1100,2024-07-04,Blue Ridge Analytics Group,17354.27,Benefits administration platform — annual fee,CONSULTING,L.Torres
+INV-1601,2024-12-07,Frontier Logistics Partners,1806.92,Services rendered,LOGISTICS,L.Torres
+INV-1076,2024-07-31,Westbrook Print & Media,2288.73,Per prior agreement,MARKETING,J.Harrison
+INV-1179,2024-08-27,Blue Ridge Analytics Group,53534.98,Inventory management system — annual license,CONSULTING,S.Patel
+INV-1150,2024-06-28,Lakeview Office Supplies Co,3030.51,Emergency procurement,SUPPLIES,R.Novak
+INV-1274,2024-06-03,Lakeview Office Supplies Co,1085.29,Network infrastructure upgrade phase 2,SUPPLIES,D.Okafor
+INV-1099,2024-07-12,Horizon Training Solutions,2407.48,Software development sprint 18 — backend API,CONSULTING,S.Patel
+INV-1376,2024-05-02,Unity Healthcare Partners,3560.06,Equipment lease payment — fiscal Q3,CONSULTING,R.Novak
+INV-1301,2024-04-22,Meridian Legal Partners LLP,10158.42,IT helpdesk and L2 support services,LEGAL,S.Patel
+INV-1419,2024-01-24,Cascade Digital Systems,3716.69,Warehouse storage and fulfillment services Q4,IT,M.Chen
+INV-1708,2024-05-13,Quantum Cloud Infrastructure,9990.0,Digital marketing campaign Q2 execution,IT,L.Torres
+INV-1502,2024-12-22,Crestview Supplies Ltd,436.9,Industry conference attendance — professional development,SUPPLIES,M.Chen
+INV-1269,2024-09-18,Cascade Digital Systems,6092.38,Employee benefits consulting — open enrollment,CONSULTING,M.Chen
+INV-1383,2024-09-07,Meridian Legal Partners LLP,10069.67,SharePoint migration — intranet modernization,LEGAL,M.Chen
+INV-1716,2024-08-11,Titan Security Services,49995.0,Q1 consulting services — enterprise architecture,SECURITY,J.Harrison
+INV-1712,2024-10-26,Summit Financial Advisors,24995.0,Catering services — quarterly board meeting,FINANCE,J.Harrison
+INV-1414,2024-11-25,Delta Freight Services LLC,3233.9,Temporary staffing — operations peak period,LOGISTICS,R.Novak
+INV-1225,2024-09-05,Meridian Legal Partners LLP,5206.69,Freight and logistics — bulk shipment handling,LEGAL,A.Reeves
+INV-1141,2024-12-08,Blue Ridge Analytics Group,9207.57,Executive coaching program — leadership team,CONSULTING,A.Reeves
+INV-1642,2024-09-21,Summit Financial Advisors,25801.12,Freight and logistics — bulk shipment handling,FINANCE,J.Harrison
+INV-1472,2024-05-30,Titan Security Services,4576.74,Network infrastructure upgrade phase 2,SECURITY,J.Harrison
+INV-1305,2024-08-31,Avalon Research Associates,17721.02,Employee benefits consulting — open enrollment,CONSULTING,A.Reeves
+INV-1542,2024-02-19,Frontier Logistics Partners,1245.9,Employee benefits consulting — open enrollment,LOGISTICS,L.Torres
+INV-1416,2024-07-11,Summit Financial Advisors,14026.66,Legal due diligence — acquisition target review,FINANCE,M.Chen
+INV-1011,2024-05-26,Blue Ridge Analytics Group,7971.85,IT helpdesk and L2 support services,CONSULTING,M.Chen
+INV-1687,2024-10-16,Ironwood Engineering Corp,5000.0,Structural engineering assessment — building A,OPERATIONS,L.Torres
+INV-1427,2024-12-06,Eagle Eye Security Systems,1327.57,Environmental compliance consulting services,OPERATIONS,A.Reeves
+INV-1543,2024-11-03,Redrock Data Solutions,7667.98,Market research and competitive landscape analysis,IT,A.Reeves
+INV-1313,2024-05-03,Delta Freight Services LLC,1075.59,Consulting — no further details,LOGISTICS,J.Harrison
+INV-1144,2024-02-09,Summit Financial Advisors,29458.36,Translation and localization services — APAC,FINANCE,D.Okafor
+INV-1174,2024-10-18,Cascade Digital Systems,4455.56,Security camera installation — warehouse expansion,IT,J.Harrison
+INV-1632,2024-01-14,Elmwood Graphics Studio,2048.48,Cloud hosting — production environment monthly,MARKETING,M.Chen
+INV-1278,2024-04-24,Harbor Light Consulting,10092.39,,CONSULTING,M.Chen
+INV-1369,2024-09-03,Yellowstone Equipment Rental,3580.35,Executive coaching program — leadership team,OPERATIONS,S.Patel
+INV-1667,2024-09-22,Meridian Legal Partners,5790.5,Network infrastructure upgrade phase 2,LEGAL,S.Patel
+INV-1123,2024-02-20,Ironwood Engineering Corp,12192.88,Market research and competitive landscape analysis,OPERATIONS,R.Novak
+INV-1006,2024-05-13,Horizon Training Solutions,2132.48,Legal due diligence — acquisition target review,CONSULTING,A.Reeves
+INV-1331,2024-01-25,Unity Healthcare Partners,7252.34,Brand identity redesign — new product line,CONSULTING,A.Reeves
+INV-1402,2024-11-09,Frontier Logistics Partners,3399.7,Staff compliance certification training,LEGAL,L.Torres
+INV-1216,2024-05-03,Elmwood Graphics Studio,7437.04,Legal retainer — contract review and advisory,SUPPLIES,S.Patel
+INV-1527,2024-07-26,Horizon Training Solutions,5051.18,SharePoint migration — intranet modernization,CONSULTING,S.Patel
+INV-1606,2024-06-01,Apex Technology Solutions,5431.49,Print and marketing collateral production,IT,R.Novak
+INV-1201,2024-05-22,Blue Ridge Analytics Group,45203.58,Corporate travel management — Q1 booking fees,CONSULTING,R.Novak
+INV-1462,2024-01-17,Lakeview Office Supplies Co,607.13,Tax planning and financial advisory services,SUPPLIES,L.Torres
+INV-1320,2024-09-29,Apex Technology Solutions,16795.41,Equipment lease payment — fiscal Q3,IT,R.Novak
+INV-1417,2024-06-20,Eagle Eye Security Systems,2459.13,Inventory management system — annual license,SECURITY,S.Patel
+INV-1714,2024-07-25,Vanguard Analytics Inc,24985.0,Catering services — quarterly board meeting,IT,J.Harrison
+INV-1473,2024-12-24,Summit Financial Advisors,29849.78,Correction — prior period,FINANCE,S.Patel
+INV-1512,2024-06-29,Cascade Digital Systems,18056.03,Consulting — no further details,IT,S.Patel
+INV-1218,2024-11-20,Elmwood Graphics Studio,2385.15,Emergency procurement,MARKETING,A.Reeves
+INV-1535,2024-05-27,Apex Technology Solutions,8585.1,SharePoint migration — intranet modernization,IT,J.Harrison
+INV-1002,2024-04-22,Summit Financial Advisors,29259.19,Annual maintenance and support contract renewal,FINANCE,S.Patel
+INV-1054,2024-09-29,Cascade Digital Systems,20469.53,Equipment lease payment — fiscal Q3,SECURITY,J.Harrison
+INV-1435,2024-09-24,Summit Financial Advisors,53726.06,Translation and localization services — APAC,FINANCE,M.Chen
+INV-1725,2024-10-01,JJ Consulting LLC,13261.52,Personal expense reimbursement,CONSULTING,S.Patel
+INV-1509,2024-05-09,Vanguard Analytics Inc,4575.06,Print and marketing collateral production,IT,L.Torres
+INV-1273,2024-02-12,Lakeview Office Supplies Co,378.5,Software development sprint 18 — backend API,SUPPLIES,D.Okafor
+INV-1475,2024-06-10,Meridian Legal Partners LLP,5199.35,Cybersecurity monitoring — 24/7 SOC retainer,LEGAL,D.Okafor
+INV-1234,2024-01-25,Meridian Legal Partners LLP,19021.25,Legal due diligence — acquisition target review,LEGAL,M.Chen
+INV-1659,2024-09-29,Frontierr Logistics Partners,1945.1,Staff compliance certification training,LOGISTICS,M.Chen
+INV-1205,2024-03-15,Harbor Light Consulting,5913.85,Digital marketing campaign Q2 execution,CONSULTING,D.Okafor
+INV-1003,2024-12-01,Lakeview Office Supplies Co,734.89,Advertising placement — industry trade publication,SECURITY,M.Chen
+INV-1756,2024-09-27,Summit Financial Advisors,96080.12,Legal filing fees and court documentation costs,FINANCE,M.Chen
+INV-1405,2024-10-24,Northpoint Marketing Agency,1885.86,Equipment lease payment — fiscal Q3,MARKETING,J.Harrison
+INV-1137,2024-06-09,Frontier Logistics Partners,1213.76,Financial audit preparation and documentation support,LOGISTICS,J.Harrison
+INV-1592,2024-03-08,Vanguard Analytics Inc,9142.51,Catering services — quarterly board meeting,IT,S.Patel
+INV-1663,2024-08-22,Summit Financial Advisory,18383.36,Digital marketing campaign Q2 execution,FINANCE,L.Torres
+INV-1211,2024-10-15,Eagle Eye Security Systems,11385.18,Executive coaching program — leadership team,SECURITY,J.Harrison
+INV-1220,2024-08-26,Meridian Legal Partners LLP,5365.02,Catering services — quarterly board meeting,LEGAL,L.Torres
+INV-1199,2024-02-21,Elmwood Graphics Studio,5706.43,Legal filing fees and court documentation costs,MARKETING,S.Patel
+INV-1499,2024-01-11,Delta Freight Services LLC,2484.1,Software development sprint 18 — backend API,SUPPLIES,S.Patel
+INV-1724,2024-05-19,JJ Consulting LLC,30144.24,Cash advance — project expenses,CONSULTING,S.Patel
+INV-1597,2024-04-04,Apex Technology Solutions,10652.8,Cloud hosting — production environment monthly,IT,S.Patel
+INV-1636,2024-05-23,Harbor Light Consulting,9210.52,Monthly software license renewal,CONSULTING,A.Reeves
+INV-1116,2024-07-25,Cascade Digital Systems,16348.28,Annual maintenance and support contract renewal,IT,A.Reeves
+INV-1480,2024-01-16,Apex Technology Solutions,43993.23,Structural engineering assessment — building A,LOGISTICS,M.Chen
+INV-1384,2024-01-24,Ironwood Engineering Corp,8248.92,Tax planning and financial advisory services,OPERATIONS,A.Reeves
+INV-1092,2024-04-05,Blue Ridge Analytics Group,16617.18,Software development sprint 18 — backend API,CONSULTING,M.Chen
+INV-1491,2024-04-13,Summit Financial Advisors,29884.0,IT helpdesk and L2 support services,FINANCE,L.Torres
+INV-1651,2024-08-03,Apex Technology Solution,5755.26,Q1 consulting services — enterprise architecture,IT,R.Novak
+INV-1540,2024-04-26,Apex Technology Solutions,10719.99,Emergency procurement,IT,R.Novak
+INV-1588,2024-09-01,Summit Financial Advisors,14914.82,Miscellaneous expenses,FINANCE,L.Torres
+INV-1036,2024-05-07,Sterling Law Group,11384.44,Market research and competitive landscape analysis,LEGAL,D.Okafor
+INV-1231,2024-02-07,Redrock Data Solutions,20841.16,Catering services — quarterly board meeting,IT,M.Chen
+INV-1167,2024-09-30,Blue Ridge Analytics Group,24243.28,Annual maintenance and support contract renewal,CONSULTING,S.Patel
+INV-1494,2024-06-29,Vanguard Analytics Inc,3157.83,Database migration and cloud uplift services,IT,R.Novak
+INV-1566,2024-06-19,Sunrise Fleet Management,756.11,Industry conference attendance — professional development,LOGISTICS,L.Torres
+INV-1428,2024-02-29,Apex Technology Solutions,8088.68,Advertising placement — industry trade publication,FACILITIES,D.Okafor
+INV-1214,2024-04-26,Apex Technology Solutions,34939.78,Payroll processing services — monthly retainer,IT,A.Reeves
+INV-1338,2024-10-26,Yellowstone Equipment Rental,2433.43,Equipment lease payment — fiscal Q3,OPERATIONS,M.Chen
+INV-1213,2024-09-04,Quantum Cloud Infrastructure,5989.05,Legal due diligence — acquisition target review,IT,D.Okafor
+INV-1195,2024-01-07,Crestview Supplies Ltd,939.75,Annual maintenance and support contract renewal,SUPPLIES,S.Patel
+INV-1154,2024-07-16,Delta Freight Services LLC,2492.2,SharePoint migration — intranet modernization,LOGISTICS,D.Okafor
+INV-1039,2024-03-27,Pacific Rim Staffing,8325.14,Employee benefits consulting — open enrollment,FACILITIES,M.Chen
+INV-1061,2024-07-12,Vanguard Analytics Inc,45000,Catering services — quarterly board meeting,IT,L.Torres
+INV-1026,2024-11-11,Sterling Law Group,4667.59,Corporate travel management — Q1 booking fees,SECURITY,S.Patel
+INV-1117,2024-08-29,Harbor Light Consulting,22367.29,Digital marketing campaign Q2 execution,CONSULTING,J.Harrison
+INV-1188,2024-01-04,Sterling Law Group,3503.48,Temporary staffing — operations peak period,LEGAL,D.Okafor
+INV-1342,2024-12-25,Delta Freight Services LLC,2361.19,Digital marketing campaign Q2 execution,IT,L.Torres
+INV-1495,2024-06-20,Ironwood Engineering Corp,4865.9,Copier and printer lease — main office,OPERATIONS,L.Torres
+INV-1699,2024-06-08,Eagle Eye Security Systems,100000.0,Digital marketing campaign Q2 execution,SECURITY,M.Chen
+INV-1001,2024-05-16,Ironwood Engineering Corp,11932.12,Executive search — VP of Engineering placement,OPERATIONS,L.Torres
+INV-1408,2024-01-04,Sunrise Fleet Management,2600.07,Copier and printer lease — main office,CONSULTING,R.Novak
+INV-1665,2024-01-21,Meridian Legal Partners,31158.29,Staff compliance certification training,LEGAL,A.Reeves
+INV-1330,2024-06-03,Summit Financial Advisors,31312.59,Print and marketing collateral production,FINANCE,M.Chen
+INV-1202,2024-10-10,Meridian Legal Partners LLP,5634.94,Copier and printer lease — main office,FACILITIES,M.Chen
+INV-1620,2024-02-02,Cascade Digital Systems,10044.78,Q1 consulting services — enterprise architecture,IT,R.Novak
+INV-1568,2024-06-26,Avalon Research Associates,11771.2,Emergency procurement,CONSULTING,S.Patel
+INV-1192,2024-10-07,Blue Ridge Analytics Group,25375.62,Executive coaching program — leadership team,CONSULTING,A.Reeves
+INV-1555,2024-04-08,Lakeview Office Supplies Co,630.96,Executive coaching program — leadership team,SUPPLIES,S.Patel
+INV-1457,2024-03-05,Unity Healthcare Partners,7853.57,Correction — prior period,SECURITY,D.Okafor
+INV-1271,2024-04-25,Meridian Legal Partners LLP,18377.82,Annual security audit and penetration testing,FINANCE,S.Patel
+INV-1016,2024-11-13,Crestview Supplies Ltd,699.09,Staff compliance certification training,SUPPLIES,J.Harrison
+INV-1546,2024-05-04,Delta Freight Services LLC,4407.69,Firewall replacement and network segmentation,LOGISTICS,L.Torres
+INV-1291,2024-01-11,Oakwood Facilities Mgmt,6035.94,Cloud hosting — production environment monthly,FACILITIES,J.Harrison
+INV-1390,2024-10-05,Delta Freight Services LLC,2246.32,Legal filing fees and court documentation costs,LOGISTICS,M.Chen
+INV-1536,2024-09-20,Westbrook Print & Media,819.1,Executive search — VP of Engineering placement,CONSULTING,L.Torres
+INV-1452,2024-06-23,Apex Technology Solutions,35817.58,Corporate travel management — Q1 booking fees,IT,L.Torres
+INV-1719,2024-05-22,Cascade Digital Systems,999.0,Industry conference attendance — professional development,IT,A.Reeves
+INV-1455,2024-02-01,Yellowstone Equipment Rental,6010.66,Facilities management — HVAC preventive maintenance,OPERATIONS,M.Chen
+INV-1268,2024-08-10,Lakeview Office Supplies Co,1156.95,Firewall replacement and network segmentation,SUPPLIES,A.Reeves
+INV-1226,2024-01-24,Quantum Cloud Infrastructure,11133.99,Office supplies and stationery restock,IT,S.Patel
+INV-1360,2024-05-20,Horizon Training Solutions,1555.32,Temporary staffing — operations peak period,CONSULTING,D.Okafor
+INV-1486,2024-07-01,Cascade Digital Systems,5993.47,Temporary staffing — operations peak period,IT,D.Okafor
+INV-1551,2024-05-10,Ridgeline Catering Co,832.31,Software development sprint 18 — backend API,FACILITIES,A.Reeves
+INV-1309,2024-10-27,Ridgeline Catering Co,1551.55,Data analytics platform subscription renewal,FACILITIES,R.Novak
+INV-1373,2024-10-10,Harbor Light Consulting,58465.53,Advertising placement — industry trade publication,CONSULTING,L.Torres
+INV-1126,2024-04-22,Westbrook Print & Media,1587.8,Annual maintenance and support contract renewal,MARKETING,R.Novak
+INV-1403,2024-10-13,Summit Financial Advisors,11795.72,HR consulting — executive recruitment cycle,FINANCE,R.Novak
+INV-1619,2024-07-25,Apex Technology Solutions,16369.22,Legal due diligence — acquisition target review,IT,R.Novak
+INV-1222,2024-08-30,Meridian Legal Partners LLP,5418.88,Cybersecurity monitoring — 24/7 SOC retainer,MARKETING,A.Reeves
+INV-1578,2024-11-24,Unity Healthcare Partners,3011.69,Network infrastructure upgrade phase 2,CONSULTING,A.Reeves
+INV-1702,2024-07-09,Ironwood Engineering Corp,2500.0,Structural engineering assessment — building A,OPERATIONS,R.Novak
+INV-1688,2024-01-14,Apex Technology Solutions,5000.0,Network infrastructure upgrade phase 2,IT,L.Torres
+INV-1409,2024-09-15,Blue Ridge Analytics Group,7420.93,Per prior agreement,CONSULTING,L.Torres
+INV-1125,2024-07-15,Unity Healthcare Partners,10867.71,Office supplies and stationery restock,CONSULTING,J.Harrison
+INV-1673-01,2024-10-06,Ironwood Engineering Corp,49548.36,Partial payment 1/3 — project milestone,OPERATIONS,A.Reeves
+INV-1020,2024-08-03,Westbrook Print & Media,3063.76,Security camera installation — warehouse expansion,MARKETING,L.Torres
+INV-1424,2024-10-18,Summit Financial Advisors,11077.4,See attached documentation,FINANCE,M.Chen
+INV-1633,2024-11-07,Meridian Legal Partners LLP,4969.37,Equipment lease payment — fiscal Q3,SUPPLIES,M.Chen
+INV-1558,2024-12-27,Meridian Legal Partners LLP,9568.66,Corporate travel management — Q1 booking fees,LEGAL,D.Okafor
+INV-1294,2024-02-07,Ironwood Engineering Corp,8527.99,Financial audit preparation and documentation support,LEGAL,R.Novak
+INV-1643,2024-07-11,Ironwood Engineering Corp,6561.75,Q1 consulting services — enterprise architecture,OPERATIONS,M.Chen
+INV-1630,2024-05-11,Ridgeline Catering Co,954.93,Benefits administration platform — annual fee,FACILITIES,M.Chen
+INV-1478,2024-07-25,Apex Technology Solutions,13142.02,Inventory management system — annual license,IT,M.Chen
+INV-1327,2024-08-23,Elmwood Graphics Studio,1780.05,Misc,MARKETING,J.Harrison
+INV-1050,2024-04-30,Oakwood Facilities Mgmt,5385.21,Freight and logistics — bulk shipment handling,FACILITIES,D.Okafor
+INV-1097,2024-05-16,Frontier Logistics Partners,2701.72,Facilities management — HVAC preventive maintenance,SUPPLIES,A.Reeves
+INV-1173,2024-09-16,Eagle Eye Security Systems,6904.19,Executive search — VP of Engineering placement,SECURITY,A.Reeves
+INV-1236,2024-05-03,Crestview Supplies Ltd,1285.25,Financial audit preparation and documentation support,SUPPLIES,M.Chen
+INV-1420,2024-04-09,Quantum Cloud Infrastructure,2003.49,Firewall replacement and network segmentation,IT,R.Novak
+INV-1346,2024-05-22,Vanguard Analytics Inc,8793.49,Annual maintenance and support contract renewal,IT,L.Torres
+INV-1362,2024-01-25,Summit Financial Advisors,31213.28,Security camera installation — warehouse expansion,FINANCE,M.Chen
+INV-1361,2024-09-04,Unity Healthcare Partners,2884.59,Financial audit preparation and documentation support,CONSULTING,D.Okafor
+INV-1364,2024-03-23,Summit Financial Advisors,14008.69,Catering services — quarterly board meeting,SUPPLIES,J.Harrison
+INV-1067,2024-02-12,Northpoint Marketing Agency,2921.0,Security camera installation — warehouse expansion,MARKETING,A.Reeves
+INV-1077,2024-05-21,Lakeview Office Supplies Co,1483.79,Data analytics platform subscription renewal,SUPPLIES,M.Chen
+INV-1646,2024-10-21,Meridian Legal Partners LLP,16097.53,Annual security audit and penetration testing,LEGAL,M.Chen
+INV-1120,2024-02-23,Apex Technology Solutions,32522.23,IT helpdesk and L2 support services,CONSULTING,J.Harrison
+INV-1329,2024-10-09,Meridian Legal Partners LLP,13290.76,Executive coaching program — leadership team,SUPPLIES,L.Torres
+INV-1300,2024-06-23,Blue Ridge Analytics Group,38606.08,Staff compliance certification training,CONSULTING,J.Harrison
+INV-1733,2024-05-09,General Business Solutions,21372.98,Miscellaneous expenses,SUPPLIES,S.Patel
+INV-1450,2024-07-17,Unity Healthcare Partners,10321.69,Environmental compliance consulting services,CONSULTING,R.Novak
+INV-1380,2024-09-26,Apex Technology Solutions,7964.91,Industry conference attendance — professional development,IT,M.Chen
+INV-1484,2024-02-14,Silverstone IT Services,18484.51,SharePoint migration — intranet modernization,IT,A.Reeves
+INV-1513,2024-11-17,Blue Ridge Analytics Group,16036.89,Annual security audit and penetration testing,CONSULTING,R.Novak
+INV-1146,2024-05-04,Ironwood Engineering Corp,7936.52,Benefits administration platform — annual fee,OPERATIONS,M.Chen
+INV-1406,2024-02-12,Westbrook Print & Media,2420.09,Financial audit preparation and documentation support,CONSULTING,R.Novak
+INV-1567,2024-04-04,Lakeview Office Supplies Co,2167.65,Annual security audit and penetration testing,SUPPLIES,J.Harrison
+INV-1382,2024-02-21,Ironwood Engineering Corp,5949.67,Data analytics platform subscription renewal,OPERATIONS,L.Torres
+INV-1731,2024-09-15,General Business Solutions,10270.8,Various services,SUPPLIES,J.Harrison
+INV-1021,2024-07-02,Delta Freight Services LLC,3943.21,Legal filing fees and court documentation costs,LOGISTICS,R.Novak
+INV-1068,2024-08-27,Vanguard Analytics Inc,3071.57,Customs brokerage and import clearance fees,IT,M.Chen
+INV-1013,2024-09-27,Westbrook Print & Media,1408.03,Database migration and cloud uplift services,MARKETING,J.Harrison
+INV-1643,2024-07-11,Ironwood Engineering Corp,6561.75,Q1 consulting services — enterprise architecture,OPERATIONS,M.Chen
+INV-1523,2024-06-14,Quantum Cloud Infrastructure,9138.92,Brand identity redesign — new product line,IT,S.Patel
+INV-1148,2024-09-18,Quantum Cloud Infrastructure,16277.73,Office supplies and stationery restock,IT,J.Harrison
+INV-1664,2024-04-05,Summit Financial Advisory,9225.48,Q1 consulting services — enterprise architecture,FINANCE,R.Novak
+INV-1421,2024-01-24,Horizon Training Solutions,1332.77,Cybersecurity monitoring — 24/7 SOC retainer,CONSULTING,D.Okafor
+INV-1743,2024-06-28,Summit Financial Advisors,85905.75,Software development sprint 18 — backend API,FINANCE,J.Harrison
+INV-1703,2024-11-29,Cascade Digital Systems,1000.0,Annual security audit and penetration testing,IT,D.Okafor
+INV-1521,2024-05-03,Cascade Digital Systems,8919.1,Annual maintenance and support contract renewal,IT,J.Harrison
+INV-1573,2024-02-08,Delta Freight Services LLC,1691.01,Structural engineering assessment — building A,LOGISTICS,R.Novak
+INV-1696,2024-06-07,Harbor Light Consulting,50000.0,Industry conference attendance — professional development,CONSULTING,A.Reeves
+INV-1324,2024-10-14,Ridgeline Catering Co,2229.97,Warehouse storage and fulfillment services Q4,FACILITIES,M.Chen
+INV-1315,2024-10-08,Quantum Cloud Infrastructure,7807.09,Structural engineering assessment — building A,OPERATIONS,D.Okafor
+INV-1678,2024-06-18,Elmwood Graphics Studio,35000,Market research and competitive landscape analysis,MARKETING,S.Patel
+INV-1156,2024-08-31,Eagle Eye Security Systems,3127.85,Insurance premium — commercial liability policy,SECURITY,S.Patel
+INV-1266,2024-09-25,Horizon Training Solutions,2066.58,Firewall replacement and network segmentation,CONSULTING,J.Harrison
+INV-1393,2024-03-09,Cascade Digital Systems,11459.44,Cloud hosting — production environment monthly,IT,M.Chen
+INV-1615,2024-11-27,Frontier Logistics Partners,2084.14,Executive search — VP of Engineering placement,LOGISTICS,S.Patel
+INV-1579,2024-09-08,Ridgeline Catering Co,1660.4,Executive search — VP of Engineering placement,FACILITIES,S.Patel
+INV-1367,2024-10-13,Sunrise Fleet Management,3125.03,Industry conference attendance — professional development,LOGISTICS,A.Reeves
+INV-1084,2024-04-06,Cascade Digital Systems,21762.21,Translation and localization services — APAC,IT,R.Novak
+INV-1613,2024-11-07,Yellowstone Equipment Rental,7010.18,Gift cards — client appreciation,OPERATIONS,D.Okafor
+INV-1612,2024-11-23,Meridian Legal Partners LLP,6552.04,Employee benefits consulting — open enrollment,LEGAL,A.Reeves
+INV-1727,2024-07-20,Quick Pay Services,12144.9,Miscellaneous expenses,OPERATIONS,S.Patel
+INV-1734,2024-01-25,Summit Financial Advisors,72122.26,Financial audit preparation and documentation support,FINANCE,M.Chen
+INV-1094,2024-04-22,Horizon Training Solutions,1060.53,Market research and competitive landscape analysis,CONSULTING,D.Okafor
+INV-1564,2024-07-15,Frontier Logistics Partners,5639.15,Financial audit preparation and documentation support,LOGISTICS,D.Okafor
+INV-1694,2024-10-10,Ironwood Engineering Corp,25000.0,Equipment lease payment — fiscal Q3,OPERATIONS,L.Torres
+INV-1516,2024-04-27,Sunrise Fleet Management,1272.18,Annual security audit and penetration testing,LOGISTICS,M.Chen
+INV-1196,2024-04-18,Titan Security Services,4660.12,Annual security audit and penetration testing,SECURITY,A.Reeves
+INV-1569,2024-03-05,Summit Financial Advisors,20255.61,Software development sprint 18 — backend API,MARKETING,J.Harrison
+INV-1130,2024-01-24,Cascade Digital Systems,9859.83,Misc,IT,D.Okafor
+INV-1479,2024-04-05,Apex Technology Solutions,7997.54,Annual maintenance and support contract renewal,IT,S.Patel
+INV-1392,2024-11-11,Frontier Logistics Partners,732.87,Database migration and cloud uplift services,LOGISTICS,D.Okafor
+INV-1044,2024-12-26,Summit Financial Advisors,15116.0,Freight and logistics — bulk shipment handling,MARKETING,R.Novak
+INV-1690,2024-08-14,Cascade Digital Systems,5000.0,Cloud hosting — production environment monthly,IT,L.Torres
+INV-1112,2024-08-11,Westbrook Print & Media,713.61,Legal retainer — contract review and advisory,MARKETING,M.Chen
+INV-1108,2024-07-14,Ironwood Engineering Corp,7846.74,Employee benefits consulting — open enrollment,OPERATIONS,M.Chen
+INV-1411,2024-07-02,Sterling Law Group,2891.57,Catering services — quarterly board meeting,LEGAL,D.Okafor
+INV-1304,2024-09-24,Eagle Eye Security Systems,13068.34,Network infrastructure upgrade phase 2,SECURITY,R.Novak
+INV-1052,2024-06-10,Meridian Legal Partners LLP,15320.23,Tax planning and financial advisory services,LEGAL,S.Patel
+INV-1147,2024-11-06,Cascade Digital Systems,6126.94,Benefits administration platform — annual fee,FACILITIES,D.Okafor
+INV-1030,2024-10-21,Titan Security Services,6807.33,Warehouse storage and fulfillment services Q4,SECURITY,A.Reeves
+INV-1171,2024-11-25,Quantum Cloud Infrastructure,9628.62,Staff compliance certification training,IT,J.Harrison
+INV-1570,2024-03-29,Frontier Logistics Partners,1605.44,SharePoint migration — intranet modernization,LOGISTICS,R.Novak
+INV-1224,2024-08-10,Blue Ridge Analytics Group,14076.57,Emergency procurement,FINANCE,J.Harrison
+INV-1368,2024-07-20,Blue Ridge Analytics Group,8080.92,Firewall replacement and network segmentation,CONSULTING,R.Novak
+INV-1075,2024-10-21,Vanguard Analytics Inc,9918.78,Temporary staffing — operations peak period,FINANCE,S.Patel
+INV-1248,2024-12-07,Cascade Digital Systems,12476.23,Warehouse storage and fulfillment services Q4,IT,R.Novak
+INV-1244,2024-11-01,Northpoint Marketing Agency,9359.0,SharePoint migration — intranet modernization,MARKETING,R.Novak
+INV-1676,2024-06-11,Westbrook Print & Media,31000,Employee benefits consulting — open enrollment,MARKETING,A.Reeves
+INV-1628,2024-07-31,Ridgeline Catering Co,502.81,Personal expense reimbursement,FACILITIES,J.Harrison
+INV-1286,2024-06-05,Apex Technology Solutions,27365.18,General expenses,IT,L.Torres
+INV-1715,2024-05-22,Delta Freight Services LLC,49990.0,Equipment lease payment — fiscal Q3,LOGISTICS,A.Reeves
+INV-1603,2024-10-20,Ironwood Engineering Corp,4339.42,Equipment lease payment — fiscal Q3,OPERATIONS,M.Chen
+INV-1319,2024-09-02,Blue Ridge Analytics Group,13850.37,Monthly software license renewal,FACILITIES,S.Patel
+INV-1110,2024-06-15,Northpoint Marketing Agency,10641.22,Network infrastructure upgrade phase 2,LOGISTICS,A.Reeves
+INV-1528,2024-02-17,Ridgeline Catering Co,1289.39,Legal due diligence — acquisition target review,FACILITIES,D.Okafor
+INV-1089,2024-06-12,Apex Technology Solutions,32814.9,Copier and printer lease — main office,IT,R.Novak
+INV-1476,2024-09-23,Ironwood Engineering Corp,4134.48,Payroll processing services — monthly retainer,OPERATIONS,L.Torres
+INV-1059,2024-11-18,Lakeview Office Supplies Co,468.69,Environmental compliance consulting services,SUPPLIES,A.Reeves
+INV-1672-03,2024-08-03,Harbor Light Consulting,9649.98,Partial payment 3/3 — project milestone,CONSULTING,D.Okafor
+INV-1237,2024-08-04,Meridian Legal Partners LLP,3814.74,Staff compliance certification training,SECURITY,D.Okafor
+INV-1064,2024-01-08,Avalon Research Associates,8023.27,Facilities management — HVAC preventive maintenance,CONSULTING,A.Reeves
+INV-1669-02,2024-10-09,Summit Financial Advisors,4776.08,Partial payment 2/4 — project milestone,FINANCE,L.Torres
+INV-1024,2024-03-22,Lakeview Office Supplies Co,1791.44,Executive search — VP of Engineering placement,SUPPLIES,M.Chen
+INV-1652,2024-09-18,Apex Technology Solution,10836.53,Monthly software license renewal,IT,A.Reeves
+INV-1595,2024-07-10,Yellowstone Equipment Rental,11751.02,Corporate travel management — Q1 booking fees,OPERATIONS,J.Harrison
+INV-1681,2024-10-19,Blue Ridge Analytics Group,10000.0,Print and marketing collateral production,CONSULTING,L.Torres
+INV-1669-04,2024-10-06,Summit Financial Advisors,4804.62,Partial payment 4/4 — project milestone,FINANCE,S.Patel
+INV-1378,2024-01-20,Blue Ridge Analytics Group,10110.04,Temporary staffing — operations peak period,CONSULTING,J.Harrison
+INV-1504,2024-04-05,Quantum Cloud Infrastructure,44979.71,Monthly software license renewal,LEGAL,L.Torres
+INV-1594,2024-09-09,Unity Healthcare Partners,5141.96,Legal due diligence — acquisition target review,CONSULTING,L.Torres
+INV-1056,2024-06-25,Blue Ridge Analytics Group,15649.2,Legal due diligence — acquisition target review,LEGAL,A.Reeves
+INV-1710,2024-08-02,Apex Technology Solutions,4995.0,Temporary staffing — operations peak period,IT,A.Reeves
+INV-1695,2024-02-06,Blue Ridge Analytics Group,50000.0,Monthly software license renewal,CONSULTING,A.Reeves
+INV-1705,2024-08-06,Summit Financial Advisors,9999.0,Digital marketing campaign Q2 execution,FINANCE,R.Novak
+INV-1638,2024-10-13,Lakeview Office Supplies Co,1877.18,Customs brokerage and import clearance fees,SUPPLIES,R.Novak
+INV-1176,2024-08-09,Lakeview Office Supplies Co,2351.42,Staff compliance certification training,SUPPLIES,M.Chen
+INV-1032,2024-09-25,Cascade Digital Systems,14883.61,Legal due diligence — acquisition target review,IT,M.Chen
+INV-1193,2024-01-18,Meridian Legal Partners LLP,37702.49,Financial audit preparation and documentation support,SECURITY,A.Reeves
+INV-1511,2024-07-25,Silverstone IT Services,13112.18,Corporate travel management — Q1 booking fees,LEGAL,S.Patel
+INV-1066,2024-05-05,Yellowstone Equipment Rental,6177.03,Brand identity redesign — new product line,OPERATIONS,S.Patel
+INV-1672-01,2024-08-02,Harbor Light Consulting,9556.77,Partial payment 1/3 — project milestone,CONSULTING,S.Patel
+INV-1354,2024-04-02,Vanguard Analytics Inc,11320.32,Employee benefits consulting — open enrollment,IT,D.Okafor
+INV-1581,2024-04-04,Blue Ridge Analytics Group,12052.7,HR consulting — executive recruitment cycle,SUPPLIES,R.Novak
+INV-1669-01,2024-10-08,Summit Financial Advisors,4878.93,Partial payment 1/4 — project milestone,FINANCE,R.Novak
+INV-1034,2024-07-14,Sunrise Fleet Management,2136.48,Insurance premium — commercial liability policy,LOGISTICS,A.Reeves
+INV-1217,2024-09-04,Crestview Supplies Ltd,1027.59,Legal filing fees and court documentation costs,CONSULTING,J.Harrison
+INV-1069,2024-02-11,Oakwood Facilities Mgmt,2294.2,Legal filing fees and court documentation costs,FACILITIES,A.Reeves
+INV-1650,2024-03-21,Apex Technology Solutions,25472.02,Staff compliance certification training,IT,A.Reeves
+INV-1158,2024-08-08,Yellowstone Equipment Rental,1322.1,Payroll processing services — monthly retainer,OPERATIONS,A.Reeves
+INV-1530,2024-03-22,Harbor Light Consulting,21977.08,Freight and logistics — bulk shipment handling,CONSULTING,J.Harrison
+INV-1640,2024-03-10,Cascade Digital Systems,5537.21,Data analytics platform subscription renewal,IT,A.Reeves
+INV-1022,2024-08-03,Delta Freight Services LLC,691.19,Advertising placement — industry trade publication,LOGISTICS,D.Okafor
+INV-1101,2024-08-11,Sterling Law Group,8308.87,Translation and localization services — APAC,LEGAL,R.Novak
+INV-1209,2024-11-17,Apex Technology Solutions,14226.31,Benefits administration platform — annual fee,IT,D.Okafor
+INV-1517,2024-06-03,Pacific Rim Staffing,7236.5,Legal retainer — contract review and advisory,CONSULTING,L.Torres
+INV-1673-02,2024-10-10,Ironwood Engineering Corp,49595.03,Partial payment 2/3 — project milestone,OPERATIONS,A.Reeves
+INV-1602,2024-12-15,Pacific Rim Staffing,5735.86,Warehouse storage and fulfillment services Q4,CONSULTING,A.Reeves
+INV-1295,2024-01-28,Silverstone IT Services,17235.45,Staff compliance certification training,IT,M.Chen
+INV-1674,2024-05-18,Ridgeline Catering Co,42000,Database migration and cloud uplift services,FACILITIES,D.Okafor
+INV-1243,2024-02-12,Eagle Eye Security Systems,6399.17,Executive coaching program — leadership team,SECURITY,M.Chen
+INV-1280,2024-05-07,Vanguard Analytics Inc,9048.38,Corporate travel management — Q1 booking fees,IT,J.Harrison
+INV-1025,2024-06-23,Quantum Cloud Infrastructure,1701.62,Cloud hosting — production environment monthly,IT,S.Patel
+INV-1641,2024-11-17,Northpoint Marketing Agency,1691.19,Freight and logistics — bulk shipment handling,MARKETING,L.Torres
+INV-1297,2024-01-14,Quantum Cloud Infrastructure,24968.33,Firewall replacement and network segmentation,IT,A.Reeves
+INV-1605,2024-12-27,Blue Ridge Analytics Group,19638.74,Annual security audit and penetration testing,CONSULTING,L.Torres
+INV-1328,2024-05-27,Apex Technology Solutions,14800.79,Customs brokerage and import clearance fees,IT,L.Torres
+INV-1272,2024-07-13,Oakwood Facilities Mgmt,5908.01,Annual maintenance and support contract renewal,FACILITIES,M.Chen
+INV-1323,2024-01-26,Pacific Rim Staffing,10584.7,Legal due diligence — acquisition target review,CONSULTING,R.Novak
+INV-1440,2024-11-30,Apex Technology Solutions,15961.82,Firewall replacement and network segmentation,IT,A.Reeves
+INV-1177,2024-12-06,Summit Financial Advisors,7398.67,Monthly software license renewal,FINANCE,J.Harrison
+INV-1160,2024-06-19,Crestview Supplies Ltd,845.96,Corporate travel management — Q1 booking fees,SUPPLIES,S.Patel
+INV-1701,2024-08-30,Westbrook Print & Media,2500.0,Cash advance — project expenses,MARKETING,A.Reeves
+INV-1326,2024-02-21,Pinnacle Risk Advisors,3693.83,Insurance premium — commercial liability policy,FINANCE,S.Patel
+INV-1488,2024-03-03,Meridian Legal Partners LLP,18066.47,Digital marketing campaign Q2 execution,LEGAL,S.Patel
+INV-1115,2024-06-13,Pinnacle Risk Advisors,5318.42,Q1 consulting services — enterprise architecture,FACILITIES,J.Harrison
+INV-1051,2024-01-30,Harbor Light Consulting,8615.52,Data analytics platform subscription renewal,CONSULTING,D.Okafor
+INV-1533,2024-04-11,Apex Technology Solutions,6470.19,SharePoint migration — intranet modernization,IT,J.Harrison
+INV-1722,2024-08-23,Unity Healthcare Partners,995.0,Tax planning and financial advisory services,CONSULTING,J.Harrison
+INV-1399,2024-07-18,Pacific Rim Staffing,4119.56,Benefits administration platform — annual fee,CONSULTING,S.Patel
+INV-1730,2024-10-28,General Business Solutions,17505.08,Miscellaneous expenses,SUPPLIES,S.Patel
+INV-1293,2024-02-28,Unity Healthcare Partners,3877.86,Various services,CONSULTING,L.Torres
+INV-1670-02,2024-03-11,Cascade Digital Systems,9863.99,Partial payment 2/2 — project milestone,IT,S.Patel
+INV-1565,2024-10-04,Delta Freight Services LLC,1883.8,Cybersecurity monitoring — 24/7 SOC retainer,LOGISTICS,J.Harrison
+INV-1666,2024-11-08,Meridian Legal Partners,7617.64,Cloud hosting — production environment monthly,LEGAL,A.Reeves
+INV-1031,2024-05-22,Meridian Legal Partners LLP,11721.98,Firewall replacement and network segmentation,LEGAL,L.Torres
+INV-1596,2024-03-14,Yellowstone Equipment Rental,5742.01,Advertising placement — industry trade publication,OPERATIONS,R.Novak
+INV-1534,2024-10-27,Meridian Legal Partners LLP,9890.44,HR consulting — executive recruitment cycle,LEGAL,J.Harrison
+INV-1183,2024-12-17,Sunrise Fleet Management,662.86,Environmental compliance consulting services,LOGISTICS,M.Chen
+INV-1490,2024-12-02,Apex Technology Solutions,7170.69,Annual security audit and penetration testing,IT,J.Harrison
+INV-1048,2024-04-11,Cascade Digital Systems,5260.12,Per prior agreement,IT,M.Chen
+INV-1454,2024-01-26,Delta Freight Services LLC,2661.09,Advertising placement — industry trade publication,LOGISTICS,L.Torres
+INV-1124,2024-04-04,Apex Technology Solutions,20197.26,Digital marketing campaign Q2 execution,IT,D.Okafor
+INV-1662,2024-04-11,Summit Financial Advisory,9256.74,Equipment lease payment — fiscal Q3,FINANCE,M.Chen
+INV-1718,2024-11-03,Delta Freight Services LLC,99980.0,Temporary staffing — operations peak period,LOGISTICS,M.Chen
+INV-1514,2024-01-30,Delta Freight Services LLC,12000,Structural engineering assessment — building A,SUPPLIES,R.Novak
+INV-1215,2024-06-16,Redrock Data Solutions,5874.84,Benefits administration platform — annual fee,IT,M.Chen
+INV-1357,2024-10-07,Lakeview Office Supplies Co,925.24,Executive search — VP of Engineering placement,SUPPLIES,M.Chen
+INV-1549,2024-04-21,Ridgeline Catering Co,402.54,Annual security audit and penetration testing,IT,L.Torres
+INV-1557,2024-09-03,Eagle Eye Security Systems,2896.96,Legal due diligence — acquisition target review,SECURITY,R.Novak
+INV-1109,2024-01-13,Ironwood Engineering Corp,5769.14,HR consulting — executive recruitment cycle,FACILITIES,A.Reeves
+INV-1308,2024-02-22,Sterling Law Group,12351.68,Q1 consulting services — enterprise architecture,LEGAL,J.Harrison
+INV-1180,2024-01-31,Sunrise Fleet Management,2672.35,Warehouse storage and fulfillment services Q4,LOGISTICS,D.Okafor
+INV-1047,2024-09-15,Harbor Light Consulting,16441.39,Software development sprint 18 — backend API,FINANCE,R.Novak
+INV-1277,2024-01-25,Apex Technology Solutions,4767.21,Brand identity redesign — new product line,IT,J.Harrison
+INV-1018,2024-04-18,Meridian Legal Partners LLP,7404.4,Digital marketing campaign Q2 execution,SUPPLIES,L.Torres
+INV-1086,2024-03-02,Blue Ridge Analytics Group,95000,Environmental compliance consulting services,CONSULTING,J.Harrison
+INV-1162,2024-01-18,Unity Healthcare Partners,5945.08,IT helpdesk and L2 support services,CONSULTING,D.Okafor
+INV-1152,2024-09-19,Crestview Supplies Ltd,978.84,Brand identity redesign — new product line,SUPPLIES,J.Harrison
+INV-1282,2024-09-29,Meridian Legal Partners LLP,5551.42,Correction — prior period,LEGAL,D.Okafor
+INV-1713,2024-05-29,Harbor Light Consulting,24990.0,Data analytics platform subscription renewal,CONSULTING,D.Okafor
+INV-1340,2024-05-24,Frontier Logistics Partners,4970.24,Remote access VPN — enterprise license expansion,LOGISTICS,A.Reeves
+INV-1503,2024-10-08,Apex Technology Solutions,41454.32,Insurance premium — commercial liability policy,IT,J.Harrison
+INV-1593,2024-12-18,Sunrise Fleet Management,1816.65,Industry conference attendance — professional development,IT,S.Patel
+INV-1711,2024-12-12,Lakeview Office Supplies Co,4990.0,Monthly software license renewal,SUPPLIES,L.Torres
+INV-1607,2024-05-01,Crestview Supplies Ltd,664.97,Database migration and cloud uplift services,SUPPLIES,R.Novak
+INV-1296,2024-11-01,Cascade Digital Systems,36211.38,Monthly software license renewal,IT,S.Patel
+INV-1645,2024-03-14,Meridian Legal Partners LLP,12840.59,Catering services — quarterly board meeting,LEGAL,S.Patel
+INV-1413,2024-11-13,Northpoint Marketing Agency,3832.26,Firewall replacement and network segmentation,MARKETING,R.Novak
+INV-1098,2024-10-29,Oakwood Facilities Mgmt,1614.01,Executive coaching program — leadership team,FACILITIES,D.Okafor
+INV-1334,2024-01-11,Silverstone IT Services,9720.87,HR consulting — executive recruitment cycle,IT,J.Harrison
+INV-1675,2024-04-12,Lakeview Office Supplies Co,38500,Brand identity redesign — new product line,SUPPLIES,M.Chen
+INV-1114,2024-02-25,Apex Technology Solutions,6588.78,Cybersecurity monitoring — 24/7 SOC retainer,IT,R.Novak
+INV-1677,2024-04-23,Crestview Supplies Ltd,28750,Employee benefits consulting — open enrollment,SUPPLIES,S.Patel
+INV-1010,2024-12-18,Blue Ridge Analytics Group,95000,Print and marketing collateral production,CONSULTING,J.Harrison
+INV-1647,2024-10-10,Frontier Logistics Partners,1624.23,Equipment lease payment — fiscal Q3,LOGISTICS,M.Chen
+INV-1704,2024-09-07,Lakeview Office Supplies Co,1000.0,Cash advance — project expenses,SUPPLIES,M.Chen
+INV-1027,2024-02-19,Blue Ridge Analytics Group,27855.36,Annual maintenance and support contract renewal,OPERATIONS,J.Harrison
+INV-1358,2024-08-01,Pacific Rim Staffing,7571.36,Cybersecurity monitoring — 24/7 SOC retainer,OPERATIONS,L.Torres
+INV-1090,2024-12-06,Redrock Data Solutions,4979.31,Office supplies and stationery restock,IT,J.Harrison
+INV-1643,2024-07-11,Ironwood Engineering Corp,6561.75,Q1 consulting services — enterprise architecture,OPERATIONS,M.Chen
+INV-1029,2024-05-17,Meridian Legal Partners LLP,11171.33,Various services,LEGAL,R.Novak
+INV-1165,2024-05-18,Meridian Legal Partners LLP,10500.66,Brand identity redesign — new product line,LEGAL,A.Reeves
+INV-1550,2024-07-06,Meridian Legal Partners LLP,6600.9,Office supplies and stationery restock,LEGAL,A.Reeves
+INV-1683,2024-08-03,Unity Healthcare Partners,10000.0,Misc,CONSULTING,J.Harrison
+INV-1103,2024-01-09,Meridian Legal Partners LLP,6104.52,Security camera installation — warehouse expansion,LEGAL,D.Okafor
+INV-1707,2024-01-15,Meridian Legal Partners LLP,9985.0,IT helpdesk and L2 support services,LEGAL,S.Patel
+INV-1434,2024-12-10,Pacific Rim Staffing,5252.78,Insurance premium — commercial liability policy,CONSULTING,R.Novak
+INV-1129,2024-02-11,Quantum Cloud Infrastructure,25555.82,Tax planning and financial advisory services,IT,L.Torres
+INV-1624,2024-05-07,Apex Technology Solutions,16821.33,Staff compliance certification training,IT,R.Novak
+INV-1604,2024-01-03,Harbor Light Consulting,28843.3,Tax planning and financial advisory services,CONSULTING,J.Harrison
+INV-1008,2024-07-08,Unity Healthcare Partners,9722.54,Market research and competitive landscape analysis,CONSULTING,R.Novak
+INV-1658,2024-10-07,Frontierr Logistics Partners,7118.26,Tax planning and financial advisory services,LOGISTICS,A.Reeves
+INV-1041,2024-03-12,Harbor Light Consulting,6805.19,Staff compliance certification training,CONSULTING,A.Reeves
+INV-1307,2024-06-05,Meridian Legal Partners LLP,45000,Software development sprint 18 — backend API,LEGAL,J.Harrison
+INV-1151,2024-09-12,Redrock Data Solutions,8586.39,Payroll processing services — monthly retainer,OPERATIONS,D.Okafor
+INV-1591,2024-08-06,Cascade Digital Systems,9127.87,Financial audit preparation and documentation support,IT,S.Patel
+INV-1407,2024-05-19,Meridian Legal Partners LLP,4581.87,Staff compliance certification training,LEGAL,J.Harrison
+INV-1023,2024-06-20,Avalon Research Associates,8604.65,Financial audit preparation and documentation support,FACILITIES,J.Harrison
+INV-1395,2024-04-03,Summit Financial Advisors,10394.94,Equipment lease payment — fiscal Q3,FINANCE,M.Chen
+INV-1169,2024-01-10,Unity Healthcare Partners,7455.34,Tax planning and financial advisory services,CONSULTING,D.Okafor
+INV-1744,2024-05-21,Summit Financial Advisors,89192.04,Temporary staffing — operations peak period,FINANCE,M.Chen
+INV-1600,2024-09-09,Horizon Training Solutions,1520.32,SharePoint migration — intranet modernization,CONSULTING,A.Reeves
+INV-1336,2024-03-12,Westbrook Print & Media,1806.52,Environmental compliance consulting services,MARKETING,L.Torres
+INV-1113,2024-12-20,Meridian Legal Partners LLP,8369.39,Temporary staffing — operations peak period,LEGAL,R.Novak
+INV-1474,2024-01-25,Blue Ridge Analytics Group,15730.41,Network infrastructure upgrade phase 2,LEGAL,A.Reeves
+INV-1149,2024-03-14,Northpoint Marketing Agency,5090.58,Remote access VPN — enterprise license expansion,MARKETING,D.Okafor
+INV-1410,2024-01-20,Meridian Legal Partners LLP,15695.83,Market research and competitive landscape analysis,LEGAL,S.Patel
+INV-1355,2024-02-02,Summit Financial Advisors,8813.12,Data analytics platform subscription renewal,SUPPLIES,J.Harrison
+INV-1717,2024-06-05,Unity Healthcare Partners,99990.0,Legal retainer — contract review and advisory,CONSULTING,S.Patel
+INV-1466,2024-04-20,Apex Technology Solutions,80000,Data analytics platform subscription renewal,IT,M.Chen
+INV-1562,2024-10-23,Apex Technology Solutions,16609.5,Network infrastructure upgrade phase 2,IT,L.Torres
+INV-1261,2024-02-18,Cascade Digital Systems,3769.57,Network infrastructure upgrade phase 2,IT,J.Harrison
+INV-1589,2024-12-11,Quantum Cloud Infrastructure,5109.6,Firewall replacement and network segmentation,IT,R.Novak
+INV-1256,2024-03-15,Blue Ridge Analytics Group,9660.38,Equipment lease payment — fiscal Q3,CONSULTING,R.Novak
+INV-1522,2024-03-09,Harbor Light Consulting,9325.87,Tax planning and financial advisory services,CONSULTING,R.Novak
+INV-1166,2024-05-23,Cascade Digital Systems,7315.63,Database migration and cloud uplift services,IT,D.Okafor
+INV-1284,2024-09-22,Summit Financial Advisors,8387.59,Third-party pen test — web application scope,FINANCE,A.Reeves
+INV-1127,2024-03-12,Harbor Light Consulting,15241.53,Remote access VPN — enterprise license expansion,CONSULTING,L.Torres
+INV-1365,2024-07-15,Meridian Legal Partners LLP,45000,Facilities management — HVAC preventive maintenance,LEGAL,D.Okafor
+INV-1518,2024-09-18,Summit Financial Advisors,8151.13,Corporate travel management — Q1 booking fees,FINANCE,A.Reeves
+INV-1492,2024-08-22,Unity Healthcare Partners,5758.76,Executive coaching program — leadership team,CONSULTING,L.Torres
+INV-1102,2024-04-07,Cascade Digital Systems,5648.85,Financial audit preparation and documentation support,IT,L.Torres
+INV-1423,2024-04-25,Blue Ridge Analytics Group,22981.15,Industry conference attendance — professional development,IT,A.Reeves
+INV-1088,2024-05-24,Northpoint Marketing Agency,4874.71,ERP system customization — procurement module,FACILITIES,J.Harrison
+INV-1275,2024-03-13,Pacific Rim Staffing,2140.65,Annual security audit and penetration testing,CONSULTING,D.Okafor
+INV-1254,2024-10-02,Yellowstone Equipment Rental,3145.8,Copier and printer lease — main office,OPERATIONS,S.Patel
+INV-1483,2024-07-09,Apex Technology Solutions,23644.22,Industry conference attendance — professional development,IT,S.Patel
+INV-1598,2024-04-16,Blue Ridge Analytics Group,13475.5,Annual security audit and penetration testing,OPERATIONS,M.Chen
+INV-1350,2024-07-09,Westbrook Print & Media,1831.33,Financial audit preparation and documentation support,MARKETING,M.Chen
+INV-1139,2024-02-23,Meridian Legal Partners LLP,36108.67,Security camera installation — warehouse expansion,LEGAL,J.Harrison
+INV-1208,2024-07-21,Summit Financial Advisors,35324.97,Inventory management system — annual license,MARKETING,M.Chen
+INV-1463,2024-02-29,Meridian Legal Partners LLP,6019.08,Database migration and cloud uplift services,LEGAL,S.Patel
+INV-1372,2024-09-05,Apex Technology Solutions,11676.35,Remote access VPN — enterprise license expansion,IT,A.Reeves
+INV-1507,2024-02-24,Pinnacle Risk Advisors,26794.29,Personal expense reimbursement,FINANCE,D.Okafor
+INV-1464,2024-05-17,Horizon Training Solutions,4472.16,Digital marketing campaign Q2 execution,CONSULTING,R.Novak
+INV-1460,2024-12-24,Redrock Data Solutions,7430.3,Legal filing fees and court documentation costs,IT,J.Harrison
+INV-1553,2024-03-28,Delta Freight Services LLC,2954.52,Market research and competitive landscape analysis,FINANCE,A.Reeves
+INV-1381,2024-05-08,Meridian Legal Partners LLP,4363.68,Brand identity redesign — new product line,LEGAL,R.Novak
+INV-1119,2024-02-13,Frontier Logistics Partners,4821.14,Remote access VPN — enterprise license expansion,LOGISTICS,J.Harrison
+INV-1181,2024-05-26,Vanguard Analytics Inc,5327.78,Advertising placement — industry trade publication,IT,J.Harrison
+INV-1753,2024-03-28,Summit Financial Advisors,94760.42,Print and marketing collateral production,FINANCE,M.Chen
+INV-1005,2024-10-18,Cascade Digital Systems,4664.69,Print and marketing collateral production,IT,M.Chen
+INV-1500,2024-08-13,Redrock Data Solutions,22151.55,Advertising placement — industry trade publication,IT,M.Chen
+INV-1190,2024-03-18,Frontier Logistics Partners,897.81,Annual maintenance and support contract renewal,LEGAL,A.Reeves
+INV-1438,2024-08-27,Quantum Cloud Infrastructure,39407.4,HR consulting — executive recruitment cycle,IT,A.Reeves
+INV-1656,2024-09-07,Frontierr Logistics Partners,3197.51,Catering services — quarterly board meeting,LOGISTICS,A.Reeves
+INV-1321,2024-08-30,Elmwood Graphics Studio,1401.8,Copier and printer lease — main office,MARKETING,J.Harrison
+INV-1740,2024-03-24,Summit Financial Advisors,77076.83,IT helpdesk and L2 support services,FINANCE,J.Harrison
+INV-1292,2024-04-15,Titan Security Services,6472.26,Annual security audit and penetration testing,SECURITY,S.Patel
+INV-1481,2024-09-04,Cascade Digital Systems,21187.5,HR consulting — executive recruitment cycle,FACILITIES,J.Harrison
+INV-1470,2024-10-02,Blue Ridge Analytics Group,64395.56,Database migration and cloud uplift services,OPERATIONS,D.Okafor
+INV-1159,2024-12-12,Quantum Cloud Infrastructure,6294.94,Misc,IT,A.Reeves
+INV-1333,2024-07-31,Sterling Law Group,4192.07,Office supplies and stationery restock,FACILITIES,M.Chen
+INV-1616,2024-02-04,Summit Financial Advisors,7666.76,Industry conference attendance — professional development,MARKETING,D.Okafor
+INV-1178,2024-08-03,Delta Freight Services LLC,1030.25,ERP system customization — procurement module,LOGISTICS,M.Chen
+INV-1645,2024-03-14,Meridian Legal Partners LLP,12840.59,Catering services — quarterly board meeting,LEGAL,S.Patel
+INV-1394,2024-02-25,Unity Healthcare Partners,5179.01,Cloud hosting — production environment monthly,CONSULTING,M.Chen
+INV-1671-03,2024-08-18,Apex Technology Solutions,24754.55,Partial payment 3/3 — project milestone,IT,L.Torres
+INV-1356,2024-09-17,Apex Technology Solutions,22228.25,Cybersecurity monitoring — 24/7 SOC retainer,IT,M.Chen
+INV-1515,2024-10-07,Cascade Digital Systems,5051.45,Industry conference attendance — professional development,IT,L.Torres
+INV-1121,2024-05-23,Eagle Eye Security Systems,2227.36,Database migration and cloud uplift services,SECURITY,A.Reeves
+INV-1547,2024-02-14,Summit Financial Advisors,10338.31,Cloud hosting — production environment monthly,FINANCE,M.Chen
+INV-1276,2024-07-01,Delta Freight Services LLC,563.55,Industry conference attendance — professional development,LOGISTICS,A.Reeves
+INV-1576,2024-07-13,Summit Financial Advisors,7600.83,Data analytics platform subscription renewal,FINANCE,S.Patel
+INV-1622,2024-06-21,Cascade Digital Systems,8994.2,Monthly software license renewal,IT,S.Patel
+INV-1265,2024-09-27,Westbrook Print & Media,3093.31,Personal expense reimbursement,MARKETING,D.Okafor
+INV-1259,2024-10-27,Lakeview Office Supplies Co,758.97,IT helpdesk and L2 support services,SUPPLIES,L.Torres
+INV-1739,2024-09-17,Summit Financial Advisors,70229.13,Data analytics platform subscription renewal,FINANCE,M.Chen
+INV-1093,2024-12-11,Westbrook Print & Media,4100.7,Tax planning and financial advisory services,MARKETING,R.Novak
+INV-1623,2024-12-15,Apex Technology Solutions,5084.59,Temporary staffing — operations peak period,IT,D.Okafor
+INV-1625,2024-07-06,Apex Technology Solutions,12554.3,Translation and localization services — APAC,FINANCE,J.Harrison
+INV-1302,2024-06-22,Apex Technology Solutions,80000,Inventory management system — annual license,SECURITY,D.Okafor
+INV-1637,2024-11-03,Unity Healthcare Partners,5568.96,IT helpdesk and L2 support services,CONSULTING,R.Novak
+INV-1347,2024-01-27,Quantum Cloud Infrastructure,9816.3,Temporary staffing — operations peak period,IT,D.Okafor
+INV-1629,2024-05-15,Oakwood Facilities Mgmt,2584.21,Database migration and cloud uplift services,FACILITIES,L.Torres
+INV-1641,2024-11-17,Northpoint Marketing Agency,1691.19,Freight and logistics — bulk shipment handling,MARKETING,L.Torres
+INV-1185,2024-12-16,Cascade Digital Systems,25823.94,Office supplies and stationery restock,IT,L.Torres
+INV-1345,2024-03-03,Delta Freight Services LLC,555.65,Employee benefits consulting — open enrollment,LOGISTICS,M.Chen
+INV-1219,2024-12-21,Meridian Legal Partners LLP,8026.55,Customs brokerage and import clearance fees,LEGAL,L.Torres
+INV-1447,2024-02-24,Cascade Digital Systems,5707.29,Network infrastructure upgrade phase 2,IT,R.Novak
+INV-1163,2024-04-16,Oakwood Facilities Mgmt,3813.76,Network infrastructure upgrade phase 2,SECURITY,D.Okafor
+INV-1673-03,2024-10-09,Ironwood Engineering Corp,49329.55,Partial payment 3/3 — project milestone,OPERATIONS,J.Harrison
+INV-1240,2024-07-08,Eagle Eye Security Systems,1080.21,Emergency procurement,SECURITY,A.Reeves
+INV-1143,2024-01-26,Meridian Legal Partners LLP,5379.15,Inventory management system — annual license,LEGAL,J.Harrison
+INV-1510,2024-10-15,Meridian Legal Partners LLP,12982.8,Brand identity redesign — new product line,LEGAL,S.Patel
+INV-1223,2024-01-15,Oakwood Facilities Mgmt,3451.82,Cloud hosting — production environment monthly,FACILITIES,M.Chen
+INV-1009,2024-08-27,Quantum Cloud Infrastructure,11205.46,Payroll processing services — monthly retainer,IT,A.Reeves
+INV-1249,2024-02-14,Pinnacle Risk Advisors,3910.34,Firewall replacement and network segmentation,FINANCE,A.Reeves
+INV-1228,2024-05-11,Ironwood Engineering Corp,6257.35,Catering services — quarterly board meeting,OPERATIONS,L.Torres
+INV-1627,2024-11-27,Meridian Legal Partners LLP,13106.47,Corporate travel management — Q1 booking fees,LEGAL,S.Patel
+INV-1227,2024-11-15,Lakeview Office Supplies Co,908.78,Misc,SUPPLIES,S.Patel
+INV-1017,2024-02-26,Eagle Eye Security Systems,8634.66,Executive coaching program — leadership team,SECURITY,L.Torres
+INV-1184,2024-01-28,Quantum Cloud Infrastructure,6576.36,Firewall replacement and network segmentation,IT,M.Chen
+INV-1203,2024-09-29,Delta Freight Services LLC,1811.87,Executive search — VP of Engineering placement,LOGISTICS,L.Torres
+INV-1617,2024-11-04,Northpoint Marketing Agency,17659.38,Database migration and cloud uplift services,MARKETING,A.Reeves
+INV-1349,2024-05-02,Delta Freight Services LLC,866.21,Personal expense reimbursement,LOGISTICS,M.Chen
+INV-1444,2024-11-19,Apex Technology Solutions,12421.78,Insurance premium — commercial liability policy,IT,S.Patel
+INV-1028,2024-10-18,Unity Healthcare Partners,11745.52,Annual security audit and penetration testing,CONSULTING,M.Chen
+INV-1670-01,2024-03-12,Cascade Digital Systems,9842.11,Partial payment 1/2 — project milestone,IT,A.Reeves
+INV-1204,2024-11-12,Blue Ridge Analytics Group,22368.96,Copier and printer lease — main office,CONSULTING,A.Reeves
+INV-1749,2024-07-03,Summit Financial Advisors,85065.91,Legal filing fees and court documentation costs,FINANCE,J.Harrison
+INV-1648,2024-02-14,Meridian Legal Partners LLP,11072.47,Freight and logistics — bulk shipment handling,LEGAL,M.Chen
+INV-1065,2024-01-20,Eagle Eye Security Systems,4680.46,Temporary staffing — operations peak period,SECURITY,D.Okafor
+INV-1519,2024-02-17,Cascade Digital Systems,11977.75,Facilities management — HVAC preventive maintenance,IT,M.Chen
+INV-1104,2024-07-14,Silverstone IT Services,21092.31,Benefits administration platform — annual fee,IT,L.Torres
+INV-1520,2024-09-08,Cascade Digital Systems,12706.65,Q1 consulting services — enterprise architecture,LOGISTICS,J.Harrison
+INV-1091,2024-05-07,Silverstone IT Services,17094.09,Payroll processing services — monthly retainer,OPERATIONS,R.Novak
+INV-1572,2024-01-10,Meridian Legal Partners LLP,7352.18,Financial audit preparation and documentation support,LOGISTICS,M.Chen
+INV-1561,2024-11-19,Titan Security Services,17582.54,SharePoint migration — intranet modernization,SECURITY,D.Okafor
+INV-1747,2024-08-22,Summit Financial Advisors,86693.82,Data analytics platform subscription renewal,FINANCE,M.Chen
+INV-1448,2024-01-02,Apex Technology Solutions,16711.03,Remote access VPN — enterprise license expansion,IT,S.Patel
+INV-1374,2024-06-21,Unity Healthcare Partners,18757.2,Monthly software license renewal,CONSULTING,L.Torres
+INV-1175,2024-12-19,Harbor Light Consulting,11831.71,Benefits administration platform — annual fee,SUPPLIES,J.Harrison
+INV-1359,2024-06-19,Cascade Digital Systems,13195.02,Network infrastructure upgrade phase 2,IT,A.Reeves
+INV-1134,2024-08-08,Cascade Digital Systems,19135.86,Corporate travel management — Q1 booking fees,IT,M.Chen
+INV-1049,2024-02-12,Northpoint Marketing Agency,7998.88,HR consulting — executive recruitment cycle,MARKETING,D.Okafor
+INV-1062,2024-02-01,Harbor Light Consulting,8514.42,Monthly software license renewal,CONSULTING,J.Harrison
+INV-1344,2024-07-08,Meridian Legal Partners LLP,9234.81,Cloud hosting — production environment monthly,LEGAL,M.Chen
+INV-1531,2024-05-05,Apex Technology Solutions,18588.66,Network infrastructure upgrade phase 2,IT,A.Reeves
+INV-1221,2024-05-12,Ironwood Engineering Corp,9730.71,Payroll processing services — monthly retainer,CONSULTING,D.Okafor
+INV-1046,2024-08-18,Lakeview Office Supplies Co,1504.22,HR consulting — executive recruitment cycle,SUPPLIES,L.Torres
+INV-1004,2024-03-13,Lakeview Office Supplies Co,2320.95,Cybersecurity monitoring — 24/7 SOC retainer,SUPPLIES,A.Reeves
+INV-1650,2024-03-21,Apex Technology Solutions,25472.02,Staff compliance certification training,IT,A.Reeves
+INV-1453,2024-09-07,Horizon Training Solutions,8330.18,Annual security audit and penetration testing,CONSULTING,J.Harrison
+INV-1692,2024-10-31,Ironwood Engineering Corp,25000.0,Catering services — quarterly board meeting,OPERATIONS,D.Okafor
+INV-1732,2024-04-26,General Business Solutions,16916.2,Cash advance — project expenses,SUPPLIES,J.Harrison
+INV-1437,2024-07-19,Summit Financial Advisors,26713.47,Legal filing fees and court documentation costs,FINANCE,R.Novak
+INV-1554,2024-11-23,Westbrook Print & Media,4109.43,Legal retainer — contract review and advisory,MARKETING,A.Reeves
+INV-1140,2024-07-05,Blue Ridge Analytics Group,26322.19,Corporate travel management — Q1 booking fees,CONSULTING,S.Patel
+INV-1375,2024-05-23,Blue Ridge Analytics Group,21921.01,Legal filing fees and court documentation costs,CONSULTING,A.Reeves
+INV-1118,2024-08-25,Avalon Research Associates,10253.28,Office supplies and stationery restock,CONSULTING,S.Patel
+INV-1155,2024-01-27,Apex Technology Solutions,72623.91,Payroll processing services — monthly retainer,IT,L.Torres
+INV-1172,2024-07-12,Eagle Eye Security Systems,14237.27,Software development sprint 18 — backend API,SECURITY,L.Torres
+INV-1585,2024-12-26,Apex Technology Solutions,18684.75,Cloud hosting — production environment monthly,LOGISTICS,S.Patel
+INV-1161,2024-03-09,Blue Ridge Analytics Group,43478.46,IT helpdesk and L2 support services,CONSULTING,A.Reeves
+INV-1263,2024-03-16,Lakeview Office Supplies Co,645.95,Brand identity redesign — new product line,SUPPLIES,L.Torres
+INV-1415,2024-06-08,Meridian Legal Partners LLP,14098.78,Monthly software license renewal,LEGAL,M.Chen
+INV-1441,2024-01-29,Oakwood Facilities Mgmt,1512.29,Catering services — quarterly board meeting,FACILITIES,R.Novak
+INV-1312,2024-05-26,Cascade Digital Systems,17466.08,Customs brokerage and import clearance fees,IT,D.Okafor
+INV-1251,2024-04-01,Apex Technology Solutions,26903.53,Third-party pen test — web application scope,IT,S.Patel
+INV-1122,2024-10-05,Summit Financial Advisors,23942.72,Executive search — VP of Engineering placement,FINANCE,R.Novak
+INV-1142,2024-02-22,Cascade Digital Systems,13704.3,Freight and logistics — bulk shipment handling,IT,J.Harrison
+INV-1685,2024-03-17,Quantum Cloud Infrastructure,10000.0,Digital marketing campaign Q2 execution,IT,L.Torres
+INV-1729,2024-08-22,Quick Pay Services,24388.8,Misc,OPERATIONS,S.Patel
+INV-1621,2024-04-18,Delta Freight Services LLC,2193.05,Remote access VPN — enterprise license expansion,LOGISTICS,M.Chen
+INV-1647,2024-10-10,Frontier Logistics Partners,1624.23,Equipment lease payment — fiscal Q3,LOGISTICS,M.Chen
+INV-1318,2024-06-29,Redrock Data Solutions,7587.32,Annual maintenance and support contract renewal,FINANCE,M.Chen
+INV-1335,2024-04-09,Meridian Legal Partners LLP,6796.49,Services rendered,LEGAL,D.Okafor
+INV-1750,2024-07-08,Summit Financial Advisors,98424.46,Industry conference attendance — professional development,FINANCE,J.Harrison
+INV-1131,2024-06-04,Frontier Logistics Partners,6369.75,Adjustment,LOGISTICS,J.Harrison
+INV-1609,2024-01-28,Lakeview Office Supplies Co,593.08,Cybersecurity monitoring — 24/7 SOC retainer,SUPPLIES,A.Reeves
+INV-1168,2024-08-28,Blue Ridge Analytics Group,10671.03,Cybersecurity monitoring — 24/7 SOC retainer,CONSULTING,R.Novak
+INV-1267,2024-06-30,Delta Freight Services LLC,4743.83,Corporate travel management — Q1 booking fees,LOGISTICS,A.Reeves
+INV-1085,2024-08-01,Summit Financial Advisors,12460.47,ERP system customization — procurement module,FINANCE,S.Patel
+INV-1682,2024-01-26,Ironwood Engineering Corp,10000.0,Print and marketing collateral production,OPERATIONS,L.Torres
+INV-1477,2024-09-13,Blue Ridge Analytics Group,37475.12,Legal filing fees and court documentation costs,CONSULTING,S.Patel
+INV-1680,2024-08-06,Unity Healthcare Partners,10000.0,Network infrastructure upgrade phase 2,CONSULTING,M.Chen
+INV-1723,2024-04-28,JJ Consulting LLC,17529.49,Gift cards — client appreciation,CONSULTING,J.Harrison
+INV-1505,2024-04-23,Harbor Light Consulting,20282.5,Advertising placement — industry trade publication,CONSULTING,S.Patel
+INV-1206,2024-08-23,Summit Financial Advisors,28574.61,Print and marketing collateral production,FACILITIES,D.Okafor
+INV-1684,2024-05-07,Apex Technology Solutions,10000.0,Misc,IT,L.Torres
+INV-1317,2024-03-22,Meridian Legal Partners LLP,7903.76,Legal retainer — contract review and advisory,LEGAL,R.Novak
+INV-1132,2024-11-13,Summit Financial Advisors,23960.71,Firewall replacement and network segmentation,FINANCE,S.Patel
+INV-1279,2024-11-30,Silverstone IT Services,4723.83,Financial audit preparation and documentation support,IT,M.Chen
+INV-1559,2024-04-18,Northpoint Marketing Agency,8003.6,General expenses,MARKETING,S.Patel
+INV-1348,2024-10-19,Lakeview Office Supplies Co,921.39,Environmental compliance consulting services,SUPPLIES,D.Okafor
+INV-1737,2024-09-16,Summit Financial Advisors,75797.98,Freight and logistics — bulk shipment handling,FINANCE,M.Chen
+INV-1351,2024-11-25,Meridian Legal Partners LLP,6048.49,Q1 consulting services — enterprise architecture,SUPPLIES,M.Chen
+INV-1012,2024-08-01,Delta Freight Services LLC,2853.12,Executive search — VP of Engineering placement,LOGISTICS,M.Chen
+INV-1262,2024-06-24,Sunrise Fleet Management,1312.62,Industry conference attendance — professional development,LOGISTICS,A.Reeves
+INV-1686,2024-04-17,Delta Freight Services LLC,5000.0,Data analytics platform subscription renewal,LOGISTICS,S.Patel
+INV-1247,2024-12-17,Ironwood Engineering Corp,6001.76,Cloud hosting — production environment monthly,OPERATIONS,M.Chen
+INV-1070,2024-05-05,Unity Healthcare Partners,21562.34,Warehouse storage and fulfillment services Q4,MARKETING,S.Patel
+INV-1322,2024-03-27,Unity Healthcare Partners,3563.9,Third-party pen test — web application scope,CONSULTING,A.Reeves
+INV-1035,2024-10-03,Unity Healthcare Partners,4375.5,Inventory management system — annual license,CONSULTING,A.Reeves
+INV-1671-01,2024-08-19,Apex Technology Solutions,24625.3,Partial payment 1/3 — project milestone,IT,R.Novak
+INV-1260,2024-03-30,Westbrook Print & Media,2210.81,Market research and competitive landscape analysis,MARKETING,D.Okafor
+INV-1087,2024-11-08,Cascade Digital Systems,21110.84,Services rendered,SUPPLIES,L.Torres
+INV-1451,2024-02-20,Ironwood Engineering Corp,10591.27,Tax planning and financial advisory services,OPERATIONS,L.Torres
+INV-1720,2024-08-04,Northpoint Marketing Agency,998.0,Industry conference attendance — professional development,MARKETING,R.Novak
+INV-1385,2024-06-15,Sunrise Fleet Management,1503.21,Freight and logistics — bulk shipment handling,CONSULTING,R.Novak
+INV-1745,2024-09-01,Summit Financial Advisors,83595.32,Freight and logistics — bulk shipment handling,FINANCE,M.Chen
+INV-1379,2024-11-18,Ridgeline Catering Co,1286.9,Database migration and cloud uplift services,FACILITIES,S.Patel
+INV-1689,2024-08-17,Harbor Light Consulting,5000.0,Data analytics platform subscription renewal,CONSULTING,A.Reeves
+INV-1497,2024-07-04,Vanguard Analytics Inc,4646.79,Executive coaching program — leadership team,IT,D.Okafor
+INV-1735,2024-02-18,Summit Financial Advisors,78260.47,Freight and logistics — bulk shipment handling,FINANCE,M.Chen
+INV-1197,2024-12-11,Unity Healthcare Partners,3401.11,Warehouse storage and fulfillment services Q4,CONSULTING,R.Novak
+INV-1698,2024-02-24,Summit Financial Advisors,100000.0,Office supplies and stationery restock,FINANCE,S.Patel
+INV-1655,2024-11-28,Apex Technology Solution,12764.26,Catering services — quarterly board meeting,IT,J.Harrison
+INV-1332,2024-04-22,Vanguard Analytics Inc,6172.29,Security camera installation — warehouse expansion,IT,L.Torres
+INV-1057,2024-11-18,Quantum Cloud Infrastructure,4147.82,Executive coaching program — leadership team,FACILITIES,A.Reeves
+INV-1136,2024-12-23,Quantum Cloud Infrastructure,7836.76,Market research and competitive landscape analysis,IT,R.Novak
+INV-1524,2024-11-15,Northpoint Marketing Agency,3980.82,Payroll processing services — monthly retainer,OPERATIONS,S.Patel
+INV-1436,2024-11-21,Eagle Eye Security Systems,5556.5,Executive coaching program — leadership team,SECURITY,D.Okafor
+INV-1532,2024-06-05,Apex Technology Solutions,11738.03,IT helpdesk and L2 support services,IT,R.Novak
+INV-1668-02,2024-05-29,Blue Ridge Analytics Group,9769.39,Partial payment 2/3 — project milestone,CONSULTING,R.Novak
+INV-1611,2024-12-24,Delta Freight Services LLC,700.85,Executive coaching program — leadership team,LOGISTICS,D.Okafor
+INV-1657,2024-11-03,Frontierr Logistics Partners,2561.85,Tax planning and financial advisory services,LOGISTICS,L.Torres
+INV-1755,2024-02-12,Summit Financial Advisors,90500.31,Data analytics platform subscription renewal,FINANCE,M.Chen
+INV-1255,2024-12-27,Frontier Logistics Partners,1507.96,Corporate travel management — Q1 booking fees,LOGISTICS,A.Reeves
+INV-1467,2024-03-01,Avalon Research Associates,9817.12,Temporary staffing — operations peak period,CONSULTING,L.Torres
+INV-1377,2024-03-01,Ridgeline Catering Co,1887.23,Insurance premium — commercial liability policy,FACILITIES,R.Novak
+INV-1257,2024-03-03,Harbor Light Consulting,13551.65,HR consulting — executive recruitment cycle,CONSULTING,M.Chen
+INV-1366,2024-08-06,Frontier Logistics Partners,4498.43,Legal retainer — contract review and advisory,OPERATIONS,M.Chen
+INV-1493,2024-03-20,Meridian Legal Partners LLP,9131.95,Advertising placement — industry trade publication,LEGAL,J.Harrison
+INV-1058,2024-12-04,Northpoint Marketing Agency,4931.81,Firewall replacement and network segmentation,SECURITY,D.Okafor
+INV-1388,2024-12-24,Elmwood Graphics Studio,2522.59,Annual maintenance and support contract renewal,MARKETING,S.Patel
+INV-1298,2024-03-28,Avalon Research Associates,9153.23,SharePoint migration — intranet modernization,CONSULTING,S.Patel
+INV-1187,2024-11-14,Cascade Digital Systems,6276.13,Facilities management — HVAC preventive maintenance,IT,L.Torres
+INV-1078,2024-06-26,Meridian Legal Partners LLP,13863.88,Gift cards — client appreciation,SECURITY,L.Torres
+INV-1458,2024-11-14,Meridian Legal Partners LLP,12846.76,Correction — prior period,IT,R.Novak
+INV-1501,2024-03-19,Apex Technology Solutions,13743.13,Office supplies and stationery restock,IT,L.Torres
+INV-1668-01,2024-05-26,Blue Ridge Analytics Group,9607.16,Partial payment 1/3 — project milestone,CONSULTING,M.Chen
+INV-1721,2024-12-01,Titan Security Services,997.0,IT helpdesk and L2 support services,SECURITY,R.Novak
+INV-1252,2024-11-11,Quantum Cloud Infrastructure,7052.02,Legal due diligence — acquisition target review,CONSULTING,L.Torres
+INV-1575,2024-07-15,Pacific Rim Staffing,4254.88,Equipment lease payment — fiscal Q3,CONSULTING,M.Chen
+INV-1582,2024-06-23,Meridian Legal Partners LLP,5597.06,Benefits administration platform — annual fee,LEGAL,S.Patel
+INV-1045,2024-02-27,Vanguard Analytics Inc,11414.21,Q1 consulting services — enterprise architecture,IT,R.Novak
+INV-1469,2024-05-10,Summit Financial Advisors,34365.64,Legal filing fees and court documentation costs,FINANCE,S.Patel
+INV-1339,2024-02-28,Cascade Digital Systems,5456.26,Database migration and cloud uplift services,OPERATIONS,J.Harrison
+INV-1281,2024-02-09,Harbor Light Consulting,29773.12,Cloud hosting — production environment monthly,CONSULTING,J.Harrison
+INV-1626,2024-08-27,Meridian Legal Partners LLP,10996.89,Print and marketing collateral production,OPERATIONS,R.Novak
+INV-1198,2024-01-20,Redrock Data Solutions,8312.54,Temporary staffing — operations peak period,IT,M.Chen
+INV-1400,2024-08-30,Frontier Logistics Partners,1197.08,Inventory management system — annual license,LOGISTICS,D.Okafor
+INV-1299,2024-05-02,Crestview Supplies Ltd,1791.74,Legal filing fees and court documentation costs,SUPPLIES,J.Harrison
+INV-1210,2024-01-15,Frontier Logistics Partners,4009.02,Equipment lease payment — fiscal Q3,LOGISTICS,L.Torres
+INV-1631,2024-05-20,Elmwood Graphics Studio,2054.18,Warehouse storage and fulfillment services Q4,MARKETING,D.Okafor
+INV-1081,2024-02-17,Ironwood Engineering Corp,9107.06,Employee benefits consulting — open enrollment,OPERATIONS,M.Chen
+INV-1426,2024-07-02,Ironwood Engineering Corp,6548.8,Legal due diligence — acquisition target review,OPERATIONS,D.Okafor
+INV-1748,2024-02-18,Summit Financial Advisors,83215.77,Brand identity redesign — new product line,FINANCE,J.Harrison
+INV-1232,2024-05-23,Frontier Logistics Partners,8166.62,Legal filing fees and court documentation costs,IT,S.Patel
+INV-1386,2024-08-22,Blue Ridge Analytics Group,20024.15,Digital marketing campaign Q2 execution,SECURITY,R.Novak
+INV-1649,2024-10-09,Cascade Digital Systems,3405.42,Cloud hosting — production environment monthly,IT,D.Okafor
+INV-1706,2024-04-23,Summit Financial Advisors,9995.0,Catering services — quarterly board meeting,FINANCE,J.Harrison
+INV-1496,2024-01-19,Meridian Legal Partners LLP,37678.97,Industry conference attendance — professional development,LEGAL,M.Chen
+INV-1431,2024-03-28,Ironwood Engineering Corp,7946.74,Firewall replacement and network segmentation,OPERATIONS,A.Reeves
+INV-1590,2024-10-11,Yellowstone Equipment Rental,5590.48,Catering services — quarterly board meeting,OPERATIONS,M.Chen
+INV-1610,2024-04-28,Apex Technology Solutions,7981.58,Equipment lease payment — fiscal Q3,IT,A.Reeves
+INV-1229,2024-11-24,Sterling Law Group,10442.78,Environmental compliance consulting services,FINANCE,L.Torres
+INV-1303,2024-12-15,Summit Financial Advisors,26499.57,Annual maintenance and support contract renewal,FINANCE,A.Reeves
+INV-1019,2024-11-21,Meridian Legal Partners LLP,6700.22,Data analytics platform subscription renewal,LEGAL,R.Novak
+INV-1138,2024-07-05,Quantum Cloud Infrastructure,17505.36,HR consulting — executive recruitment cycle,IT,D.Okafor
+INV-1660,2024-02-25,Summit Financial Advisory,7604.13,Freight and logistics — bulk shipment handling,FINANCE,M.Chen
+INV-1314,2024-08-13,Blue Ridge Analytics Group,60363.05,HR consulting — executive recruitment cycle,SUPPLIES,A.Reeves
+INV-1080,2024-02-13,Meridian Legal Partners LLP,9302.65,HR consulting — executive recruitment cycle,LEGAL,M.Chen
+INV-1014,2024-12-14,Ironwood Engineering Corp,4355.83,Executive search — VP of Engineering placement,OPERATIONS,L.Torres
+INV-1207,2024-04-04,Cascade Digital Systems,4873.89,Print and marketing collateral production,IT,J.Harrison
+INV-1738,2024-11-09,Summit Financial Advisors,74795.31,HR consulting — executive recruitment cycle,FINANCE,J.Harrison
+INV-1506,2024-07-31,Ironwood Engineering Corp,7926.9,Copier and printer lease — main office,OPERATIONS,R.Novak
+INV-1548,2024-09-02,Summit Financial Advisors,10311.3,Executive search — VP of Engineering placement,FINANCE,L.Torres
+INV-1095,2024-09-05,Westbrook Print & Media,2107.1,Industry conference attendance — professional development,MARKETING,L.Torres
+INV-1391,2024-06-05,Vanguard Analytics Inc,5835.02,Security camera installation — warehouse expansion,IT,S.Patel
+INV-1583,2024-10-22,Crestview Supplies Ltd,402.97,Freight and logistics — bulk shipment handling,IT,S.Patel
+INV-1525,2024-10-10,Blue Ridge Analytics Group,19157.48,Warehouse storage and fulfillment services Q4,CONSULTING,A.Reeves
+INV-1186,2024-02-18,Summit Financial Advisors,11288.54,HR consulting — executive recruitment cycle,FINANCE,D.Okafor
+INV-1468,2024-02-20,Meridian Legal Partners LLP,7751.02,SharePoint migration — intranet modernization,FACILITIES,S.Patel
+INV-1107,2024-01-24,Unity Healthcare Partners,6880.7,Firewall replacement and network segmentation,CONSULTING,R.Novak
+INV-1055,2024-04-13,Elmwood Graphics Studio,1334.38,Catering services — quarterly board meeting,MARKETING,D.Okafor
+INV-1586,2024-02-11,Lakeview Office Supplies Co,3009.91,Translation and localization services — APAC,SUPPLIES,L.Torres
+INV-1398,2024-02-29,Delta Freight Services LLC,1740.57,Q1 consulting services — enterprise architecture,LOGISTICS,D.Okafor
+INV-1425,2024-11-18,Horizon Training Solutions,1870.54,Remote access VPN — enterprise license expansion,CONSULTING,D.Okafor
+INV-1608,2024-03-20,Cascade Digital Systems,3408.02,Cloud hosting — production environment monthly,LOGISTICS,M.Chen
+INV-1071,2024-07-24,Vanguard Analytics Inc,4274.06,Corporate travel management — Q1 booking fees,IT,A.Reeves
+INV-1306,2024-04-12,Cascade Digital Systems,16294.31,Per prior agreement,IT,A.Reeves
+INV-1693,2024-04-24,Frontier Logistics Partners,25000.0,Cash advance — project expenses,LOGISTICS,M.Chen
+INV-1079,2024-01-10,Horizon Training Solutions,866.82,Executive search — VP of Engineering placement,CONSULTING,L.Torres
+INV-1404,2024-05-23,Apex Technology Solutions,16519.58,Firewall replacement and network segmentation,SUPPLIES,L.Torres
+INV-1446,2024-11-21,Cascade Digital Systems,20319.14,Environmental compliance consulting services,IT,A.Reeves
+INV-1728,2024-01-15,Quick Pay Services,17198.83,Various services,OPERATIONS,M.Chen
+INV-1635,2024-05-18,Meridian Legal Partners LLP,27133.63,IT helpdesk and L2 support services,OPERATIONS,R.Novak
+INV-1649,2024-10-09,Cascade Digital Systems,3405.42,Cloud hosting — production environment monthly,IT,D.Okafor
+INV-1083,2024-10-02,Silverstone IT Services,7120.95,Office supplies and stationery restock,IT,S.Patel
+INV-1700,2024-04-24,Titan Security Services,2500.0,Miscellaneous expenses,SECURITY,L.Torres
+INV-1246,2024-02-24,Meridian Legal Partners LLP,15316.36,HR consulting — executive recruitment cycle,LEGAL,A.Reeves
+INV-1337,2024-02-05,Lakeview Office Supplies Co,876.79,Software development sprint 18 — backend API,SUPPLIES,S.Patel
+INV-1040,2024-10-29,Delta Freight Services LLC,848.93,Cloud hosting — production environment monthly,LOGISTICS,A.Reeves
+INV-1264,2024-12-05,Blue Ridge Analytics Group,18001.4,Office supplies and stationery restock,LOGISTICS,A.Reeves
+INV-1545,2024-11-18,Apex Technology Solutions,19486.42,Industry conference attendance — professional development,IT,D.Okafor
+INV-1042,2024-06-18,Delta Freight Services LLC,7816.7,Per prior agreement,LOGISTICS,D.Okafor
+INV-1311,2024-05-21,Meridian Legal Partners LLP,4121.42,Industry conference attendance — professional development,LEGAL,S.Patel
+INV-1560,2024-04-04,Horizon Training Solutions,8950.86,Employee benefits consulting — open enrollment,CONSULTING,J.Harrison
+INV-1584,2024-06-29,Apex Technology Solutions,6288.89,Digital marketing campaign Q2 execution,IT,A.Reeves
+INV-1397,2024-03-27,Pinnacle Risk Advisors,10548.57,Customs brokerage and import clearance fees,FINANCE,L.Torres
+INV-1741,2024-08-16,Summit Financial Advisors,78971.36,HR consulting — executive recruitment cycle,FINANCE,J.Harrison
+INV-1465,2024-02-29,Redrock Data Solutions,6283.95,Database migration and cloud uplift services,OPERATIONS,R.Novak
+INV-1574,2024-08-29,Meridian Legal Partners LLP,23260.11,Warehouse storage and fulfillment services Q4,LEGAL,S.Patel
+INV-1459,2024-01-21,Apex Technology Solutions,23774.92,Office supplies and stationery restock,IT,A.Reeves
+INV-1370,2024-02-03,Cascade Digital Systems,8916.03,IT helpdesk and L2 support services,IT,M.Chen
+INV-1230,2024-08-31,Delta Freight Services LLC,4561.75,Market research and competitive landscape analysis,SUPPLIES,M.Chen
+INV-1135,2024-03-20,Westbrook Print & Media,1230.37,IT helpdesk and L2 support services,MARKETING,D.Okafor
+INV-1157,2024-11-22,Summit Financial Advisors,16398.6,Inventory management system — annual license,LOGISTICS,L.Torres
+INV-1239,2024-04-04,Apex Technology Solutions,32862.88,Insurance premium — commercial liability policy,LOGISTICS,R.Novak
+INV-1182,2024-10-20,Vanguard Analytics Inc,12951.08,Cybersecurity monitoring — 24/7 SOC retainer,IT,S.Patel
+INV-1096,2024-08-19,Silverstone IT Services,2889.91,Network infrastructure upgrade phase 2,IT,D.Okafor
+INV-1258,2024-08-25,Delta Freight Services LLC,2368.28,Warehouse storage and fulfillment services Q4,LOGISTICS,L.Torres
+INV-1401,2024-02-20,Vanguard Analytics Inc,12010.34,General expenses,IT,M.Chen
+INV-1433,2024-08-12,Meridian Legal Partners LLP,10774.92,Executive search — VP of Engineering placement,SECURITY,A.Reeves
+INV-1235,2024-12-26,Cascade Digital Systems,9679.97,Print and marketing collateral production,IT,J.Harrison
+INV-1043,2024-03-13,Delta Freight Services LLC,2829.11,Q1 consulting services — enterprise architecture,LOGISTICS,L.Torres
+INV-1238,2024-09-22,Meridian Legal Partners LLP,16150.13,Inventory management system — annual license,LEGAL,D.Okafor
+INV-1645,2024-03-14,Meridian Legal Partners LLP,12840.59,Catering services — quarterly board meeting,LEGAL,S.Patel
+INV-1063,2024-05-09,Cascade Digital Systems,12272.47,Staff compliance certification training,IT,A.Reeves
+INV-1371,2024-07-28,Unity Healthcare Partners,5447.87,Customs brokerage and import clearance fees,CONSULTING,S.Patel
+INV-1074,2024-07-24,Quantum Cloud Infrastructure,5309.81,Market research and competitive landscape analysis,IT,R.Novak
+INV-1128,2024-09-23,Crestview Supplies Ltd,2590.12,,SUPPLIES,R.Novak
+INV-1082,2024-12-12,Meridian Legal Partners LLP,10731.63,Q1 consulting services — enterprise architecture,LEGAL,M.Chen
+INV-1037,2024-12-22,Lakeview Office Supplies Co,881.74,Q1 consulting services — enterprise architecture,SUPPLIES,J.Harrison
+INV-1283,2024-04-08,Westbrook Print & Media,4988.33,Corporate travel management — Q1 booking fees,MARKETING,S.Patel
+INV-1285,2024-10-05,Unity Healthcare Partners,7183.07,Firewall replacement and network segmentation,CONSULTING,D.Okafor
+INV-1194,2024-11-30,Blue Ridge Analytics Group,24426.91,Personal expense reimbursement,CONSULTING,D.Okafor
+INV-1544,2024-09-15,Cascade Digital Systems,22382.33,ERP system customization — procurement module,SUPPLIES,J.Harrison
+INV-1310,2024-01-27,Avalon Research Associates,28518.69,Staff compliance certification training,CONSULTING,A.Reeves
+INV-1644,2024-05-11,Blue Ridge Analytics Group,27075.85,Network infrastructure upgrade phase 2,CONSULTING,S.Patel
+INV-1482,2024-07-09,Frontier Logistics Partners,3597.23,Executive search — VP of Engineering placement,FACILITIES,A.Reeves
+INV-1580,2024-04-01,Meridian Legal Partners LLP,9755.41,Employee benefits consulting — open enrollment,LEGAL,D.Okafor
+INV-1363,2024-10-13,Unity Healthcare Partners,3300.71,Print and marketing collateral production,CONSULTING,L.Torres
+INV-1746,2024-10-14,Summit Financial Advisors,87476.0,Annual maintenance and support contract renewal,FINANCE,J.Harrison
+INV-1352,2024-12-01,Summit Financial Advisors,28136.01,SharePoint migration — intranet modernization,FINANCE,S.Patel
+INV-1038,2024-05-11,Ridgeline Catering Co,1772.62,Advertising placement — industry trade publication,SUPPLIES,J.Harrison
+INV-1212,2024-11-13,Sterling Law Group,3637.8,Security camera installation — warehouse expansion,LEGAL,A.Reeves
+INV-1418,2024-02-05,Harbor Light Consulting,19591.58,Insurance premium — commercial liability policy,CONSULTING,J.Harrison
+INV-1233,2024-08-16,Apex Technology Solutions,18640.56,Staff compliance certification training,IT,S.Patel
+INV-1449,2024-04-09,Summit Financial Advisors,25093.1,Data analytics platform subscription renewal,FINANCE,L.Torres
+INV-1289,2024-02-29,Meridian Legal Partners LLP,10179.06,IT helpdesk and L2 support services,LEGAL,S.Patel
+INV-1443,2024-06-12,Cascade Digital Systems,8977.75,Security camera installation — warehouse expansion,IT,D.Okafor
+INV-1647,2024-10-10,Frontier Logistics Partners,1624.23,Equipment lease payment — fiscal Q3,LOGISTICS,M.Chen
+INV-1644,2024-05-11,Blue Ridge Analytics Group,27075.85,Network infrastructure upgrade phase 2,CONSULTING,S.Patel
+INV-1461,2024-03-19,Apex Technology Solutions,8220.26,Insurance premium — commercial liability policy,IT,D.Okafor
+INV-1153,2024-10-12,Cascade Digital Systems,12260.8,ERP system customization — procurement module,IT,R.Novak
+INV-1430,2024-07-31,Yellowstone Equipment Rental,1895.69,Personal expense reimbursement,OPERATIONS,D.Okafor
+INV-1387,2024-08-16,Apex Technology Solutions,4186.25,HR consulting — executive recruitment cycle,IT,M.Chen
+INV-1653,2024-04-14,Apex Technology Solution,4249.23,Freight and logistics — bulk shipment handling,IT,A.Reeves
+INV-1634,2024-08-01,Eagle Eye Security Systems,7331.31,Employee benefits consulting — open enrollment,SECURITY,J.Harrison
+INV-1642,2024-09-21,Summit Financial Advisors,25801.12,Freight and logistics — bulk shipment handling,FINANCE,J.Harrison
+INV-1253,2024-03-31,Quantum Cloud Infrastructure,4255.9,Employee benefits consulting — open enrollment,IT,S.Patel
+INV-1552,2024-12-23,Ironwood Engineering Corp,17888.88,Data analytics platform subscription renewal,OPERATIONS,A.Reeves
+INV-1422,2024-07-09,Sunrise Fleet Management,1552.09,Corporate travel management — Q1 booking fees,SECURITY,A.Reeves
+INV-1489,2024-07-22,Horizon Training Solutions,9400.61,Insurance premium — commercial liability policy,SECURITY,S.Patel
+INV-1556,2024-02-10,Westbrook Print & Media,4555.16,IT helpdesk and L2 support services,MARKETING,J.Harrison
+INV-1487,2024-10-16,Cascade Digital Systems,13375.18,Equipment lease payment — fiscal Q3,SECURITY,J.Harrison
+INV-1751,2024-12-10,Summit Financial Advisors,95862.28,IT helpdesk and L2 support services,FINANCE,J.Harrison
+INV-1599,2024-10-25,Cascade Digital Systems,14098.47,Cybersecurity monitoring — 24/7 SOC retainer,LOGISTICS,M.Chen
+INV-1007,2024-06-19,Lakeview Office Supplies Co,2048.86,Copier and printer lease — main office,SUPPLIES,A.Reeves
+INV-1145,2024-01-30,Apex Technology Solutions,21016.66,Network infrastructure upgrade phase 2,MARKETING,L.Torres
+INV-1105,2024-06-25,Quantum Cloud Infrastructure,3017.54,Legal filing fees and court documentation costs,IT,J.Harrison
+INV-1242,2024-11-05,Blue Ridge Analytics Group,20384.9,Structural engineering assessment — building A,OPERATIONS,S.Patel
+INV-1668-03,2024-05-26,Blue Ridge Analytics Group,9848.23,Partial payment 3/3 — project milestone,CONSULTING,L.Torres
+INV-1648,2024-02-14,Meridian Legal Partners LLP,11072.47,Freight and logistics — bulk shipment handling,LEGAL,M.Chen
+INV-1164,2024-02-22,Apex Technology Solutions,9596.85,Monthly software license renewal,FACILITIES,L.Torres
+INV-1498,2024-03-20,Summit Financial Advisors,7365.32,Annual security audit and penetration testing,FINANCE,S.Patel
+INV-1471,2024-10-25,Frontier Logistics Partners,1392.78,Freight and logistics — bulk shipment handling,LOGISTICS,A.Reeves
+INV-1442,2024-04-13,Blue Ridge Analytics Group,34508.72,IT helpdesk and L2 support services,CONSULTING,D.Okafor
+INV-1752,2024-07-04,Summit Financial Advisors,96192.34,IT helpdesk and L2 support services,FINANCE,M.Chen
+INV-1742,2024-08-16,Summit Financial Advisors,80123.83,Employee benefits consulting — open enrollment,FINANCE,J.Harrison
+INV-1754,2024-08-14,Summit Financial Advisors,97511.27,Cybersecurity monitoring — 24/7 SOC retainer,FINANCE,M.Chen
+INV-1429,2024-08-13,Unity Healthcare Partners,4188.44,Facilities management — HVAC preventive maintenance,SECURITY,L.Torres
+INV-1661,2024-09-19,Summit Financial Advisory,6534.77,Office supplies and stationery restock,FINANCE,S.Patel
+INV-1614,2024-01-25,Quantum Cloud Infrastructure,1664.78,Annual security audit and penetration testing,IT,L.Torres
+INV-1563,2024-12-16,Crestview Supplies Ltd,758.24,Temporary staffing — operations peak period,SUPPLIES,R.Novak
+INV-1538,2024-11-10,Crestview Supplies Ltd,850.78,Temporary staffing — operations peak period,SUPPLIES,J.Harrison
+INV-1245,2024-04-04,Vanguard Analytics Inc,13000.49,Industry conference attendance — professional development,IT,R.Novak
+INV-1736,2024-01-07,Summit Financial Advisors,76373.29,Equipment lease payment — fiscal Q3,FINANCE,J.Harrison
+INV-1060,2024-09-01,Lakeview Office Supplies Co,715.33,Remote access VPN — enterprise license expansion,SUPPLIES,A.Reeves
+INV-1456,2024-06-14,Frontier Logistics Partners,5979.6,Print and marketing collateral production,MARKETING,J.Harrison
+INV-1709,2024-04-28,Quantum Cloud Infrastructure,4999.0,Annual maintenance and support contract renewal,IT,S.Patel
+INV-1343,2024-07-29,Crestview Supplies Ltd,303.07,Insurance premium — commercial liability policy,MARKETING,J.Harrison
+INV-1539,2024-12-16,Apex Technology Solutions,15037.52,Q1 consulting services — enterprise architecture,FACILITIES,D.Okafor
+INV-1287,2024-11-10,Unity Healthcare Partners,8208.42,Personal expense reimbursement,CONSULTING,L.Torres
+INV-1111,2024-01-19,Blue Ridge Analytics Group,13799.58,Freight and logistics — bulk shipment handling,CONSULTING,A.Reeves
+INV-1439,2024-06-23,Horizon Training Solutions,3504.54,Industry conference attendance — professional development,CONSULTING,D.Okafor
+INV-1189,2024-10-10,Cascade Digital Systems,25567.04,Corporate travel management — Q1 booking fees,IT,L.Torres
+INV-1053,2024-03-19,Cascade Digital Systems,4864.6,Warehouse storage and fulfillment services Q4,IT,J.Harrison
+INV-1529,2024-11-18,Pacific Rim Staffing,3791.04,Customs brokerage and import clearance fees,SECURITY,A.Reeves
+INV-1316,2024-08-30,Sterling Law Group,11134.51,Warehouse storage and fulfillment services Q4,LEGAL,L.Torres
+INV-1341,2024-05-23,Pacific Rim Staffing,4088.66,Annual security audit and penetration testing,CONSULTING,R.Novak
+INV-1445,2024-08-05,Quantum Cloud Infrastructure,34601.6,Print and marketing collateral production,IT,M.Chen
+INV-1679,2024-07-25,Sunrise Fleet Management,27000,Temporary staffing — operations peak period,LOGISTICS,A.Reeves
+INV-1618,2024-09-19,Vanguard Analytics Inc,26964.55,Annual security audit and penetration testing,IT,D.Okafor
+INV-1697,2024-08-12,Meridian Legal Partners LLP,50000.0,Equipment lease payment — fiscal Q3,LEGAL,R.Novak
+INV-1412,2024-03-14,Unity Healthcare Partners,5307.95,Office supplies and stationery restock,MARKETING,A.Reeves
+INV-1200,2024-10-26,Westbrook Print & Media,1506.41,Financial audit preparation and documentation support,MARKETING,D.Okafor
+INV-1073,2024-09-10,Summit Financial Advisors,9449.31,Inventory management system — annual license,FINANCE,J.Harrison
+INV-1290,2024-06-02,Frontier Logistics Partners,4089.5,Advertising placement — industry trade publication,LOGISTICS,S.Patel
+INV-1646,2024-10-21,Meridian Legal Partners LLP,16097.53,Annual security audit and penetration testing,LEGAL,M.Chen
+INV-1015,2024-11-22,Cascade Digital Systems,6059.89,Employee benefits consulting — open enrollment,CONSULTING,L.Torres
+INV-1639,2024-03-27,Frontier Logistics Partners,2678.94,Network infrastructure upgrade phase 2,LOGISTICS,A.Reeves
+INV-1106,2024-10-21,Blue Ridge Analytics Group,14486.06,Office supplies and stationery restock,CONSULTING,A.Reeves
+INV-1133,2024-11-11,Westbrook Print & Media,1317.84,Consulting — no further details,MARKETING,R.Novak
+INV-1396,2024-09-03,Cascade Digital Systems,13299.0,Software development sprint 18 — backend API,IT,R.Novak
+INV-1432,2024-07-05,Blue Ridge Analytics Group,74410.94,Office supplies and stationery restock,CONSULTING,A.Reeves
+INV-1669-03,2024-10-04,Summit Financial Advisors,4820.73,Partial payment 3/4 — project milestone,FINANCE,R.Novak
+INV-1288,2024-03-19,Apex Technology Solutions,7657.47,Structural engineering assessment — building A,FACILITIES,R.Novak
+INV-1033,2024-06-08,Meridian Legal Partners LLP,15377.08,Annual maintenance and support contract renewal,LEGAL,S.Patel
+INV-1537,2024-03-09,Titan Security Services,3697.74,Customs brokerage and import clearance fees,SECURITY,A.Reeves
+INV-1508,2024-11-25,Sterling Law Group,15244.49,Tax planning and financial advisory services,LEGAL,D.Okafor
+INV-1325,2024-03-10,Titan Security Services,8621.93,Staff compliance certification training,SECURITY,R.Novak
+INV-1526,2024-03-17,Horizon Training Solutions,1646.95,Annual security audit and penetration testing,MARKETING,L.Torres
+INV-1072,2024-05-19,Delta Freight Services LLC,1769.5,Database migration and cloud uplift services,LOGISTICS,L.Torres
+INV-1270,2024-12-21,Crestview Supplies Ltd,175.99,Freight and logistics — bulk shipment handling,SUPPLIES,D.Okafor
+INV-1587,2024-09-07,Blue Ridge Analytics Group,13548.03,Firewall replacement and network segmentation,CONSULTING,S.Patel
+INV-1353,2024-11-29,Delta Freight Services LLC,1722.84,Brand identity redesign — new product line,LOGISTICS,L.Torres
+INV-1654,2024-08-23,Apex Technology Solution,16675.31,Q1 consulting services — enterprise architecture,IT,S.Patel
+INV-1577,2024-05-11,Apex Technology Solutions,15670.68,Insurance premium — commercial liability policy,IT,M.Chen
+INV-1571,2024-08-24,Apex Technology Solutions,44768.12,Industry conference attendance — professional development,IT,D.Okafor
+INV-1691,2024-09-01,Lakeview Office Supplies Co,25000.0,Miscellaneous expenses,SUPPLIES,A.Reeves
+INV-1726,2024-06-05,Quick Pay Services,12780.81,Adjustment,OPERATIONS,S.Patel
