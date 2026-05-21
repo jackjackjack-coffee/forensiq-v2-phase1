@@ -95,6 +95,186 @@ const REAL_VENDORS: VendorRow[] = [
   ['Siemens',                   'OPERATIONS',  5000, 200000],
   ['Schneider Electric',        'OPERATIONS',  3000, 150000],
   ['Emerson Electric',          'OPERATIONS',  2000, 120000],
+  // Mega-cap Tech / Consumer Electronics
+  ['Apple Inc',                 'IT',         15000, 600000],
+  ['NVIDIA Corporation',        'IT',         10000, 500000],
+  ['Alphabet Inc',              'IT',         20000, 800000],
+  ['Meta Platforms',            'IT',          8000, 350000],
+  ['Amazon.com',                'IT',         10000, 500000],
+  ['Tesla',                     'OPERATIONS', 10000, 400000],
+  ['TSMC',                      'IT',         15000, 600000],
+  ['Samsung Electronics',       'IT',          8000, 400000],
+  ['ASML Holding',              'IT',         20000, 700000],
+  ['Broadcom',                  'IT',          8000, 300000],
+  ['Qualcomm',                  'IT',          5000, 200000],
+  ['Intel Corporation',         'IT',          5000, 250000],
+  ['Advanced Micro Devices',    'IT',          3000, 150000],
+  ['Texas Instruments',         'IT',          2000, 100000],
+  ['Applied Materials',         'IT',          5000, 200000],
+  ['Lam Research',              'IT',          8000, 300000],
+  ['KLA Corporation',           'IT',          6000, 250000],
+  ['Micron Technology',         'IT',          3000, 120000],
+  ['Western Digital',           'IT',          2000,  80000],
+  ['NetApp',                    'IT',          2000,  90000],
+  ['Palo Alto Networks',        'SECURITY',    2000, 120000],
+  ['VMware',                    'IT',          3000, 150000],
+  ['Intuit',                    'IT',          2000, 100000],
+  ['Autodesk',                  'IT',          2000, 120000],
+  ['Synopsys',                  'IT',          5000, 200000],
+  ['Cadence Design Systems',    'IT',          4000, 180000],
+  ['Fortinet',                  'SECURITY',    1000,  80000],
+  ['Zscaler',                   'SECURITY',    1500, 100000],
+  ['Okta',                      'SECURITY',    1000,  70000],
+  ['HubSpot',                   'IT',          1000,  60000],
+  ['Palantir Technologies',     'IT',          2000,  80000],
+  ['Snowflake',                 'IT',          5000, 180000],
+  ['Cloudflare',                'IT',          1000,  60000],
+  ['Twilio',                    'IT',           500,  40000],
+  ['HashiCorp',                 'IT',           500,  30000],
+  // Healthcare / Pharma / Biotech
+  ['Johnson & Johnson',         'OPERATIONS',  5000, 300000],
+  ['UnitedHealth Group',        'OPERATIONS', 10000, 500000],
+  ['Pfizer Inc',                'OPERATIONS',  5000, 250000],
+  ['Eli Lilly',                 'OPERATIONS',  8000, 400000],
+  ['AbbVie',                    'OPERATIONS',  6000, 300000],
+  ['Merck & Co',                'OPERATIONS',  5000, 250000],
+  ['Bristol-Myers Squibb',      'OPERATIONS',  4000, 200000],
+  ['Thermo Fisher Scientific',  'OPERATIONS',  5000, 300000],
+  ['Danaher Corporation',       'OPERATIONS',  4000, 250000],
+  ['Becton Dickinson',          'OPERATIONS',  3000, 150000],
+  ['Medtronic',                 'OPERATIONS',  3000, 180000],
+  ['Abbott Laboratories',       'OPERATIONS',  3000, 150000],
+  ['Stryker Corporation',       'OPERATIONS',  5000, 250000],
+  ['Zimmer Biomet',             'OPERATIONS',  3000, 150000],
+  ['Boston Scientific',         'OPERATIONS',  2000, 100000],
+  ['Baxter International',      'OPERATIONS',  2000,  80000],
+  ['Cigna Group',               'OPERATIONS',  4000, 200000],
+  ['CVS Health',                'OPERATIONS',  2000, 100000],
+  ['Elevance Health',           'OPERATIONS',  5000, 250000],
+  ['Humana',                    'OPERATIONS',  3000, 150000],
+  // Consumer / Retail
+  ['Walmart',                   'SUPPLIES',     200,  25000],
+  ['Costco Wholesale',          'SUPPLIES',     500,  40000],
+  ['Home Depot',                'SUPPLIES',     200,  20000],
+  ['Lowe\'s Companies',         'SUPPLIES',     200,  15000],
+  ['McDonald\'s Corporation',   'MARKETING',    500,  30000],
+  ['Starbucks',                 'MARKETING',    200,  15000],
+  ['Nike',                      'SUPPLIES',    1000,  50000],
+  ['LVMH',                      'MARKETING',   5000, 200000],
+  ['TJX Companies',             'SUPPLIES',     500,  30000],
+  ['Target Corporation',        'SUPPLIES',     200,  20000],
+  ['Amazon Logistics',          'LOGISTICS',    500,  40000],
+  ['Procter & Gamble',          'OPERATIONS',  2000, 100000],
+  ['Unilever',                  'OPERATIONS',  2000,  90000],
+  ['Nestle',                    'OPERATIONS',  2000,  80000],
+  ['Colgate-Palmolive',         'OPERATIONS',  1000,  50000],
+  // Energy
+  ['ExxonMobil',                'OPERATIONS', 10000, 500000],
+  ['Chevron Corporation',       'OPERATIONS',  8000, 400000],
+  ['ConocoPhillips',            'OPERATIONS',  5000, 250000],
+  ['SLB (Schlumberger)',        'OPERATIONS',  5000, 200000],
+  ['Halliburton',               'OPERATIONS',  3000, 150000],
+  ['Baker Hughes',              'OPERATIONS',  3000, 120000],
+  // Financial Services
+  ['Visa Inc',                  'FINANCE',     2000, 150000],
+  ['Mastercard',                'FINANCE',     2000, 150000],
+  ['American Express',          'FINANCE',     3000, 200000],
+  ['PayPal Holdings',           'FINANCE',     1000,  80000],
+  ['Charles Schwab',            'FINANCE',     3000, 150000],
+  ['Fidelity Investments',      'FINANCE',     5000, 250000],
+  ['CME Group',                 'FINANCE',     5000, 200000],
+  ['S&P Global',                'FINANCE',     5000, 250000],
+  ['Moody\'s Corporation',      'FINANCE',     4000, 200000],
+  ['MSCI Inc',                  'FINANCE',     3000, 150000],
+  // Insurance
+  ['Berkshire Hathaway',        'FINANCE',    10000, 500000],
+  ['Aon plc',                   'CONSULTING',  5000, 250000],
+  ['Marsh McLennan',            'CONSULTING',  5000, 200000],
+  ['Willis Towers Watson',      'CONSULTING',  4000, 180000],
+  ['Chubb Limited',             'FINANCE',     5000, 200000],
+  ['Travelers Companies',       'FINANCE',     3000, 120000],
+  ['MetLife',                   'FINANCE',     4000, 180000],
+  ['Prudential Financial',      'FINANCE',     4000, 180000],
+  // Defense / Aerospace
+  ['Lockheed Martin',           'OPERATIONS', 10000, 500000],
+  ['Raytheon Technologies',     'OPERATIONS',  8000, 400000],
+  ['Northrop Grumman',          'OPERATIONS',  8000, 400000],
+  ['Boeing',                    'OPERATIONS',  8000, 400000],
+  ['General Dynamics',          'OPERATIONS',  6000, 300000],
+  ['L3Harris Technologies',     'OPERATIONS',  5000, 250000],
+  ['BAE Systems',               'OPERATIONS',  5000, 250000],
+  ['Airbus',                    'OPERATIONS',  8000, 400000],
+  // Industrial / Equipment
+  ['Deere & Company',           'OPERATIONS',  5000, 250000],
+  ['Parker Hannifin',           'OPERATIONS',  4000, 200000],
+  ['Illinois Tool Works',       'OPERATIONS',  3000, 150000],
+  ['Eaton Corporation',         'OPERATIONS',  3000, 150000],
+  ['Rockwell Automation',       'OPERATIONS',  2000, 100000],
+  ['Xylem',                     'OPERATIONS',  2000,  80000],
+  ['Roper Technologies',        'IT',          3000, 150000],
+  // Telecom
+  ['AT&T',                      'IT',          1000,  60000],
+  ['Verizon Communications',    'IT',          1000,  60000],
+  ['T-Mobile US',               'IT',           800,  50000],
+  ['Comcast',                   'MARKETING',   2000, 100000],
+  ['Charter Communications',    'IT',          1000,  60000],
+  ['Lumen Technologies',        'IT',           500,  30000],
+  // Real Estate / Infrastructure
+  ['American Tower',            'FACILITIES',  3000, 150000],
+  ['Crown Castle',              'FACILITIES',  2000, 100000],
+  ['Prologis',                  'FACILITIES',  2000, 100000],
+  ['CBRE Group',                'FACILITIES',  3000, 150000],
+  ['Jones Lang LaSalle',        'FACILITIES',  3000, 120000],
+  // Additional Top-500 Tech / SaaS
+  ['Uber Technologies',         'LOGISTICS',    200,  20000],
+  ['Lyft',                      'LOGISTICS',    100,  10000],
+  ['DoorDash',                  'LOGISTICS',    100,   8000],
+  ['Airbnb',                    'FACILITIES',   200,  25000],
+  ['Block Inc',                 'FINANCE',      500,  40000],
+  ['Stripe',                    'FINANCE',     1000,  80000],
+  ['Shopify',                   'IT',          1000,  60000],
+  ['Toast',                     'IT',           200,  15000],
+  ['Veeva Systems',             'IT',          2000, 100000],
+  ['Workiva',                   'IT',          1000,  60000],
+  ['nCino',                     'FINANCE',      800,  50000],
+  ['Pegasystems',               'IT',          2000, 100000],
+  ['OpenText',                  'IT',          2000,  90000],
+  ['SS&C Technologies',         'FINANCE',     2000, 100000],
+  ['Broadridge Financial',      'FINANCE',     2000, 100000],
+  ['Jack Henry & Associates',   'FINANCE',     1000,  60000],
+  ['Fiserv',                    'FINANCE',     2000, 100000],
+  ['NCR Atleos',                'IT',          1000,  50000],
+  ['Zebra Technologies',        'IT',          1000,  60000],
+  ['Trimble',                   'IT',          2000,  80000],
+  ['Bentley Systems',           'IT',          1500,  70000],
+  ['PTC Inc',                   'IT',          2000, 100000],
+  ['MathWorks',                 'IT',          1000,  50000],
+  ['SAS Institute',             'IT',          3000, 150000],
+  ['TIBCO Software',            'IT',          2000, 100000],
+  ['Informatica',               'IT',          2000, 100000],
+  ['MicroStrategy',             'IT',          2000, 100000],
+  ['Qlik Technologies',         'IT',          1000,  60000],
+  ['Alteryx',                   'IT',           800,  50000],
+  // Additional Consulting / Staffing
+  ['Booz Allen Hamilton',       'CONSULTING',  5000, 250000],
+  ['SAIC',                      'CONSULTING',  5000, 200000],
+  ['Leidos Holdings',           'CONSULTING',  5000, 200000],
+  ['ManpowerGroup',             'CONSULTING',  2000, 100000],
+  ['Robert Half International', 'CONSULTING',  1000,  60000],
+  ['Korn Ferry',                'CONSULTING',  2000, 100000],
+  ['Spencer Stuart',            'CONSULTING',  5000, 200000],
+  ['Heidrick & Struggles',      'CONSULTING',  3000, 120000],
+  // Additional Legal / Compliance
+  ['Sullivan & Cromwell',       'LEGAL',       5000, 300000],
+  ['Cleary Gottlieb',           'LEGAL',       5000, 280000],
+  ['Weil Gotshal & Manges',     'LEGAL',       5000, 280000],
+  ['Simpson Thacher & Bartlett','LEGAL',       5000, 270000],
+  ['Shearman & Sterling',       'LEGAL',       4000, 220000],
+  ['Freshfields Bruckhaus',     'LEGAL',       4000, 220000],
+  ['Linklaters',                'LEGAL',       4000, 200000],
+  ['Allen & Overy',             'LEGAL',       4000, 200000],
+  ['Clifford Chance',           'LEGAL',       4000, 200000],
+  ['Herbert Smith Freehills',   'LEGAL',       3000, 180000],
 ];
 
 // Fuzzy variants — real company name vs subtle misspelling/variation
@@ -238,14 +418,17 @@ export function generateSampleCsv(): string {
   const normalCount = Math.max(400, Math.floor(totalTarget * 0.8));
   const fraudScale  = totalTarget / 1000;
 
-  const dupGroups        = Math.max(5,  Math.round(10 * fraudScale));
-  const fuzzyPairs       = Math.max(3,  Math.round(5  * fraudScale));
-  const splitClusters    = Math.max(3,  Math.round(6  * fraudScale));
-  const rsfCount         = Math.max(3,  Math.round(6  * fraudScale));
-  const roundCount       = Math.max(10, Math.round(25 * fraudScale));
-  const nearThreshCount  = Math.max(10, Math.round(18 * fraudScale));
-  const benfordClusterCt = Math.max(15, Math.round(22 * fraudScale));
-  const ghostRowsPerVend = Math.max(2,  Math.round(3  * fraudScale));
+  // Per-type variance multipliers (0.1x–3.5x) so each dataset has a unique fraud profile
+  const v = () => 0.1 + rng() * 3.4;
+
+  const dupGroups        = Math.max(2,  Math.round(10 * fraudScale * v()));
+  const fuzzyPairs       = Math.max(1,  Math.round(5  * fraudScale * v()));
+  const splitClusters    = Math.max(1,  Math.round(6  * fraudScale * v()));
+  const rsfCount         = Math.max(1,  Math.round(6  * fraudScale * v()));
+  const roundCount       = Math.max(3,  Math.round(25 * fraudScale * v()));
+  const nearThreshCount  = Math.max(3,  Math.round(18 * fraudScale * v()));
+  const benfordClusterCt = Math.max(3,  Math.round(22 * fraudScale * v()));
+  const ghostRowsPerVend = Math.max(1,  Math.round(3  * fraudScale * v()));
 
   let invCounter = 1000 + randInt(rng, 0, 200);
   const nextInv = () => `INV-${++invCounter}`;

@@ -47,9 +47,9 @@ export function exportRiskReport(result: AnalysisResult, fileName = 'forensiq-ri
     { Metric: 'Duplicate Rate',         Value: `${(p.duplicate_rate * 100).toFixed(2)}%` },
     { Metric: 'Round Number Rate',      Value: `${(p.round_number_rate * 100).toFixed(2)}%` },
     { Metric: 'Benford 1st-digit MAD',  Value: Number(p.benford_mad.toFixed(4)) },
-    { Metric: 'Benford 1st conformity', Value: result.benford_1st.conformity },
+    { Metric: 'Benford 1st conformity', Value: categorizeMad(result.benford_1st.mad / 100, 1).label },
     { Metric: 'Benford 2nd-digit MAD',  Value: Number(result.benford_2nd.mad.toFixed(4)) },
-    { Metric: 'Benford 2nd conformity', Value: result.benford_2nd.conformity },
+    { Metric: 'Benford 2nd conformity', Value: categorizeMad(result.benford_2nd.mad / 100, 2).label },
   ];
   XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(summaryRows), 'Executive Summary');
 
@@ -83,8 +83,8 @@ export function exportRiskReport(result: AnalysisResult, fileName = 'forensiq-ri
   XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(explanations), 'Detector Explanations');
 
   // ── Tab 5: Benford Detail ────────────────────────────────────
-  const cat1 = categorizeMad(result.benford_1st.mad, 1);
-  const cat2 = categorizeMad(result.benford_2nd.mad, 2);
+  const cat1 = categorizeMad(result.benford_1st.mad / 100, 1);
+  const cat2 = categorizeMad(result.benford_2nd.mad / 100, 2);
   const benfordRows = [
     { Position: '1st digit', MAD: Number(result.benford_1st.mad.toFixed(4)), Category: cat1.label, Range: cat1.range, Interpretation: cat1.description },
     { Position: '2nd digit', MAD: Number(result.benford_2nd.mad.toFixed(4)), Category: cat2.label, Range: cat2.range, Interpretation: cat2.description },
