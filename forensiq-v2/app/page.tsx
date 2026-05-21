@@ -43,14 +43,16 @@ function loadHistory(): AnalysisSummary[] {
 }
 
 function appendHistory(s: AnalysisSummary, result: AnalysisResult): AnalysisSummary[] {
-  const updated = [s, ...loadHistory()].slice(0, 20);
-  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
-  try { localStorage.setItem(RESULT_KEY(s.id), JSON.stringify(result)); } catch {}
-  // Evict oldest result if needed
-  if (updated.length === 20) {
-    const oldest = updated[19];
-    if (oldest) try { localStorage.removeItem(RESULT_KEY(oldest.id)); } catch {}
+  const prev = loadHistory();
+  const updated = [s, ...prev].slice(0, 20);
+  // Keep only the 3 most recent full results — evict anything beyond index 2
+  // (indices 0 and 1 of prev become indices 1 and 2 of updated)
+  for (const old of prev.slice(2)) {
+    try { localStorage.removeItem(RESULT_KEY(old.id)); } catch {}
   }
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(updated)); } catch {}
+  // Save the new result (prev[0] and prev[1] are already in localStorage)
+  try { localStorage.setItem(RESULT_KEY(s.id), JSON.stringify(result)); } catch {}
   return updated;
 }
 
