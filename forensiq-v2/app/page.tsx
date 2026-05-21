@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect, Fragment } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { setAnalysisResult } from '@/lib/analysis-store';
 import { generateSampleCsv, triggerCsvDownload } from '@/lib/sample-generator';
@@ -1190,6 +1190,8 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<ProgressUpdate | null>(null);
   const [history, setHistory] = useState<AnalysisSummary[]>([]);
+  // In-memory cache: keeps ALL results from this session regardless of localStorage quota
+  const sessionCache = useRef<Map<string, AnalysisResult>>(new Map());
 
   // Loaded but not-yet-analyzed file
   const [pendingTxns, setPendingTxns]         = useState<RawTransaction[] | null>(null);
@@ -1263,6 +1265,7 @@ export default function Home() {
         score: r.portfolio.score,
         tier: r.portfolio.tier,
       };
+      sessionCache.current.set(summary.id, r);
       setHistory(appendHistory(summary, r));
       setPendingTxns(null);
       setPendingFilename(null);
@@ -1279,9 +1282,11 @@ export default function Home() {
       <HistorySidebar
           history={history}
           onSelect={(id) => {
-            const stored = loadStoredResult(id);
-            if (stored) {
-              setAnalysisResult(stored);
+            // Session cache (in-memory) takes priority; localStorage is fallback
+            const r = sessionCache.current.get(id) ?? loadStoredResult(id);
+            if (r) {
+              setAnalysisResult(r);
+              setResult(r);
               window.location.href = '/overview';
             }
           }}
