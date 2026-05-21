@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { setAnalysisResult } from '@/lib/analysis-store';
+import { downloadSampleCsv } from '@/lib/sample-generator';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, Legend, ReferenceLine, Cell,
@@ -362,7 +363,13 @@ function UploadSection({
 
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs text-gray-500 space-y-1">
         <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">Need a sample to try?</p>
-        <a href="/sample.csv" download className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline">Download sample-transactions.csv</a>
+        <button
+          onClick={downloadSampleCsv}
+          className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline text-left"
+        >
+          Generate random sample-transactions.csv
+        </button>
+        <p className="text-gray-400 dark:text-gray-600 text-xs">Each download generates a fresh randomised dataset with embedded fraud patterns.</p>
         <p className="mt-3 text-gray-500">Auto-detected columns: amount/total/value, date/invoice_date, vendor/supplier, invoice_id, description.</p>
       </div>
     </div>
