@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, Fragment } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { setAnalysisResult } from '@/lib/analysis-store';
+import { generateSampleCsv, triggerCsvDownload } from '@/lib/sample-generator';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, Legend, ReferenceLine, Cell,
@@ -15,7 +16,7 @@ import {
   categorizeMad, BENFORD_1ST_CATEGORIES, BENFORD_2ND_CATEGORIES,
 } from '@/lib/benford-categories';
 import type {
-  AnalysisResult, AnalyzedTransaction, RiskTier, DetectorName,
+  AnalysisResult, AnalyzedTransaction, RawTransaction, RiskTier, DetectorName,
 } from '@/lib/types/transaction';
 
 // ── Analysis history (localStorage) ─────────────────────────────
@@ -278,12 +279,20 @@ function DetailDrawer({ txn, onClose }: { txn: AnalyzedTransaction | null; onClo
 // ── Section: Upload ──────────────────────────────────────────────
 
 function UploadSection({
-  onDrop, error, result, filename, onViewResults,
+  onDrop, error, result, filename,
+  pendingFilename, pendingCount,
+  onGenerateSample, onClearFile, onStartAnalysis,
+  onViewResults,
 }: {
   onDrop: (files: File[]) => void;
   error: string | null;
   result: AnalysisResult | null;
   filename: string | null;
+  pendingFilename: string | null;
+  pendingCount: number | null;
+  onGenerateSample: () => void;
+  onClearFile: () => void;
+  onStartAnalysis: () => void;
   onViewResults: () => void;
 }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -333,6 +342,48 @@ function UploadSection({
     );
   }
 
+  // Pending state — file loaded but not analyzed yet
+  if (pendingFilename && pendingCount !== null) {
+    return (
+      <div className="max-w-2xl mx-auto py-12 space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Ready to Analyze</h2>
+          <p className="text-gray-600 dark:text-gray-400 mt-1 text-sm">
+            Review the loaded file and click Start Analysis when ready.
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl flex-shrink-0">📄</div>
+            <div className="min-w-0">
+              <p className="font-medium text-gray-900 dark:text-white truncate">{pendingFilename}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{pendingCount.toLocaleString()} transactions loaded</p>
+            </div>
+          </div>
+          <button
+            onClick={onClearFile}
+            aria-label="Remove file"
+            className="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex-shrink-0 transition-colors"
+          >
+            ✕
+          </button>
+        </div>
+
+        {error && (
+          <div className="bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-xl px-4 py-3 text-sm">{error}</div>
+        )}
+
+        <button
+          onClick={onStartAnalysis}
+          className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-colors"
+        >
+          Start Analysis →
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto py-12 space-y-6">
       <div>
@@ -362,7 +413,13 @@ function UploadSection({
 
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 text-xs text-gray-500 space-y-1">
         <p className="font-medium text-gray-700 dark:text-gray-300 mb-2">Need a sample to try?</p>
-        <a href="/sample.csv" download className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline">Download sample-transactions.csv</a>
+        <button
+          onClick={onGenerateSample}
+          className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline text-left"
+        >
+          Generate random sample-transactions.csv
+        </button>
+        <p className="text-gray-400 dark:text-gray-600 text-xs">The CSV will download and also load into the app — click Start Analysis when ready. Real company names (Microsoft, Goldman Sachs, etc.) and 500–10,000 transactions per generation.</p>
         <p className="mt-3 text-gray-500">Auto-detected columns: amount/total/value, date/invoice_date, vendor/supplier, invoice_id, description.</p>
       </div>
     </div>
@@ -643,6 +700,9 @@ function TransactionsSection({
   const [dateTo, setDateTo] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('composite_risk');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+  const [page, setPage] = useState(1);
+
+  const PAGE_SIZE = 50;
 
   const filtered = useMemo(() => {
     const min = minAmount ? parseFloat(minAmount) : -Infinity;
@@ -670,6 +730,12 @@ function TransactionsSection({
         return sortDir === 'asc' ? cmp : -cmp;
       });
   }, [transactions, filter, search, minAmount, maxAmount, dateFrom, dateTo, sortKey, sortDir]);
+
+  // Reset to page 1 whenever the filtered set changes
+  useEffect(() => { setPage(1); }, [filtered]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const counts = useMemo(() => ({
     ALL: transactions.length,
@@ -754,7 +820,7 @@ function TransactionsSection({
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-800">
-              {filtered.slice(0, 500).map((txn) => (
+              {paginated.map((txn) => (
                 <tr
                   key={txn.invoice_id}
                   onClick={() => onSelect(txn)}
@@ -790,11 +856,43 @@ function TransactionsSection({
             </tbody>
           </table>
         </div>
-        {filtered.length > 500 && (
-          <p className="text-center text-gray-600 text-xs py-3 border-t border-gray-800">
-            Showing 500 of {filtered.length.toLocaleString()} transactions
-          </p>
-        )}
+        {/* Pagination controls */}
+        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-800 text-xs text-gray-500">
+          <span>
+            {filtered.length === 0 ? 'No results' : (
+              <>
+                {((page - 1) * PAGE_SIZE + 1).toLocaleString()}–{Math.min(page * PAGE_SIZE, filtered.length).toLocaleString()} of {filtered.length.toLocaleString()} transactions
+              </>
+            )}
+          </span>
+          {totalPages > 1 && (
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setPage(1)}
+                disabled={page === 1}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >«</button>
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >‹</button>
+              <span className="px-3 py-1 text-gray-400">
+                Page {page} / {totalPages}
+              </span>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >›</button>
+              <button
+                onClick={() => setPage(totalPages)}
+                disabled={page === totalPages}
+                className="px-2 py-1 rounded bg-gray-800 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+              >»</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -1091,49 +1189,87 @@ export default function Home() {
   const [progress, setProgress] = useState<ProgressUpdate | null>(null);
   const [history, setHistory] = useState<AnalysisSummary[]>([]);
 
+  // Loaded but not-yet-analyzed file
+  const [pendingTxns, setPendingTxns]         = useState<RawTransaction[] | null>(null);
+  const [pendingFilename, setPendingFilename] = useState<string | null>(null);
+
   useEffect(() => {
     setHistory(loadHistory());
   }, []);
 
+  // Drop or pick → parse only, do NOT auto-analyze
   const handleDrop = useCallback((files: File[]) => {
     const file = files[0];
     if (!file) return;
     setError(null);
-    setLastFilename(file.name);
-    setProgress({ step: 0, total: 10, label: 'Reading file…' });
 
     const reader = new FileReader();
-    reader.onload = async (e) => {
+    reader.onload = (e) => {
       try {
-        const text = e.target?.result as string;
+        const text    = e.target?.result as string;
         const mapping = autoDetectMapping(text);
-        const parsed = parseCsv(text, mapping);
+        const parsed  = parseCsv(text, mapping);
         if (parsed.transactions.length === 0) {
           setError('No valid transactions found. Ensure the CSV has a numeric column.');
-          setProgress(null);
           return;
         }
-        const r = await runForensicAnalysisAsync(parsed.transactions, setProgress);
-        setAnalysisResult(r);
-        setResult(r);
-        const summary: AnalysisSummary = {
-          id: Date.now().toString(),
-          filename: file.name,
-          analyzedAt: new Date().toISOString(),
-          totalTransactions: r.portfolio.total_transactions,
-          flaggedTransactions: r.portfolio.flagged_transactions,
-          score: r.portfolio.score,
-          tier: r.portfolio.tier,
-        };
-        setHistory(appendHistory(summary, r));
-        setProgress(null);
+        setPendingTxns(parsed.transactions);
+        setPendingFilename(file.name);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Analysis failed.');
-        setProgress(null);
+        setError(err instanceof Error ? err.message : 'Failed to read file.');
       }
     };
     reader.readAsText(file);
   }, []);
+
+  // "Generate Random Sample" → download + load into pending
+  const handleGenerateSample = useCallback(() => {
+    setError(null);
+    try {
+      const csv      = generateSampleCsv();
+      triggerCsvDownload(csv, 'sample-transactions.csv');
+      const parsed   = parseCsv(csv, autoDetectMapping(csv));
+      setPendingTxns(parsed.transactions);
+      setPendingFilename('sample-transactions.csv');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to generate sample.');
+    }
+  }, []);
+
+  const handleClearFile = useCallback(() => {
+    setPendingTxns(null);
+    setPendingFilename(null);
+    setError(null);
+  }, []);
+
+  const handleStartAnalysis = useCallback(async () => {
+    if (!pendingTxns || pendingTxns.length === 0) return;
+    const filename = pendingFilename ?? 'transactions.csv';
+    setError(null);
+    setLastFilename(filename);
+    setProgress({ step: 0, total: 10, label: 'Starting analysis…' });
+    try {
+      const r = await runForensicAnalysisAsync(pendingTxns, setProgress);
+      setAnalysisResult(r);
+      setResult(r);
+      const summary: AnalysisSummary = {
+        id: Date.now().toString(),
+        filename,
+        analyzedAt: new Date().toISOString(),
+        totalTransactions: r.portfolio.total_transactions,
+        flaggedTransactions: r.portfolio.flagged_transactions,
+        score: r.portfolio.score,
+        tier: r.portfolio.tier,
+      };
+      setHistory(appendHistory(summary, r));
+      setPendingTxns(null);
+      setPendingFilename(null);
+      setProgress(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Analysis failed.');
+      setProgress(null);
+    }
+  }, [pendingTxns, pendingFilename]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex">
@@ -1157,6 +1293,11 @@ export default function Home() {
           error={error}
           result={result}
           filename={lastFilename}
+          pendingFilename={pendingFilename}
+          pendingCount={pendingTxns?.length ?? null}
+          onGenerateSample={handleGenerateSample}
+          onClearFile={handleClearFile}
+          onStartAnalysis={handleStartAnalysis}
           onViewResults={() => { window.location.href = '/overview'; }}
         />
       </main>
