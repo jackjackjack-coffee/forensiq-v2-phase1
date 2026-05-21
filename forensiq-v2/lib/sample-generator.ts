@@ -1,40 +1,115 @@
 // Generates a randomised sample CSV in-browser. Every call produces a
-// different dataset while still embedding the same fraud pattern types
-// so all detectors have something to find.
+// different dataset — both transaction count (500–10,000) and the
+// specific vendors / amounts / dates vary. Vendors are drawn from a
+// list of real, well-known global companies.
 
-const VENDORS: Array<[string, string, number, number]> = [
-  // [name, category, typMin, typMax]
-  ['Apex Technology Solutions',   'IT',          2000,  80000],
-  ['Blue Ridge Analytics Group',  'CONSULTING',  5000,  95000],
-  ['Meridian Legal Partners LLP', 'LEGAL',       2500,  45000],
-  ['Summit Financial Advisors',   'FINANCE',     3000,  70000],
-  ['Cascade Digital Systems',     'IT',          1500,  60000],
-  ['Frontier Logistics Partners', 'LOGISTICS',    500,  15000],
-  ['Northpoint Marketing Agency', 'MARKETING',   1000,  25000],
-  ['Ironwood Engineering Corp',   'OPERATIONS',  2000,  40000],
-  ['Lakeview Office Supplies Co', 'SUPPLIES',     100,   5000],
-  ['Titan Security Services',     'SECURITY',    1000,  35000],
-  ['Quantum Cloud Infrastructure','IT',           800,  50000],
-  ['Harbor Light Consulting',     'CONSULTING',  3000,  60000],
-  ['Unity Healthcare Partners',   'CONSULTING',  2000,  30000],
-  ['Delta Freight Services LLC',  'LOGISTICS',    300,  12000],
-  ['Vanguard Analytics Inc',      'IT',          1500,  45000],
-  ['Ridgeline Catering Co',       'FACILITIES',   200,   8000],
-  ['Yellowstone Equipment Rental','OPERATIONS',   500,  20000],
-  ['Pacific Rim Staffing',        'CONSULTING',  1000,  15000],
-  ['Eagle Eye Security Systems',  'SECURITY',     500,  25000],
-  ['Westbrook Print & Media',     'MARKETING',    300,  10000],
-  ['Silverstone IT Services',     'IT',          1000,  30000],
-  ['Oakwood Facilities Mgmt',     'FACILITIES',  1000,  18000],
-  ['Horizon Training Solutions',  'CONSULTING',   500,  12000],
-  ['Crestview Supplies Ltd',      'SUPPLIES',     100,   4000],
-  ['Sterling Law Group',          'LEGAL',       1500,  30000],
-  ['Redrock Data Solutions',      'IT',          2000,  40000],
-  ['Avalon Research Associates',  'CONSULTING',  5000,  50000],
-  ['Elmwood Graphics Studio',     'MARKETING',    500,  15000],
-  ['Pinnacle Risk Advisors',      'FINANCE',     2000,  35000],
-  ['Sunrise Fleet Management',    'LOGISTICS',    400,   8000],
+type VendorRow = [name: string, category: string, typMin: number, typMax: number];
+
+// ── Real companies (~80), grouped by typical category ─────────────────
+const REAL_VENDORS: VendorRow[] = [
+  // IT / SaaS / Cloud
+  ['Microsoft Corporation',     'IT',          5000, 250000],
+  ['Oracle Corporation',        'IT',          8000, 200000],
+  ['Salesforce Inc',            'IT',          3000, 150000],
+  ['Adobe Systems',             'IT',          1000,  80000],
+  ['ServiceNow',                'IT',          2000, 120000],
+  ['Atlassian',                 'IT',           500,  40000],
+  ['Snowflake',                 'IT',          5000, 180000],
+  ['Datadog',                   'IT',          1000,  60000],
+  ['MongoDB',                   'IT',           500,  35000],
+  ['GitHub',                    'IT',           200,  25000],
+  ['GitLab',                    'IT',           300,  20000],
+  ['Amazon Web Services',       'IT',          2000, 300000],
+  ['Google Cloud',              'IT',          2000, 200000],
+  ['Cisco Systems',             'IT',          3000, 150000],
+  ['IBM',                       'IT',          5000, 200000],
+  ['SAP',                       'IT',          6000, 220000],
+  ['Workday',                   'IT',          3000, 150000],
+  ['Zoom Communications',       'IT',           300,  40000],
+  ['Slack Technologies',        'IT',           200,  25000],
+  ['Dropbox',                   'IT',           150,  18000],
+  // Consulting
+  ['Deloitte',                  'CONSULTING', 10000, 500000],
+  ['PricewaterhouseCoopers',    'CONSULTING', 10000, 450000],
+  ['Ernst & Young',             'CONSULTING',  8000, 400000],
+  ['KPMG',                      'CONSULTING',  8000, 400000],
+  ['McKinsey & Company',        'CONSULTING', 15000, 600000],
+  ['Boston Consulting Group',   'CONSULTING', 12000, 550000],
+  ['Bain & Company',            'CONSULTING', 12000, 500000],
+  ['Accenture',                 'CONSULTING',  5000, 300000],
+  ['Capgemini',                 'CONSULTING',  4000, 250000],
+  ['Infosys',                   'CONSULTING',  3000, 200000],
+  ['Tata Consultancy Services', 'CONSULTING',  3000, 220000],
+  ['Cognizant',                 'CONSULTING',  3000, 180000],
+  // Legal
+  ['Latham & Watkins',          'LEGAL',       5000, 300000],
+  ['Skadden Arps',              'LEGAL',       6000, 350000],
+  ['Kirkland & Ellis',          'LEGAL',       5000, 300000],
+  ['Baker McKenzie',            'LEGAL',       3000, 200000],
+  ['DLA Piper',                 'LEGAL',       3000, 180000],
+  ['Jones Day',                 'LEGAL',       4000, 220000],
+  ['Sidley Austin',             'LEGAL',       4000, 200000],
+  ['White & Case',              'LEGAL',       3500, 190000],
+  // Finance / Banking
+  ['Goldman Sachs',             'FINANCE',    10000, 500000],
+  ['JPMorgan Chase',            'FINANCE',     8000, 400000],
+  ['Morgan Stanley',            'FINANCE',     8000, 400000],
+  ['BlackRock',                 'FINANCE',     6000, 350000],
+  ['Citigroup',                 'FINANCE',     5000, 300000],
+  ['Bank of America',           'FINANCE',     5000, 280000],
+  ['Wells Fargo',               'FINANCE',     4000, 240000],
+  // Logistics
+  ['FedEx Corporation',         'LOGISTICS',    200,  30000],
+  ['United Parcel Service',     'LOGISTICS',    200,  30000],
+  ['DHL Express',               'LOGISTICS',    300,  35000],
+  ['Maersk Line',               'LOGISTICS',   2000, 120000],
+  ['C.H. Robinson',             'LOGISTICS',   1000,  60000],
+  ['XPO Logistics',             'LOGISTICS',    800,  50000],
+  ['Expeditors International',  'LOGISTICS',   1500,  80000],
+  // Marketing / Advertising
+  ['WPP Group',                 'MARKETING',   3000, 200000],
+  ['Omnicom Group',             'MARKETING',   3000, 180000],
+  ['Publicis Groupe',           'MARKETING',   2500, 150000],
+  ['Interpublic Group',         'MARKETING',   2500, 140000],
+  ['Dentsu',                    'MARKETING',   2000, 120000],
+  // Security
+  ['Palo Alto Networks',        'SECURITY',    2000, 120000],
+  ['CrowdStrike',               'SECURITY',    1500, 100000],
+  ['Fortinet',                  'SECURITY',    1000,  80000],
+  ['Splunk',                    'SECURITY',    2000, 100000],
+  ['Check Point Software',      'SECURITY',    1500,  90000],
+  ['SentinelOne',               'SECURITY',    1000,  70000],
+  ['Rapid7',                    'SECURITY',     800,  60000],
+  // Facilities / Office
+  ['WeWork',                    'FACILITIES',   500,  50000],
+  ['Regus',                     'FACILITIES',   400,  35000],
+  ['Steelcase',                 'FACILITIES',   500,  30000],
+  ['Herman Miller',             'FACILITIES',   500,  35000],
+  ['Staples',                   'SUPPLIES',      50,   5000],
+  ['Office Depot',              'SUPPLIES',      50,   5000],
+  // Operations / Equipment / Industrial
+  ['Honeywell',                 'OPERATIONS',  2000, 150000],
+  ['Caterpillar',               'OPERATIONS',  5000, 200000],
+  ['3M Company',                'OPERATIONS',   500,  40000],
+  ['General Electric',          'OPERATIONS',  5000, 250000],
+  ['Siemens',                   'OPERATIONS',  5000, 200000],
+  ['Schneider Electric',        'OPERATIONS',  3000, 150000],
+  ['Emerson Electric',          'OPERATIONS',  2000, 120000],
 ];
+
+// Fuzzy variants — real company name vs subtle misspelling/variation
+const REAL_FUZZY_VARIANTS: Record<string, string> = {
+  'Microsoft Corporation':     'Microsft Corporation',         // typo
+  'Amazon Web Services':       'Amazon Web Service',           // missing s
+  'Goldman Sachs':             'Goldman Sach',                 // missing s
+  'Deloitte':                  'Deloite',                      // missing t
+  'Oracle Corporation':        'Oracle Corp',                  // abbrev
+  'Salesforce Inc':            'Salesforce Incorporated',      // full form
+  'Palo Alto Networks':        'Palo Alto Network',            // missing s
+  'JPMorgan Chase':            'JP Morgan Chase',              // space added
+  'Ernst & Young':             'Ernst and Young',              // & vs and
+  'McKinsey & Company':        'Mckinsey & Company',           // capitalization
+};
 
 const LEGIT_DESCS = [
   'Monthly software license renewal',
@@ -99,7 +174,7 @@ const SUSP_DESCS = [
 
 const APPROVERS = ['J.Harrison', 'M.Chen', 'S.Patel', 'R.Novak', 'L.Torres', 'D.Okafor', 'A.Reeves'];
 
-// Seeded with Math.random() so every call produces a different dataset
+// Seeded LCG so the seed (set per call) determines the dataset
 function makeRng(seed: number) {
   let s = seed;
   return () => {
@@ -113,7 +188,7 @@ function randInt(rng: () => number, lo: number, hi: number) {
 }
 
 function randAmount(rng: () => number, lo: number, hi: number): number {
-  const t = Math.pow(rng(), 2.5); // skew toward lower amounts (realistic)
+  const t = Math.pow(rng(), 2.5);  // skew toward lower amounts (realistic)
   return Math.round((lo + t * (hi - lo)) * 100) / 100;
 }
 
@@ -156,59 +231,66 @@ interface Row {
 
 export function generateSampleCsv(): string {
   const seed = Math.floor(Math.random() * 0xffffffff);
-  const rng = makeRng(seed);
+  const rng  = makeRng(seed);
+
+  // Total target between 500 and 10,000 — fully randomised every call
+  const totalTarget = randInt(rng, 500, 10000);
+  const normalCount = Math.max(400, Math.floor(totalTarget * 0.8));
+  const fraudScale  = totalTarget / 1000;
+
+  const dupGroups        = Math.max(5,  Math.round(10 * fraudScale));
+  const fuzzyPairs       = Math.max(3,  Math.round(5  * fraudScale));
+  const splitClusters    = Math.max(3,  Math.round(6  * fraudScale));
+  const rsfCount         = Math.max(3,  Math.round(6  * fraudScale));
+  const roundCount       = Math.max(10, Math.round(25 * fraudScale));
+  const nearThreshCount  = Math.max(10, Math.round(18 * fraudScale));
+  const benfordClusterCt = Math.max(15, Math.round(22 * fraudScale));
+  const ghostRowsPerVend = Math.max(2,  Math.round(3  * fraudScale));
 
   let invCounter = 1000 + randInt(rng, 0, 200);
   const nextInv = () => `INV-${++invCounter}`;
 
   const rows: Row[] = [];
 
-  const vendorWeights = VENDORS.map((_, i) => Math.max(1, 10 - Math.floor(i / 3)));
+  // Weight first few vendors more heavily so they appear as "regulars"
+  const vendorWeights = REAL_VENDORS.map((_, i) => Math.max(1, 10 - Math.floor(i / 4)));
 
-  // ── Normal transactions (~620) ─────────────────────────────────
-  for (let i = 0; i < 620; i++) {
-    const [vname, vcat, vlo, vhi] = weightedPick(rng, VENDORS, vendorWeights)!;
-    const isSupicious = rng() < 0.1;
+  // ── Normal transactions ────────────────────────────────────────
+  for (let i = 0; i < normalCount; i++) {
+    const [vname, vcat, vlo, vhi] = weightedPick(rng, REAL_VENDORS, vendorWeights);
+    const suspicious = rng() < 0.08;
     rows.push({
       invoice_id:  nextInv(),
       date:        randDate(rng),
       vendor:      vname,
       amount:      randAmount(rng, vlo, vhi),
-      description: isSupicious ? pick(rng, SUSP_DESCS) : pick(rng, LEGIT_DESCS),
-      category:    rng() < 0.8 ? vcat : pick(rng, ['IT','LEGAL','MARKETING','CONSULTING','LOGISTICS','FINANCE','FACILITIES','SECURITY','OPERATIONS','SUPPLIES']),
+      description: suspicious ? pick(rng, SUSP_DESCS) : pick(rng, LEGIT_DESCS),
+      category:    rng() < 0.85 ? vcat : pick(rng, ['IT','LEGAL','MARKETING','CONSULTING','LOGISTICS','FINANCE','FACILITIES','SECURITY','OPERATIONS','SUPPLIES']),
       approved_by: pick(rng, APPROVERS),
     });
   }
 
-  // ── Fraud Pattern 1: Exact Duplicates (8-12 groups) ───────────
-  const dupCount = randInt(rng, 8, 12);
-  for (let g = 0; g < dupCount; g++) {
-    const [vname, vcat, vlo, vhi] = weightedPick(rng, VENDORS.slice(0, 10), vendorWeights.slice(0, 10))!;
-    const amt  = randAmount(rng, vlo, vhi);
-    const dt   = randDate(rng);
-    const inv  = nextInv();
-    const desc = pick(rng, LEGIT_DESCS);
-    const appr = pick(rng, APPROVERS);
+  // ── Fraud 1: Exact Duplicates ──────────────────────────────────
+  for (let g = 0; g < dupGroups; g++) {
+    const [vname, vcat, vlo, vhi] = weightedPick(rng, REAL_VENDORS.slice(0, 25), vendorWeights.slice(0, 25));
+    const amt   = randAmount(rng, vlo, vhi);
+    const dt    = randDate(rng);
+    const inv   = nextInv();
+    const desc  = pick(rng, LEGIT_DESCS);
+    const appr  = pick(rng, APPROVERS);
     const count = rng() < 0.3 ? 3 : 2;
     for (let k = 0; k < count; k++) {
       rows.push({ invoice_id: inv, date: dt, vendor: vname, amount: amt, description: desc, category: vcat, approved_by: appr });
     }
   }
 
-  // ── Fraud Pattern 2: Fuzzy Vendor Names (3-5 pairs) ──────────
-  const fuzzyVariants: Record<string, string> = {
-    'Apex Technology Solutions':   'Apex Technology Solution',
-    'Frontier Logistics Partners': 'Frontierr Logistics Partners',
-    'Summit Financial Advisors':   'Summit Financial Advisory',
-    'Meridian Legal Partners LLP': 'Meridian Legal Partners',
-    'Cascade Digital Systems':     'Cascade Digital System',
-  };
-  const fuzzyKeys = Object.keys(fuzzyVariants);
-  const fuzzyCount = randInt(rng, 3, 5);
-  for (let f = 0; f < fuzzyCount; f++) {
+  // ── Fraud 2: Fuzzy Vendor Names ────────────────────────────────
+  const fuzzyKeys = Object.keys(REAL_FUZZY_VARIANTS);
+  for (let f = 0; f < fuzzyPairs; f++) {
     const realName = fuzzyKeys[f % fuzzyKeys.length]!;
-    const fakeName = fuzzyVariants[realName]!;
-    const vendor = VENDORS.find(v => v[0] === realName)!;
+    const fakeName = REAL_FUZZY_VARIANTS[realName]!;
+    const vendor   = REAL_VENDORS.find(v => v[0] === realName);
+    if (!vendor) continue;
     for (let k = 0; k < randInt(rng, 3, 5); k++) {
       rows.push({
         invoice_id:  nextInv(),
@@ -222,23 +304,22 @@ export function generateSampleCsv(): string {
     }
   }
 
-  // ── Fraud Pattern 3: Split Invoices (5-7 clusters) ───────────
-  const splitScenarios: Array<[string, number, number, number, number]> = [
-    // [vendor, threshold, n, amtLo, amtHi]
-    ['Blue Ridge Analytics Group',  10000, 3, 9550, 9920],
-    ['Summit Financial Advisors',    5000, 4, 4720, 4970],
-    ['Cascade Digital Systems',     10000, 2, 9800, 9980],
-    ['Apex Technology Solutions',   25000, 3, 24400, 24900],
-    ['Harbor Light Consulting',     10000, 3, 9450, 9820],
-    ['Ironwood Engineering Corp',   50000, 3, 49000, 49750],
-    ['Meridian Legal Partners LLP', 10000, 2, 9700, 9960],
+  // ── Fraud 3: Split Invoices ────────────────────────────────────
+  const splitScenarios: Array<[name: string, threshold: number, n: number, lo: number, hi: number]> = [
+    ['Microsoft Corporation',   10000, 3, 9550, 9920],
+    ['Goldman Sachs',           10000, 4, 9700, 9970],
+    ['Deloitte',                25000, 3, 24400, 24900],
+    ['Accenture',               10000, 3, 9450, 9820],
+    ['Honeywell',               50000, 3, 49000, 49750],
+    ['JPMorgan Chase',           5000, 4, 4720, 4970],
+    ['Cisco Systems',           10000, 2, 9800, 9980],
   ];
-  const splitCount = randInt(rng, 5, 7);
-  for (let s = 0; s < splitCount; s++) {
+  for (let s = 0; s < splitClusters; s++) {
     const [vname, , n, lo, hi] = splitScenarios[s % splitScenarios.length]!;
-    const vendor = VENDORS.find(v => v[0] === vname)!;
+    const vendor = REAL_VENDORS.find(v => v[0] === vname);
+    if (!vendor) continue;
     const baseDate = randDate(rng);
-    const invBase = nextInv();
+    const invBase  = nextInv();
     for (let k = 0; k < n; k++) {
       const amt = Math.round((lo + rng() * (hi - lo)) * 100) / 100;
       rows.push({
@@ -253,20 +334,20 @@ export function generateSampleCsv(): string {
     }
   }
 
-  // ── Fraud Pattern 4: RSF Outliers (5-7) ──────────────────────
-  const rsfCases: Array<[string, number, number]> = [
-    ['Ridgeline Catering Co',       27000, 45000],
-    ['Lakeview Office Supplies Co', 30000, 42000],
-    ['Westbrook Print & Media',     25000, 38000],
-    ['Crestview Supplies Ltd',      22000, 34000],
-    ['Elmwood Graphics Studio',     28000, 40000],
-    ['Sunrise Fleet Management',    20000, 32000],
-    ['Yellowstone Equipment Rental',24000, 37000],
+  // ── Fraud 4: RSF Outliers ──────────────────────────────────────
+  const rsfCases: Array<[name: string, lo: number, hi: number]> = [
+    ['Staples',         27000, 45000],
+    ['Office Depot',    30000, 42000],
+    ['Dropbox',         25000, 38000],
+    ['GitHub',          22000, 34000],
+    ['Slack Technologies', 28000, 40000],
+    ['Zoom Communications', 20000, 32000],
+    ['Atlassian',       24000, 37000],
   ];
-  const rsfCount = randInt(rng, 5, 7);
   for (let r = 0; r < rsfCount; r++) {
-    const [vname, lo, hi] = rsfCases[r]!;
-    const vendor = VENDORS.find(v => v[0] === vname)!;
+    const [vname, lo, hi] = rsfCases[r % rsfCases.length]!;
+    const vendor = REAL_VENDORS.find(v => v[0] === vname);
+    if (!vendor) continue;
     rows.push({
       invoice_id:  nextInv(),
       date:        randDate(rng),
@@ -278,11 +359,10 @@ export function generateSampleCsv(): string {
     });
   }
 
-  // ── Fraud Pattern 5: Round Numbers (20-30) ───────────────────
+  // ── Fraud 5: Round Numbers ─────────────────────────────────────
   const roundPool = [1000, 2500, 5000, 10000, 25000, 50000, 100000];
-  const roundCount = randInt(rng, 20, 30);
   for (let r = 0; r < roundCount; r++) {
-    const [vname, vcat] = pick(rng, VENDORS.slice(0, 20))!;
+    const [vname, vcat] = pick(rng, REAL_VENDORS.slice(0, 40));
     rows.push({
       invoice_id:  nextInv(),
       date:        randDate(rng),
@@ -294,14 +374,13 @@ export function generateSampleCsv(): string {
     });
   }
 
-  // ── Fraud Pattern 6: Near-threshold Amounts (15-20) ──────────
+  // ── Fraud 6: Near-threshold Amounts ────────────────────────────
   const nearThreshPool: number[] = [];
   for (const t of [1000, 5000, 10000, 25000, 50000, 100000]) {
     for (let d = 1; d <= 20; d += 5) nearThreshPool.push(t - d);
   }
-  const nearCount = randInt(rng, 15, 20);
-  for (let n = 0; n < nearCount; n++) {
-    const [vname, vcat] = pick(rng, VENDORS.slice(0, 15))!;
+  for (let n = 0; n < nearThreshCount; n++) {
+    const [vname, vcat] = pick(rng, REAL_VENDORS.slice(0, 30));
     rows.push({
       invoice_id:  nextInv(),
       date:        randDate(rng),
@@ -313,14 +392,15 @@ export function generateSampleCsv(): string {
     });
   }
 
-  // ── Fraud Pattern 7: Ghost Vendors (2-4 each) ────────────────
-  const ghostVendors = [
+  // ── Fraud 7: Ghost Vendors (suspicious, generic names) ─────────
+  const ghostVendors: Array<[name: string, cat: string, lo: number, hi: number]> = [
     ['JJ Consulting LLC',          'CONSULTING', 8000, 48000],
     ['Quick Pay Services',         'OPERATIONS', 5000, 40000],
     ['General Business Solutions', 'SUPPLIES',   2000, 20000],
-  ] as const;
+    ['Global Services Group',      'CONSULTING', 4000, 35000],
+  ];
   for (const [gv, gcat, glo, ghi] of ghostVendors) {
-    for (let k = 0; k < randInt(rng, 2, 4); k++) {
+    for (let k = 0; k < ghostRowsPerVend; k++) {
       rows.push({
         invoice_id:  nextInv(),
         date:        randDate(rng),
@@ -333,11 +413,9 @@ export function generateSampleCsv(): string {
     }
   }
 
-  // ── Fraud Pattern 8: Benford Violation Cluster (20-25) ───────
-  const benfordCount = randInt(rng, 20, 25);
-  const benfordVendor = pick(rng, ['Summit Financial Advisors', 'Blue Ridge Analytics Group']);
-  const benfordCat    = 'FINANCE';
-  for (let b = 0; b < benfordCount; b++) {
+  // ── Fraud 8: Benford Violation Cluster (digit 7-9 concentrated) ─
+  const benfordVendor = pick(rng, ['Goldman Sachs', 'JPMorgan Chase', 'Morgan Stanley']);
+  for (let b = 0; b < benfordClusterCt; b++) {
     const startDigit = pick(rng, [7, 8, 9]);
     const lo = startDigit * 10000;
     const hi = lo + 9999;
@@ -347,7 +425,7 @@ export function generateSampleCsv(): string {
       vendor:      benfordVendor,
       amount:      Math.round((lo + rng() * (hi - lo)) * 100) / 100,
       description: pick(rng, LEGIT_DESCS.slice(10, 30)),
-      category:    benfordCat,
+      category:    'FINANCE',
       approved_by: pick(rng, APPROVERS.slice(0, 2)),
     });
   }
@@ -373,13 +451,16 @@ export function generateSampleCsv(): string {
   return [header, ...lines].join('\n');
 }
 
-export function downloadSampleCsv(): void {
-  const csv  = generateSampleCsv();
+export function triggerCsvDownload(csv: string, filename: string): void {
   const blob = new Blob([csv], { type: 'text/csv' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href     = url;
-  a.download = 'sample-transactions.csv';
+  a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+export function downloadSampleCsv(): void {
+  triggerCsvDownload(generateSampleCsv(), 'sample-transactions.csv');
 }
