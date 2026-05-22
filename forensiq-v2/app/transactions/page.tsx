@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { TransactionTable } from '@/components/ui/TransactionTable';
+import { DatePicker } from '@/components/ui/DatePicker';
 import { getAnalysisResult } from '@/lib/analysis-store';
 import { adaptTransaction, type TableTransaction } from '@/lib/adapt-transaction';
 import type { AnalysisResult, RiskTier } from '@/lib/types/transaction';
@@ -129,24 +130,22 @@ export default function TransactionsPage() {
         />
       </div>
 
-      {/* Date range — native picker, full year visible */}
+      {/* Date range — custom English-locale picker (independent of browser locale) */}
       <div className="flex flex-wrap items-center gap-2">
-        <label className="flex items-center gap-2 text-xs text-slate-400">
-          From
-          <input
-            type="date" value={dateFrom}
-            onChange={(e) => { setDateFrom(e.target.value); setPage(1); }}
-            className={`${inputCls} w-44 [color-scheme:light] dark:[color-scheme:dark]`}
-          />
-        </label>
-        <label className="flex items-center gap-2 text-xs text-slate-400">
-          To
-          <input
-            type="date" value={dateTo}
-            onChange={(e) => { setDateTo(e.target.value); setPage(1); }}
-            className={`${inputCls} w-44 [color-scheme:light] dark:[color-scheme:dark]`}
-          />
-        </label>
+        <span className="text-xs text-slate-400">From</span>
+        <DatePicker
+          value={dateFrom}
+          onChange={(v) => { setDateFrom(v); setPage(1); }}
+          placeholder="Start date"
+          ariaLabel="Date from"
+        />
+        <span className="text-xs text-slate-400">To</span>
+        <DatePicker
+          value={dateTo}
+          onChange={(v) => { setDateTo(v); setPage(1); }}
+          placeholder="End date"
+          ariaLabel="Date to"
+        />
         {(dateFrom || dateTo) && (
           <button
             type="button"
