@@ -95,7 +95,7 @@ async function runAnalysis(transactions: RawTransaction[]): Promise<AnalysisResu
   const uniqueAddresses = [...new Set([...vendorToAddress.values()])];
 
   tick(9);
-  let externalData: ExternalVerifyResponse = { edgar: {}, nominatim: {} };
+  let externalData: ExternalVerifyResponse = { edgar: {}, ofac: {}, nominatim: {} };
   try {
     const resp = await fetch('/api/external-verify', {
       method: 'POST',
@@ -114,11 +114,12 @@ async function runAnalysis(transactions: RawTransaction[]): Promise<AnalysisResu
   >();
   for (const [vendorLower, vendorOriginal] of vendorToOriginal) {
     const edgarResult = externalData.edgar[vendorOriginal];
+    const ofacResult = externalData.ofac[vendorOriginal];
     const address = vendorToAddress.get(vendorLower);
     const nominatimResult = address != null ? externalData.nominatim[address] : undefined;
     external_results.set(vendorLower, {
       edgar_verified: edgarResult != null ? edgarResult.matched : null,
-      ofac_hit: null,
+      ofac_hit: ofacResult != null ? ofacResult.hit : null,
       address_valid: nominatimResult != null ? nominatimResult.valid : null,
     });
   }

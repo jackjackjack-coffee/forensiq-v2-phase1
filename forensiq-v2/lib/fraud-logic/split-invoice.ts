@@ -27,8 +27,10 @@ const DEFAULT_THRESHOLDS = [1000, 2500, 5000, 10000, 25000, 50000, 100000];
 /** Transactions within this many days from same vendor are clustered */
 const TIME_WINDOW_DAYS = 7;
 
-/** Cluster is flagged if combined amount exceeds the threshold by at most this ratio */
-const THRESHOLD_BREACH_RATIO = 2.0;
+/** Cluster is flagged if combined amount exceeds the threshold by at most this ratio.
+ *  3.5× covers the textbook case of 3 invoices summing to ~3× the threshold (e.g.
+ *  three $9.3k payments evading a $10k limit = $28k = 2.8×). 2.0 was too tight. */
+const THRESHOLD_BREACH_RATIO = 3.5;
 
 /**
  * Split Invoice Detection (Structuring / Threshold Avoidance)

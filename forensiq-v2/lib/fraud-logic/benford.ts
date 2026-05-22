@@ -139,13 +139,21 @@ function analyzeBenford(transactions: RawTransaction[], position: 1 | 2): Benfor
     return sum + (exp > 0 ? Math.pow(obs - exp, 2) / exp : 0);
   }, 0);
 
-  // Mean Absolute Deviation
-  const mad =
+  // Mean Absolute Deviation — emitted as a decimal fraction (0.0–1.0)
+  // to match Nigrini's conventional units (MAD < 0.015 ≈ acceptable).
+  const madPctPoints =
     digitRange.reduce((sum, d) => sum + Math.abs(observed[d] - expected[d]), 0) /
     digitRange.length;
+  const mad = madPctPoints / 100;
 
+  // Nigrini's MAD conformity ranges differ by digit position.
+  // 1st digit: acceptable < 0.012, marginal < 0.015, else non-conforming.
+  // 2nd digit: acceptable < 0.010, marginal < 0.012, else non-conforming.
+  const acceptCutoff   = position === 1 ? 0.012 : 0.010;
+  const marginalCutoff = position === 1 ? 0.015 : 0.012;
   const conformity =
-    mad < 6 ? 'ACCEPTABLE' : mad < 10 ? 'MARGINAL' : 'NON_CONFORMING';
+    mad < acceptCutoff   ? 'ACCEPTABLE'  :
+    mad < marginalCutoff ? 'MARGINAL'    : 'NON_CONFORMING';
 
   return {
     digit_position: position,

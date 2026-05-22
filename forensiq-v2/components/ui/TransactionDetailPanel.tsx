@@ -9,7 +9,13 @@ interface Transaction {
   risk: 'Critical' | 'High' | 'Medium' | 'Low'
   score: number
   detectors: string[]
-  detectorResults?: { name: string; description: string; passed: boolean }[]
+  detectorResults?: { name: string; description: string; status: 'PASS' | 'FAIL' | 'N/A' }[]
+}
+
+const STATUS_STYLE: Record<'PASS' | 'FAIL' | 'N/A', string> = {
+  PASS: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-400',
+  FAIL: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-400',
+  'N/A': 'bg-gray-100 text-gray-500 dark:bg-slate-800 dark:text-slate-500',
 }
 
 interface TransactionDetailPanelProps {
@@ -69,13 +75,9 @@ export function TransactionDetailPanel({ transaction, onClose }: TransactionDeta
                 <p className="text-xs text-gray-500 dark:text-slate-500 mt-0.5">{r.description}</p>
               </div>
               <span
-                className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5 ${
-                  r.passed
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-400'
-                    : 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-400'
-                }`}
+                className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5 ${STATUS_STYLE[r.status]}`}
               >
-                {r.passed ? 'PASS' : 'FAIL'}
+                {r.status}
               </span>
             </div>
           ))}

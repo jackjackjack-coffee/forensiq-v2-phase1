@@ -60,6 +60,14 @@ export function computeRsf(transactions: RawTransaction[]): RsfResult[] {
     });
   }
 
+  // Portfolio-wide median: fallback baseline when a vendor has too few
+  // transactions to form a reliable median of its own. This is the shell-
+  // company case — a fictitious vendor with 1-3 huge invoices would otherwise
+  // have RSF≈1.0 against itself and never flag.
+  const MIN_VENDOR_SAMPLE = 5;
+  const portfolioSorted = transactions.map((t) => t.amount).sort((a, b) => a - b);
+  const portfolioMedian = median(portfolioSorted);
+
   return transactions.map((txn) => {
     const stats = vendorStats.get(txn.vendor);
 
@@ -73,7 +81,12 @@ export function computeRsf(transactions: RawTransaction[]): RsfResult[] {
       };
     }
 
-    const rsf = txn.amount / stats.median;
+    // For low-sample vendors, the vendor's own median is unreliable; compare
+    // against the portfolio median (typical of *any* transaction in the ledger).
+    const useFallback = stats.count < MIN_VENDOR_SAMPLE && portfolioMedian > 0;
+    const baseline = useFallback ? portfolioMedian : stats.median;
+
+    const rsf = txn.amount / baseline;
     const rsf_flag = rsf > 3.0;
 
     // Z-score: (x - mean) / std. If std is 0 (single-transaction vendor), use 0.
