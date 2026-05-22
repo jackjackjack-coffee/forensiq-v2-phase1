@@ -351,6 +351,94 @@ const SUSP_DESCS = [
 
 const APPROVERS = ['J.Harrison', 'M.Chen', 'S.Patel', 'R.Novak', 'L.Torres', 'D.Okafor', 'A.Reeves'];
 
+// ── Vendor addresses ──────────────────────────────────────────────
+// Real HQ / commercial addresses for well-known SEC filers. Nominatim
+// should geocode all of these to commercial / office locations.
+const KNOWN_HQ_ADDRESSES: Record<string, string> = {
+  'Microsoft Corporation':     'One Microsoft Way, Redmond, WA 98052',
+  'Oracle Corporation':        '2300 Oracle Way, Austin, TX 78741',
+  'Salesforce Inc':            '415 Mission St, San Francisco, CA 94105',
+  'Adobe Systems':             '345 Park Ave, San Jose, CA 95110',
+  'Amazon Web Services':       '410 Terry Ave N, Seattle, WA 98109',
+  'Google Cloud':              '1600 Amphitheatre Pkwy, Mountain View, CA 94043',
+  'Cisco Systems':             '170 W Tasman Dr, San Jose, CA 95134',
+  'IBM':                       '1 New Orchard Rd, Armonk, NY 10504',
+  'Apple Inc':                 'One Apple Park Way, Cupertino, CA 95014',
+  'NVIDIA Corporation':        '2788 San Tomas Expy, Santa Clara, CA 95051',
+  'Alphabet Inc':              '1600 Amphitheatre Pkwy, Mountain View, CA 94043',
+  'Meta Platforms':            '1 Hacker Way, Menlo Park, CA 94025',
+  'Tesla':                     '1 Tesla Rd, Austin, TX 78725',
+  'Intel Corporation':         '2200 Mission College Blvd, Santa Clara, CA 95054',
+  'Deloitte':                  '30 Rockefeller Plaza, New York, NY 10112',
+  'PricewaterhouseCoopers':    '300 Madison Ave, New York, NY 10017',
+  'Ernst & Young':             '5 Times Square, New York, NY 10036',
+  'KPMG':                      '345 Park Ave, New York, NY 10154',
+  'Accenture':                 '161 N Clark St, Chicago, IL 60601',
+  'McKinsey & Company':        '3 World Trade Center, New York, NY 10007',
+  'Goldman Sachs':             '200 West St, New York, NY 10282',
+  'JPMorgan Chase':            '383 Madison Ave, New York, NY 10017',
+  'Morgan Stanley':            '1585 Broadway, New York, NY 10036',
+  'BlackRock':                 '50 Hudson Yards, New York, NY 10001',
+  'FedEx Corporation':         '3610 Hacks Cross Rd, Memphis, TN 38125',
+  'United Parcel Service':     '55 Glenlake Pkwy NE, Atlanta, GA 30328',
+  'Honeywell':                 '855 S Mint St, Charlotte, NC 28202',
+  'Johnson & Johnson':         '1 Johnson & Johnson Plaza, New Brunswick, NJ 08933',
+  'Pfizer Inc':                '66 Hudson Blvd E, New York, NY 10001',
+  'Visa Inc':                  '900 Metro Center Blvd, Foster City, CA 94404',
+  'Mastercard':                '2000 Purchase St, Purchase, NY 10577',
+};
+
+// Generic real commercial addresses (Class A office buildings, well-known
+// business districts) used as fallback when a vendor isn't in KNOWN_HQ_ADDRESSES.
+const GENERIC_COMMERCIAL_ADDRESSES: string[] = [
+  '200 S Wacker Dr, Chicago, IL 60606',
+  '500 W Madison St, Chicago, IL 60661',
+  '101 Federal St, Boston, MA 02110',
+  '1 Federal St, Boston, MA 02110',
+  '125 High St, Boston, MA 02110',
+  '300 Park Ave, New York, NY 10022',
+  '388 Greenwich St, New York, NY 10013',
+  '270 Park Ave, New York, NY 10017',
+  '1 Pennsylvania Plaza, New York, NY 10119',
+  '1209 Orange St, Wilmington, DE 19801',
+  '901 5th Ave, Seattle, WA 98164',
+  '101 California St, San Francisco, CA 94111',
+  '555 California St, San Francisco, CA 94104',
+  '6500 Brackenridge Pkwy, Austin, TX 78744',
+  '2950 N Loop Fwy W, Houston, TX 77092',
+  '8400 NW 36th St, Doral, FL 33166',
+  '233 S Wacker Dr, Chicago, IL 60606',
+  '1700 Pennsylvania Ave NW, Washington, DC 20006',
+  '99 High St, Boston, MA 02110',
+];
+
+// Suspicious addresses for planted shell vendors — Nominatim should either
+// fail to geocode these or classify them as residential / virtual office.
+const SUSPICIOUS_ADDRESS_POOL: string[] = [
+  '742 Evergreen Terrace, Springfield, OR 97477',   // residential look
+  '1313 Mockingbird Lane, Pittsburgh, PA 15201',    // residential look
+  '124 Conch St, Bikini Bottom, FL 99999',          // won't geocode
+  '0 Phantom Ave, Ghostville, ZZ 00000',            // won't geocode
+  '500 Mailbox Pl PMB 412, Sometown, NV 89074',     // mail-drop pattern
+  '78 Forwarding Suite #PMB 99, Reno, NV 89501',    // mail-drop pattern
+  '999999 Nowhere Rd, Atlantis, XX',                // gibberish
+  '15 Apt 3B Maple Street, Somewhere, IL 60001',    // residential
+];
+
+// ── OFAC fuzzy-shell vendor templates ────────────────────────────────
+// Shell vendor names that include or closely resemble well-known, long-
+// standing SDN-listed entity names. Used to plant a demonstrable OFAC hit.
+// We rely on OFAC's substring-of-entity match (entity SDN with ≥3 tokens)
+// to surface these on the live SDN feed.
+const OFAC_FUZZY_SHELL_POOL: Array<{ name: string; category: string; lo: number; hi: number }> = [
+  { name: 'Bank Melli Iran Trading Co',         category: 'FINANCE',    lo: 25000, hi: 180000 },
+  { name: 'Bank Sepah Iran Services LLC',       category: 'FINANCE',    lo: 20000, hi: 150000 },
+  { name: 'TransKapitalBank Holdings',          category: 'FINANCE',    lo: 30000, hi: 200000 },
+  { name: 'Promsvyazbank Services Ltd',         category: 'CONSULTING', lo: 15000, hi: 120000 },
+  { name: 'Rosneft Trading Solutions',          category: 'OPERATIONS', lo: 40000, hi: 220000 },
+  { name: 'IRGC Engineering Consultants',       category: 'CONSULTING', lo: 18000, hi: 140000 },
+];
+
 // Seeded LCG so the seed (set per call) determines the dataset
 function makeRng(seed: number) {
   let s = seed;
@@ -386,6 +474,15 @@ function pick<T>(rng: () => number, arr: T[]): T {
   return arr[Math.floor(rng() * arr.length)]!;
 }
 
+function shuffled<T>(arr: readonly T[], rng: () => number): T[] {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [out[i], out[j]] = [out[j]!, out[i]!];
+  }
+  return out;
+}
+
 function weightedPick<T>(rng: () => number, items: T[], weights: number[]): T {
   const total = weights.reduce((a, b) => a + b, 0);
   let r = rng() * total;
@@ -404,6 +501,7 @@ interface Row {
   description: string;
   category: string;
   approved_by: string;
+  address?: string;
 }
 
 export function generateSampleCsv(): string {
@@ -426,6 +524,13 @@ export function generateSampleCsv(): string {
   const nearThreshCount  = Math.max(3,  Math.round(18 * fraudScale * v()));
   const benfordClusterCt = Math.max(3,  Math.round(22 * fraudScale * v()));
   const ghostRowsPerVend = Math.max(1,  Math.round(3  * fraudScale * v()));
+
+  // ── External-verification knobs (randomised each call) ────────────
+  // realVendorPct is informational only — the REAL_VENDORS pool already
+  // dominates; this drives how many synthetic / shell entries get planted.
+  const realVendorPct        = 0.60 + rng() * 0.35;   // 60–95 %
+  const suspiciousAddrCount  = randInt(rng, 0, 5);    // 0–5 residential / mail-drop
+  const ofacFuzzyShellCount  = randInt(rng, 0, 3);    // 0–3 sanctioned-shell vendors
 
   let invCounter = 1000 + randInt(rng, 0, 200);
   const nextInv = () => `INV-${++invCounter}`;
@@ -610,14 +715,100 @@ export function generateSampleCsv(): string {
     });
   }
 
+  // ── Fraud 9: OFAC Fuzzy-Shell Vendors (0–3, randomised) ─────────
+  // Plant shell vendors whose names contain well-known SDN entity names.
+  // Real OFAC SDN screening will catch these via substring-of-entity match.
+  // These vendors also get suspicious addresses so they double-fire.
+  const ofacShellsForRun = shuffled(OFAC_FUZZY_SHELL_POOL, rng).slice(0, ofacFuzzyShellCount);
+  for (const shell of ofacShellsForRun) {
+    const txCount = randInt(rng, 2, 4);
+    for (let k = 0; k < txCount; k++) {
+      rows.push({
+        invoice_id:  nextInv(),
+        date:        randDate(rng),
+        vendor:      shell.name,
+        amount:      randAmount(rng, shell.lo, shell.hi),
+        description: pick(rng, SUSP_DESCS.slice(0, 8)),
+        category:    shell.category,
+        approved_by: pick(rng, APPROVERS.slice(0, 3)),
+      });
+    }
+  }
+
+  // ── Build per-vendor address map ───────────────────────────────
+  // Every unique vendor that appears in rows[] gets an address. Real SEC
+  // filers use their known HQ; ghost / shell / fuzzy-variant vendors get
+  // either a generic commercial address or one of the planted suspicious
+  // addresses (residential, mail-drop, or non-geocodable).
+  const uniqueVendors = Array.from(new Set(rows.map((r) => r.vendor)));
+  const vendorToAddress = new Map<string, string>();
+
+  // Pre-assign known HQs and shell vendors their addresses.
+  for (const vendor of uniqueVendors) {
+    if (KNOWN_HQ_ADDRESSES[vendor]) {
+      vendorToAddress.set(vendor, KNOWN_HQ_ADDRESSES[vendor]!);
+    }
+  }
+
+  // Shell vendors get a suspicious address (one each, drawn from the pool).
+  const shuffledSuspicious = shuffled(SUSPICIOUS_ADDRESS_POOL, rng);
+  let suspIdx = 0;
+  for (const shell of ofacShellsForRun) {
+    vendorToAddress.set(
+      shell.name,
+      shuffledSuspicious[suspIdx % shuffledSuspicious.length]!,
+    );
+    suspIdx++;
+  }
+
+  // Plant the remaining suspicious addresses on randomly-chosen vendors
+  // that don't yet have one assigned. Total planted = suspiciousAddrCount.
+  const stillNeedingAddress = uniqueVendors.filter((v) => !vendorToAddress.has(v));
+  const extraSuspicious = Math.max(0, suspiciousAddrCount - ofacShellsForRun.length);
+  const targets = shuffled(stillNeedingAddress, rng).slice(0, extraSuspicious);
+  for (const vendor of targets) {
+    vendorToAddress.set(
+      vendor,
+      shuffledSuspicious[suspIdx % shuffledSuspicious.length]!,
+    );
+    suspIdx++;
+  }
+
+  // Everyone else gets a generic commercial address (deterministic per
+  // vendor — stable across rows for the same vendor).
+  const commercialPool = shuffled(GENERIC_COMMERCIAL_ADDRESSES, rng);
+  let comIdx = 0;
+  for (const vendor of uniqueVendors) {
+    if (!vendorToAddress.has(vendor)) {
+      vendorToAddress.set(vendor, commercialPool[comIdx % commercialPool.length]!);
+      comIdx++;
+    }
+  }
+
+  // Stamp the address onto every row.
+  for (const r of rows) {
+    r.address = vendorToAddress.get(r.vendor) ?? '';
+  }
+
   // ── Shuffle ────────────────────────────────────────────────────
   for (let i = rows.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
     [rows[i], rows[j]] = [rows[j]!, rows[i]!];
   }
 
+  // Stash run metadata for the README / debug surface to display.
+  if (typeof window !== 'undefined') {
+    (window as { __forensiq_lastSampleStats?: unknown }).__forensiq_lastSampleStats = {
+      totalRows: rows.length,
+      uniqueVendors: uniqueVendors.length,
+      realVendorPct: Math.round(realVendorPct * 100),
+      suspiciousAddresses: suspiciousAddrCount,
+      ofacFuzzyShells: ofacFuzzyShellCount,
+    };
+  }
+
   // ── Serialize to CSV ───────────────────────────────────────────
-  const header = 'invoice_id,date,vendor,amount,description,category,approved_by';
+  const header = 'invoice_id,date,vendor,amount,description,category,approved_by,address';
   const escape = (v: string | number) => {
     const s = String(v);
     return s.includes(',') || s.includes('"') || s.includes('\n')
@@ -625,7 +816,7 @@ export function generateSampleCsv(): string {
       : s;
   };
   const lines = rows.map(r =>
-    [r.invoice_id, r.date, r.vendor, r.amount, r.description, r.category, r.approved_by]
+    [r.invoice_id, r.date, r.vendor, r.amount, r.description, r.category, r.approved_by, r.address ?? '']
       .map(escape).join(',')
   );
   return [header, ...lines].join('\n');

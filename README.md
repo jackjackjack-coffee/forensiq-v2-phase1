@@ -48,12 +48,12 @@ The pipeline runs nine detectors in three layers, then computes a composite scor
 
 ### Layer 3 — Text & external verification
 
-| Detector | What it catches |
+| Detector | What it actually proves |
 |---|---|
 | **Description audit** | Vague descriptions ("Misc", "Consulting", "Services") and known fraud keywords. |
-| **EDGAR vendor lookup** | Is this vendor a real SEC-registered entity? Catches fictitious shell vendors. |
-| **OFAC sanctions screen** | Is this vendor on the U.S. Treasury sanctions list? Mandatory check; violations are federal crimes. |
-| **Nominatim address geocoding** | Does the vendor address resolve to a real location? Catches mail-drop and ghost-vendor schemes. |
+| **OFAC sanctions screen** | **Blocklist check.** Vendor name matched against the U.S. Treasury SDN feed (fetched live, ~10 MB XML, cached in module scope). Exact match, substring-of-entity match for distinctive entity names, and Levenshtein-2 fuzzy match for typo evasion. A hit escalates the transaction to score 100. Silence means *not sanctioned*, not "verified". |
+| **EDGAR vendor lookup** | **Partial allowlist check.** Confirms a vendor is a registered SEC filer (~8k entities — public companies, investment advisors, broker-dealers). Most legitimate private vendors aren't in EDGAR, so absence isn't a failure on its own. The composite-score logic only escalates when *not in EDGAR* is paired with *RSF outlier* — i.e., "large invoice from an unverifiable vendor". |
+| **Nominatim address geocoding** | **Sanity check.** Geocodes the vendor address via OpenStreetMap. Flags addresses that don't resolve at all or resolve to residential / mail-drop locations. Weaker signal than a real business-registry check (state Secretary of State filings) would be — but free, no API key. **Capped at the addresses of already-flagged vendors per analysis** to respect OSM's 1 req/sec policy: we re-verify suspicious-looking vendors specifically, rather than burning rate-limit budget on clean ones. |
 
 ### Composite scoring
 

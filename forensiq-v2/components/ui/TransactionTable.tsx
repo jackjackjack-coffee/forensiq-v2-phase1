@@ -14,7 +14,7 @@ interface Transaction {
   risk: 'Critical' | 'High' | 'Medium' | 'Low'
   score: number
   detectors: string[]
-  detectorResults?: { name: string; description: string; status: 'PASS' | 'FAIL' | 'N/A' }[]
+  detectorResults?: { name: string; description: string; status: 'PASS' | 'FAIL' | 'N/A' | 'INFO' }[]
 }
 
 interface TransactionTableProps {

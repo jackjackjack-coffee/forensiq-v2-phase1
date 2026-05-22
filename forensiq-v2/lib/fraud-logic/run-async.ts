@@ -135,7 +135,25 @@ export async function runForensicAnalysisAsync(
   }
 
   const uniqueVendors = [...vendorToOriginal.values()];
-  const uniqueAddresses = [...new Set([...vendorToAddress.values()])];
+
+  // Smart Nominatim filter — only ship addresses of vendors already
+  // flagged by internal detectors (RSF / isolation outlier / fuzzy dup).
+  // Forensically appropriate and fits the 8-address rate-limit budget.
+  const flaggedVendorsLower = new Set<string>();
+  for (let i = 0; i < transactions.length; i++) {
+    const v = transactions[i]!.vendor.toLowerCase();
+    if (rsfResults[i]?.rsf_flag) flaggedVendorsLower.add(v);
+    if (is_outlier[i]) flaggedVendorsLower.add(v);
+    if (fuzzyResults[i]?.fuzzy_dup_group !== null) flaggedVendorsLower.add(v);
+  }
+  const prioritizedAddresses: string[] = [];
+  const seenAddr = new Set<string>();
+  for (const [vendorLower, address] of vendorToAddress) {
+    if (flaggedVendorsLower.has(vendorLower) && !seenAddr.has(address)) {
+      prioritizedAddresses.push(address);
+      seenAddr.add(address);
+    }
+  }
 
   tick(9); await yieldToUI();
 
@@ -144,7 +162,7 @@ export async function runForensicAnalysisAsync(
     const resp = await fetch('/api/external-verify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vendors: uniqueVendors, addresses: uniqueAddresses }),
+      body: JSON.stringify({ vendors: uniqueVendors, addresses: prioritizedAddresses }),
     });
     if (resp.ok) {
       externalData = (await resp.json()) as ExternalVerifyResponse;

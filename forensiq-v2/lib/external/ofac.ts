@@ -146,14 +146,29 @@ function screenVendor(vendor: string, sdn: SdnEntry[]): SdnEntry | null {
 
   for (const entry of sdn) {
     const allNames = [entry.name, ...entry.aliases];
+    const isEntity = entry.list_type.toUpperCase() !== 'INDIVIDUAL';
 
     for (const name of allNames) {
       const nameLower = name.toLowerCase().trim();
 
-      // Exact match (normalized)
+      // 1. Exact match (normalized)
       if (vendorLower === nameLower) return entry;
 
-      // Fuzzy match — Levenshtein distance ≤ 2 on name tokens
+      // 2. Substring-of-entity-name match — only for *entity* SDNs with
+      //    distinctive multi-token names (≥ 12 chars and ≥ 2 tokens). This
+      //    is what real compliance screens do: "vendor contains a known
+      //    sanctioned entity's name" → flag. Individual names skipped to
+      //    avoid false positives on common given names (Khan, Ali, etc.).
+      if (
+        isEntity &&
+        nameLower.length >= 12 &&
+        nameLower.split(/\s+/).length >= 2 &&
+        vendorLower.includes(nameLower)
+      ) {
+        return entry;
+      }
+
+      // 3. Fuzzy match — Levenshtein-2 catches deliberate misspellings.
       if (fuzzyNameMatch(vendorLower, nameLower)) return entry;
     }
   }
