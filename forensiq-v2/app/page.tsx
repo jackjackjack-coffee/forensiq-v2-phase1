@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect, useRef, Fragment } from 'react';
+import { useState, useCallback, useMemo, useEffect, Fragment } from 'react';
+import { useRouter } from 'next/navigation';
 import { useDropzone } from 'react-dropzone';
 import { setAnalysisResult } from '@/lib/analysis-store';
 import { generateSampleCsv, triggerCsvDownload } from '@/lib/sample-generator';
@@ -94,6 +95,12 @@ function deleteHistoryItem(id: string): AnalysisSummary[] {
   try { localStorage.removeItem(RESULT_KEY(id)); } catch {}
   return updated;
 }
+
+// Module-level cache (Map) survives across SPA navigations within the same
+// browser session — useRef inside a component is reset when the component
+// unmounts (e.g. when navigating to /overview and back). Without this, only
+// the 3 most-recent results in localStorage are reachable from the sidebar.
+const sessionResultCache = new Map<string, AnalysisResult>();
 
 // ── Tier styling (color-blind safe with icons) ───────────────────
 
@@ -1224,13 +1231,12 @@ function DetectorsSection({ transactions }: { transactions: AnalyzedTransaction[
 // ── Main Layout ──────────────────────────────────────────────────
 
 export default function Home() {
+  const router = useRouter();
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [lastFilename, setLastFilename] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<ProgressUpdate | null>(null);
   const [history, setHistory] = useState<AnalysisSummary[]>([]);
-  // In-memory cache: keeps ALL results from this session regardless of localStorage quota
-  const sessionCache = useRef<Map<string, AnalysisResult>>(new Map());
 
   // Loaded but not-yet-analyzed file
   const [pendingTxns, setPendingTxns]         = useState<RawTransaction[] | null>(null);
@@ -1304,7 +1310,7 @@ export default function Home() {
         score: r.portfolio.score,
         tier: r.portfolio.tier,
       };
-      sessionCache.current.set(summary.id, r);
+      sessionResultCache.set(summary.id, r);
       setHistory(appendHistory(summary, r));
       setPendingTxns(null);
       setPendingFilename(null);
@@ -1320,14 +1326,14 @@ export default function Home() {
       <LoadingOverlay progress={progress} />
       <HistorySidebar
           history={history}
-          resolveResult={(id) => sessionCache.current.get(id) ?? loadStoredResult(id)}
+          resolveResult={(id) => sessionResultCache.get(id) ?? loadStoredResult(id)}
           onSelect={(_id, r) => {
             setAnalysisResult(r);
             setResult(r);
-            window.location.href = '/overview';
+            router.push('/overview');
           }}
           onDelete={(id) => {
-            sessionCache.current.delete(id);
+            sessionResultCache.delete(id);
             setHistory(deleteHistoryItem(id));
           }}
         />
@@ -1342,7 +1348,7 @@ export default function Home() {
           onGenerateSample={handleGenerateSample}
           onClearFile={handleClearFile}
           onStartAnalysis={handleStartAnalysis}
-          onViewResults={() => { window.location.href = '/overview'; }}
+          onViewResults={() => { router.push('/overview'); }}
         />
       </main>
     </div>

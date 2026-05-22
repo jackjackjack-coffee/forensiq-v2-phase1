@@ -111,7 +111,7 @@ export default function TransactionsPage() {
       </div>
 
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         <input
           type="text" placeholder="Search vendor / invoice…" value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
@@ -127,12 +127,35 @@ export default function TransactionsPage() {
           onChange={(e) => { setMaxAmount(e.target.value); setPage(1); }}
           className={inputCls}
         />
-        <div className="flex gap-1">
-          <input type="text" placeholder="From (YYYY-MM-DD)" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }}
-            className={`flex-1 min-w-0 ${inputCls}`} />
-          <input type="text" placeholder="To (YYYY-MM-DD)" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }}
-            className={`flex-1 min-w-0 ${inputCls}`} />
-        </div>
+      </div>
+
+      {/* Date range — native picker, full year visible */}
+      <div className="flex flex-wrap items-center gap-2">
+        <label className="flex items-center gap-2 text-xs text-slate-400">
+          From
+          <input
+            type="date" value={dateFrom}
+            onChange={(e) => { setDateFrom(e.target.value); setPage(1); }}
+            className={`${inputCls} w-44 [color-scheme:light] dark:[color-scheme:dark]`}
+          />
+        </label>
+        <label className="flex items-center gap-2 text-xs text-slate-400">
+          To
+          <input
+            type="date" value={dateTo}
+            onChange={(e) => { setDateTo(e.target.value); setPage(1); }}
+            className={`${inputCls} w-44 [color-scheme:light] dark:[color-scheme:dark]`}
+          />
+        </label>
+        {(dateFrom || dateTo) && (
+          <button
+            type="button"
+            onClick={() => { setDateFrom(''); setDateTo(''); setPage(1); }}
+            className="text-xs text-slate-500 hover:text-slate-300 underline"
+          >
+            clear dates
+          </button>
+        )}
       </div>
 
       {/* Sort controls */}
