@@ -63,9 +63,10 @@ function getDetectorMessage(txn: AnalyzedTransaction, d: DetectorName): string {
         : 'Vendor name does not match any OFAC SDN list entry.';
     case 'EDGAR_UNVERIFIED':
       if (txn.edgar_verified === null) return 'EDGAR verification not available for this vendor.';
+      if (txn.edgar_verified === true) return 'Vendor confirmed in SEC EDGAR registry.';
       return triggered
-        ? 'Vendor not found in SEC EDGAR registry — possible shell entity.'
-        : 'Vendor confirmed in SEC EDGAR registry.';
+        ? 'Vendor not in SEC EDGAR registry AND amount is unusually large — possible shell entity.'
+        : 'Vendor is not an SEC filer — typical for private companies, no other red flags.';
     case 'ADDRESS_INVALID':
       if (txn.address_valid === null) return 'No address provided for geocoding.';
       return triggered
@@ -96,16 +97,27 @@ export interface TableTransaction {
   risk: RiskLevel;
   score: number;
   detectors: string[];
-  detectorResults: { name: string; description: string; status: 'PASS' | 'FAIL' | 'N/A' }[];
+  detectorResults: { name: string; description: string; status: 'PASS' | 'FAIL' | 'N/A' | 'INFO' }[];
 }
 
-function detectorStatus(txn: AnalyzedTransaction, d: DetectorName): 'PASS' | 'FAIL' | 'N/A' {
-  // External checks return null when the verification didn't run (e.g., over
-  // the rate-limit cap, or no address provided). Show "N/A" rather than a
-  // misleading PASS for those.
+function detectorStatus(txn: AnalyzedTransaction, d: DetectorName): 'PASS' | 'FAIL' | 'N/A' | 'INFO' {
+  // External checks return null when the verification didn't run (over
+  // the rate-limit cap, or no address provided). Show N/A for those.
   if (d === 'OFAC_HIT' && txn.ofac_hit === null) return 'N/A';
   if (d === 'EDGAR_UNVERIFIED' && txn.edgar_verified === null) return 'N/A';
   if (d === 'ADDRESS_INVALID' && txn.address_valid === null) return 'N/A';
+
+  // EDGAR special case: absence of a match isn't a failure on its own —
+  // most private companies aren't SEC filers. Show PASS only when actually
+  // matched, FAIL only when not-matched paired with another red flag
+  // (the composite-score logic gates the triggered_detectors entry), and
+  // INFO ("not an SEC filer, no other concerns") otherwise.
+  if (d === 'EDGAR_UNVERIFIED') {
+    if (txn.edgar_verified === true) return 'PASS';
+    if (txn.triggered_detectors.includes(d)) return 'FAIL';
+    return 'INFO';
+  }
+
   return txn.triggered_detectors.includes(d) ? 'FAIL' : 'PASS';
 }
 

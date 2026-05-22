@@ -92,7 +92,31 @@ async function runAnalysis(transactions: RawTransaction[]): Promise<AnalysisResu
     if (txn.address && !vendorToAddress.has(key)) vendorToAddress.set(key, txn.address);
   }
   const uniqueVendors = [...vendorToOriginal.values()];
-  const uniqueAddresses = [...new Set([...vendorToAddress.values()])];
+
+  // ── Smart Nominatim filter ────────────────────────────────────
+  // Nominatim's 1 req/sec policy forces a hard cap (~8 addresses per
+  // analysis on Vercel). Rather than verify the first 8 alphabetically,
+  // we only ship addresses for vendors that *already* have another
+  // red flag from the internal detectors — RSF outlier, isolation
+  // outlier, or fuzzy duplicate. This matches real forensic procedure
+  // ("escalate vendor-master verification for vendors that look
+  // suspicious on other grounds") and ensures the rate-limit budget
+  // is spent where it matters.
+  const flaggedVendorsLower = new Set<string>();
+  for (let i = 0; i < transactions.length; i++) {
+    const v = transactions[i]!.vendor.toLowerCase();
+    if (rsfResults[i]?.rsf_flag) flaggedVendorsLower.add(v);
+    if (is_outlier[i]) flaggedVendorsLower.add(v);
+    if (fuzzyResults[i]?.fuzzy_dup_group !== null) flaggedVendorsLower.add(v);
+  }
+  const prioritizedAddresses: string[] = [];
+  const seenAddr = new Set<string>();
+  for (const [vendorLower, address] of vendorToAddress) {
+    if (flaggedVendorsLower.has(vendorLower) && !seenAddr.has(address)) {
+      prioritizedAddresses.push(address);
+      seenAddr.add(address);
+    }
+  }
 
   tick(9);
   let externalData: ExternalVerifyResponse = { edgar: {}, ofac: {}, nominatim: {} };
@@ -100,7 +124,7 @@ async function runAnalysis(transactions: RawTransaction[]): Promise<AnalysisResu
     const resp = await fetch('/api/external-verify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vendors: uniqueVendors, addresses: uniqueAddresses }),
+      body: JSON.stringify({ vendors: uniqueVendors, addresses: prioritizedAddresses }),
     });
     if (resp.ok) externalData = (await resp.json()) as ExternalVerifyResponse;
   } catch {
