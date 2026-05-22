@@ -19,6 +19,7 @@ const DETECTOR_LABEL: Record<DetectorName, string> = {
 const DRAWER_DETECTORS: DetectorName[] = [
   'EXACT_DUPLICATE', 'RSF', 'ISOLATION_FOREST', 'SPLIT_INVOICE',
   'ROUND_NUMBER', 'DESCRIPTION_AUDIT', 'BENFORD_1ST',
+  'OFAC_HIT', 'EDGAR_UNVERIFIED', 'ADDRESS_INVALID',
 ];
 
 const fmt = (n: number) =>
@@ -55,6 +56,21 @@ function getDetectorMessage(txn: AnalyzedTransaction, d: DetectorName): string {
       return triggered
         ? `Description matched high-risk pattern (score: ${txn.description_risk.toFixed(0)}/100).`
         : 'Description appears specific and legitimate.';
+    case 'OFAC_HIT':
+      if (txn.ofac_hit === null) return 'OFAC screening not available for this vendor.';
+      return triggered
+        ? 'Vendor name matches an entry on the OFAC sanctions list — CRITICAL escalation.'
+        : 'Vendor name does not match any OFAC SDN list entry.';
+    case 'EDGAR_UNVERIFIED':
+      if (txn.edgar_verified === null) return 'EDGAR verification not available for this vendor.';
+      return triggered
+        ? 'Vendor not found in SEC EDGAR registry — possible shell entity.'
+        : 'Vendor confirmed in SEC EDGAR registry.';
+    case 'ADDRESS_INVALID':
+      if (txn.address_valid === null) return 'No address provided for geocoding.';
+      return triggered
+        ? 'Vendor address could not be geocoded or resolves to a residential location.'
+        : 'Vendor address geocodes to a valid commercial location.';
     default:
       return DETECTOR_INFO[d].short;
   }
@@ -80,7 +96,17 @@ export interface TableTransaction {
   risk: RiskLevel;
   score: number;
   detectors: string[];
-  detectorResults: { name: string; description: string; passed: boolean }[];
+  detectorResults: { name: string; description: string; status: 'PASS' | 'FAIL' | 'N/A' }[];
+}
+
+function detectorStatus(txn: AnalyzedTransaction, d: DetectorName): 'PASS' | 'FAIL' | 'N/A' {
+  // External checks return null when the verification didn't run (e.g., over
+  // the rate-limit cap, or no address provided). Show "N/A" rather than a
+  // misleading PASS for those.
+  if (d === 'OFAC_HIT' && txn.ofac_hit === null) return 'N/A';
+  if (d === 'EDGAR_UNVERIFIED' && txn.edgar_verified === null) return 'N/A';
+  if (d === 'ADDRESS_INVALID' && txn.address_valid === null) return 'N/A';
+  return txn.triggered_detectors.includes(d) ? 'FAIL' : 'PASS';
 }
 
 export function adaptTransaction(txn: AnalyzedTransaction): TableTransaction {
@@ -95,7 +121,7 @@ export function adaptTransaction(txn: AnalyzedTransaction): TableTransaction {
     detectorResults: DRAWER_DETECTORS.map((d) => ({
       name: DETECTOR_INFO[d].name,
       description: getDetectorMessage(txn, d),
-      passed: !txn.triggered_detectors.includes(d),
+      status: detectorStatus(txn, d),
     })),
   };
 }

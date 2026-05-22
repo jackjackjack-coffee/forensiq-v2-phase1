@@ -66,7 +66,8 @@ describe("Benford's Law — First Digit", () => {
     expect(result.digit_position).toBe(1);
     expect(result.total_records).toBe(1000);
     expect(result.conformity).toBe('ACCEPTABLE');
-    expect(result.mad).toBeLessThan(6);
+    // MAD reported as a decimal fraction (Nigrini units).
+    expect(result.mad).toBeLessThan(0.012);
   });
 
   test('uniform distribution (fabricated data) should be NON_CONFORMING', () => {
@@ -84,7 +85,7 @@ describe("Benford's Law — First Digit", () => {
     }
     const result = analyzeBenfordFirst(txns);
     expect(result.conformity).toBe('NON_CONFORMING');
-    expect(result.mad).toBeGreaterThan(10);
+    expect(result.mad).toBeGreaterThan(0.015);
   });
 
   test('digit 1 should be most frequent in natural data (>25%)', () => {

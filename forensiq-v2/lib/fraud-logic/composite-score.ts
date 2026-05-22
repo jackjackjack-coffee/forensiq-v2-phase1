@@ -241,7 +241,9 @@ export function computePortfolioRisk(
     100,
     Math.min(meanRisk * 1.8, 60) +            // primary: avg per-txn risk (0–60)
     Math.min(duplicate_rate * 100 * 2, 20) +  // duplicate pattern boost (0–20)
-    Math.min(benford_mad * 1.5, 20)           // Benford deviation boost (0–20)
+    Math.min(benford_mad * 1000, 20)          // Benford deviation boost (0–20)
+                                              // benford_mad is a decimal fraction
+                                              // (≈0.005–0.05 in practice).
   );
 
   const flagged = analyzed.filter(
