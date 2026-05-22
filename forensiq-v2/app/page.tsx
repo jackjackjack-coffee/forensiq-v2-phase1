@@ -8,7 +8,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, Legend, ReferenceLine, Cell,
 } from 'recharts';
-import { runForensicAnalysisAsync, type ProgressUpdate } from '@/lib/fraud-logic/run-async';
+import { runForensicAnalysisInWorker, type ProgressUpdate } from '@/lib/fraud-logic/run-async';
 import { parseCsv, autoDetectMapping } from '@/lib/parsers/csv';
 import { exportRiskReport } from '@/lib/export';
 import { DETECTOR_INFO } from '@/lib/detector-info';
@@ -478,18 +478,20 @@ function HistorySidebar({
   history,
   onSelect,
   onDelete,
+  resolveResult,
 }: {
   history: AnalysisSummary[];
-  onSelect: (id: string) => void;
+  onSelect: (id: string, result: AnalysisResult) => void;
   onDelete: (id: string) => void;
+  resolveResult: (id: string) => AnalysisResult | null;
 }) {
   const [missingId, setMissingId] = useState<string | null>(null);
 
   function handleSelect(id: string) {
-    const stored = loadStoredResult(id);
-    if (stored) {
+    const r = resolveResult(id);
+    if (r) {
       setMissingId(null);
-      onSelect(id);
+      onSelect(id, r);
     } else {
       setMissingId(id);
     }
@@ -1290,7 +1292,7 @@ export default function Home() {
     setLastFilename(filename);
     setProgress({ step: 0, total: 10, label: 'Starting analysis…' });
     try {
-      const r = await runForensicAnalysisAsync(pendingTxns, setProgress);
+      const r = await runForensicAnalysisInWorker(pendingTxns, setProgress);
       setAnalysisResult(r);
       setResult(r);
       const summary: AnalysisSummary = {
@@ -1318,16 +1320,14 @@ export default function Home() {
       <LoadingOverlay progress={progress} />
       <HistorySidebar
           history={history}
-          onSelect={(id) => {
-            // Session cache (in-memory) takes priority; localStorage is fallback
-            const r = sessionCache.current.get(id) ?? loadStoredResult(id);
-            if (r) {
-              setAnalysisResult(r);
-              setResult(r);
-              window.location.href = '/overview';
-            }
+          resolveResult={(id) => sessionCache.current.get(id) ?? loadStoredResult(id)}
+          onSelect={(_id, r) => {
+            setAnalysisResult(r);
+            setResult(r);
+            window.location.href = '/overview';
           }}
           onDelete={(id) => {
+            sessionCache.current.delete(id);
             setHistory(deleteHistoryItem(id));
           }}
         />
