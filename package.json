@@ -1,0 +1,11 @@
+{
+  "name": "forensiq-screenshot-tooling",
+  "private": true,
+  "description": "Repo-root tooling for regenerating README screenshots. The Next.js app lives in forensiq-v2/.",
+  "scripts": {
+    "screenshots": "node scripts/screenshots.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}

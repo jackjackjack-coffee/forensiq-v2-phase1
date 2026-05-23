@@ -4,6 +4,8 @@
 
 **Live demo:** https://forensiq-v2-phase1.vercel.app
 
+![Upload](docs/screenshots/hero-upload.png)
+
 ---
 
 ## What it does
@@ -17,6 +19,8 @@ Drop a CSV of vendor payments. In a few seconds you get:
 - An **Excel risk report** export for the audit work paper
 
 Auditor data stays in the browser — there is no server-side persistence of transactions.
+
+![Portfolio overview](docs/screenshots/overview-score.png)
 
 ## Why this exists
 
@@ -58,6 +62,18 @@ The pipeline runs nine detectors in three layers, then computes a composite scor
 ### Composite scoring
 
 `composite-score.ts` rolls each transaction's detector outputs into a 0–100 score with weights drawn from ACFE incidence rates, then assigns a `RiskTier` and aggregates portfolio-level metrics (estimated exposure, outlier rate, duplicate rate, etc.).
+
+Per-transaction drill-down shows every detector's verdict — including the external checks — with PASS / FAIL / INFO / N/A status:
+
+![Transaction detail panel](docs/screenshots/transaction-detail.png)
+
+## Visual tour
+
+![Risk score distribution and time series](docs/screenshots/overview-charts.png)
+
+![Benford 1st-digit conformity](docs/screenshots/benford.png)
+
+![Detector firing counts](docs/screenshots/detectors.png)
 
 ## Architecture
 
