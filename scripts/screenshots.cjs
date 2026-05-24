@@ -57,12 +57,17 @@ function mockVerify(reqJson) {
 }
 
 async function waitForAnalysisDone(page) {
+  // Playwright's waitForFunction signature is (fn, arg, options) — passing
+  // {timeout} as the second arg silently uses the 30s default. Pass undefined
+  // for `arg` so the options object lands in the right slot.
   await page.waitForFunction(
     () => !document.body.innerText.includes('RUNNING FORENSIC ANALYSIS'),
-    { timeout: 120_000 },
+    undefined,
+    { timeout: 180_000 },
   );
   await page.waitForFunction(
     () => /Forensic Analysis Complete|RESULTS READY/i.test(document.body.innerText),
+    undefined,
     { timeout: 90_000 },
   );
 }
@@ -118,13 +123,23 @@ async function shoot(page, name) {
   });
 
   // ── 1. hero-upload ──────────────────────────────────────────────
-  console.log('\n[1/6] hero-upload.png');
+  console.log('\n[1/7] hero-upload.png');
   await page.goto(BASE, { waitUntil: 'networkidle' });
   await page.waitForSelector('text=DROP CSV FILE', { timeout: 15_000 });
   await shoot(page, 'hero-upload');
 
-  // ── 2 + 3. interesting sample → overview ───────────────────────
-  console.log('\n[2/6] generating an interesting sample…');
+  // ── 2. parser-feedback card (pending state after GENERATE) ──────
+  console.log('\n[2/7] parser-feedback.png');
+  await page.click('button:has-text("GENERATE")');
+  await page.waitForSelector('button:has-text("RUN FORENSIC ANALYSIS")', { timeout: 15_000 });
+  // Card renders right above the RUN button; give a beat for layout
+  // Card uses CSS-uppercased "Parser detected" — Playwright text= matches case-insensitively
+  await page.waitForSelector('text=Parser detected', { timeout: 5_000 });
+  await page.waitForTimeout(400);
+  await shoot(page, 'parser-feedback');
+
+  // ── 3 + 4. interesting sample → overview ───────────────────────
+  console.log('\n[3/7] generating an interesting sample…');
   await generateInterestingSample(page);
 
   await page.click('button:has-text("VIEW RESULTS"), a[href="/overview"]');
@@ -132,31 +147,29 @@ async function shoot(page, name) {
   await page.waitForSelector('text=Portfolio', { timeout: 15_000 });
   await page.waitForTimeout(1200); // charts render
 
-  console.log('\n[3/6] overview-score.png');
+  console.log('\n[4/7] overview-score.png');
   await page.evaluate(() => window.scrollTo(0, 0));
   await shoot(page, 'overview-score');
 
-  console.log('\n[4/6] overview-charts.png');
+  console.log('\n[5/7] overview-charts.png');
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45));
   await page.waitForTimeout(500);
   await shoot(page, 'overview-charts');
 
-  // ── 5. transactions + detail panel ──────────────────────────────
-  console.log('\n[5/6] transaction-detail.png');
+  // ── 6. transactions + detail panel ──────────────────────────────
+  console.log('\n[6/7] transaction-detail.png');
   await page.goto(`${BASE}/transactions`, { waitUntil: 'networkidle' });
   await page.waitForSelector('table tbody tr', { timeout: 15_000 });
   // First row is highest-risk (default sort) — likely an OFAC-flagged shell
   await page.locator('table tbody tr').first().click();
   await page.waitForTimeout(800);
-  // Scroll the detail panel (which renders below the table) into view.
-  const panel = page.locator('text=Transaction Detail, text=Detector Findings').first();
-  // Fallback: scroll to the bottom of the page so the panel is visible.
+  // Detail panel renders below the table; scroll to bottom so it's in frame.
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(400);
   await shoot(page, 'transaction-detail');
 
-  // ── 6. benford ──────────────────────────────────────────────────
-  console.log('\n[6/6] benford.png');
+  // ── 7. benford ──────────────────────────────────────────────────
+  console.log('\n[7/7] benford.png');
   await page.goto(`${BASE}/benford`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(1500);
   await shoot(page, 'benford');
