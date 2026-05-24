@@ -121,6 +121,12 @@ export interface ParseResult {
   transactions: RawTransaction[];
   errors: ParseError[];
   skipped_rows: number;
+  /** Mapping the parser actually used (after fallback / auto-detect). */
+  resolved_mapping?: ColumnMapping;
+  /** Count of rows where amount was zero or negative (credits/refunds). */
+  credit_rows?: number;
+  /** Date-format hint for the user. */
+  date_format?: 'ISO' | 'US (MM/DD)' | 'EU (DD/MM)' | 'ambiguous' | 'unknown';
 }
 
 export interface ParseError {

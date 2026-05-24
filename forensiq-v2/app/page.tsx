@@ -18,8 +18,15 @@ import {
 } from '@/lib/benford-categories';
 import pako from 'pako';
 import type {
-  AnalysisResult, AnalyzedTransaction, RawTransaction, RiskTier, DetectorName,
+  AnalysisResult, AnalyzedTransaction, RawTransaction, RiskTier, DetectorName, ColumnMapping,
 } from '@/lib/types/transaction';
+
+interface PendingMeta {
+  resolvedMapping: ColumnMapping;
+  creditRows: number;
+  skippedRows: number;
+  dateFormat: 'ISO' | 'US (MM/DD)' | 'EU (DD/MM)' | 'ambiguous' | 'unknown';
+}
 
 // ── Analysis history (localStorage) ─────────────────────────────
 
@@ -310,11 +317,60 @@ function DetailDrawer({ txn, onClose }: { txn: AnalyzedTransaction | null; onClo
   );
 }
 
+// ── Parser-feedback card ────────────────────────────────────────
+// Shown after a CSV is parsed but before analysis runs. Surfaces what
+// the parser auto-detected so the user can catch misdetection before
+// trusting downstream results.
+
+function ParserFeedback({ meta, rowCount }: { meta: PendingMeta; rowCount: number | null }) {
+  const m = meta.resolvedMapping;
+  const warnDate = meta.dateFormat === 'ambiguous';
+  const warnSize = (rowCount ?? 0) > 50_000;
+  return (
+    <div className="border border-slate-700 bg-slate-950 rounded-lg p-4 space-y-3 font-mono">
+      <p className="text-[10px] text-slate-400 uppercase tracking-widest">Parser detected</p>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
+        <span className="text-slate-500">Amount column</span>
+        <span className="text-slate-200">{m.amount}</span>
+        <span className="text-slate-500">Date column</span>
+        <span className="text-slate-200">{m.date || '— (defaulting to today)'}</span>
+        <span className="text-slate-500">Vendor column</span>
+        <span className="text-slate-200">{m.vendor || '— (defaulting to "Unknown")'}</span>
+        <span className="text-slate-500">Date format</span>
+        <span className={warnDate ? 'text-amber-400' : 'text-slate-200'}>
+          {meta.dateFormat}{warnDate && ' — assuming ISO; verify if dates look wrong'}
+        </span>
+        {meta.creditRows > 0 && (
+          <>
+            <span className="text-slate-500">Credits / refunds</span>
+            <span className="text-slate-200">
+              {meta.creditRows.toLocaleString()} row{meta.creditRows === 1 ? '' : 's'} excluded
+              (zero or negative amount)
+            </span>
+          </>
+        )}
+        {meta.skippedRows > 0 && (
+          <>
+            <span className="text-slate-500">Unparseable</span>
+            <span className="text-amber-400">{meta.skippedRows.toLocaleString()} row{meta.skippedRows === 1 ? '' : 's'} skipped</span>
+          </>
+        )}
+      </div>
+      {warnSize && (
+        <p className="text-[11px] text-amber-400 border-t border-slate-800 pt-2">
+          ⚠ Large dataset ({rowCount?.toLocaleString()} rows). Fuzzy-duplicate detection is O(n²);
+          analysis may take several minutes.
+        </p>
+      )}
+    </div>
+  );
+}
+
 // ── Section: Upload ──────────────────────────────────────────────
 
 function UploadSection({
   onDrop, error, result, filename,
-  pendingFilename, pendingCount,
+  pendingFilename, pendingCount, pendingMeta,
   onGenerateSample, onClearFile, onStartAnalysis,
   onViewResults,
 }: {
@@ -324,6 +380,7 @@ function UploadSection({
   filename: string | null;
   pendingFilename: string | null;
   pendingCount: number | null;
+  pendingMeta: PendingMeta | null;
   onGenerateSample: () => void;
   onClearFile: () => void;
   onStartAnalysis: () => void;
@@ -404,6 +461,10 @@ function UploadSection({
             ✕
           </button>
         </div>
+
+        {pendingMeta && (
+          <ParserFeedback meta={pendingMeta} rowCount={pendingCount} />
+        )}
 
         {error && (
           <div className="border border-red-800 bg-red-950/40 text-red-300 rounded-lg px-4 py-3 text-sm">{error}</div>
@@ -1241,6 +1302,7 @@ export default function Home() {
   // Loaded but not-yet-analyzed file
   const [pendingTxns, setPendingTxns]         = useState<RawTransaction[] | null>(null);
   const [pendingFilename, setPendingFilename] = useState<string | null>(null);
+  const [pendingMeta, setPendingMeta]         = useState<PendingMeta | null>(null);
 
   useEffect(() => {
     setHistory(loadHistory());
@@ -1264,6 +1326,12 @@ export default function Home() {
         }
         setPendingTxns(parsed.transactions);
         setPendingFilename(file.name);
+        setPendingMeta({
+          resolvedMapping: parsed.resolved_mapping ?? mapping,
+          creditRows: parsed.credit_rows ?? 0,
+          skippedRows: parsed.skipped_rows,
+          dateFormat: parsed.date_format ?? 'unknown',
+        });
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to read file.');
       }
@@ -1277,9 +1345,16 @@ export default function Home() {
     try {
       const csv      = generateSampleCsv();
       triggerCsvDownload(csv, 'sample-transactions.csv');
-      const parsed   = parseCsv(csv, autoDetectMapping(csv));
+      const mapping  = autoDetectMapping(csv);
+      const parsed   = parseCsv(csv, mapping);
       setPendingTxns(parsed.transactions);
       setPendingFilename('sample-transactions.csv');
+      setPendingMeta({
+        resolvedMapping: parsed.resolved_mapping ?? mapping,
+        creditRows: parsed.credit_rows ?? 0,
+        skippedRows: parsed.skipped_rows,
+        dateFormat: parsed.date_format ?? 'unknown',
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate sample.');
     }
@@ -1288,11 +1363,25 @@ export default function Home() {
   const handleClearFile = useCallback(() => {
     setPendingTxns(null);
     setPendingFilename(null);
+    setPendingMeta(null);
     setError(null);
   }, []);
 
   const handleStartAnalysis = useCallback(async () => {
     if (!pendingTxns || pendingTxns.length === 0) return;
+
+    // Pre-flight size warning — fuzzy-duplicate detection is O(n²) within
+    // amount bands; above ~50k rows the worker can run for many minutes.
+    if (pendingTxns.length > 50_000) {
+      const proceed = window.confirm(
+        `This file has ${pendingTxns.length.toLocaleString()} transactions.\n\n` +
+        'Analysis will take several minutes, primarily because fuzzy-duplicate ' +
+        'detection scales quadratically. For very large ledgers, consider ' +
+        'splitting by quarter or department.\n\nContinue?',
+      );
+      if (!proceed) return;
+    }
+
     const filename = pendingFilename ?? 'transactions.csv';
     setError(null);
     setLastFilename(filename);
@@ -1314,6 +1403,7 @@ export default function Home() {
       setHistory(appendHistory(summary, r));
       setPendingTxns(null);
       setPendingFilename(null);
+      setPendingMeta(null);
       setProgress(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Analysis failed.');
@@ -1345,6 +1435,7 @@ export default function Home() {
           filename={lastFilename}
           pendingFilename={pendingFilename}
           pendingCount={pendingTxns?.length ?? null}
+          pendingMeta={pendingMeta}
           onGenerateSample={handleGenerateSample}
           onClearFile={handleClearFile}
           onStartAnalysis={handleStartAnalysis}
