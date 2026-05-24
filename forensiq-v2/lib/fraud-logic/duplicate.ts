@@ -99,6 +99,18 @@ function buildExactKey(txn: RawTransaction): string {
  */
 export function detectFuzzyDuplicates(transactions: RawTransaction[]): FuzzyDuplicateResult[] {
   const LEVENSHTEIN_THRESHOLD = 2;
+  // For very large ledgers (>20k rows) the O(n²) within-band comparisons can
+  // run for tens of minutes. Restrict the candidate pool to transactions
+  // above the portfolio median — fuzzy-duplicate fraud almost always involves
+  // material amounts, and most false positives sit in the low-amount tail.
+  const LARGE_DATASET_THRESHOLD = 20_000;
+  let candidateMask: boolean[] | null = null;
+  if (transactions.length > LARGE_DATASET_THRESHOLD) {
+    const sortedAmounts = transactions.map((t) => t.amount).sort((a, b) => a - b);
+    const median = sortedAmounts[Math.floor(sortedAmounts.length / 2)] ?? 0;
+    candidateMask = transactions.map((t) => t.amount >= median);
+  }
+
   const results: FuzzyDuplicateResult[] = transactions.map(() => ({
     fuzzy_dup_group: null,
     fuzzy_match_idx: null,
@@ -119,6 +131,10 @@ export function detectFuzzyDuplicates(transactions: RawTransaction[]): FuzzyDupl
         const idxA = group[i];
         const idxB = group[j];
         if (idxA === undefined || idxB === undefined) continue;
+
+        // Large-dataset short-circuit: at least one side must be above the
+        // portfolio median, otherwise skip the expensive Levenshtein call.
+        if (candidateMask && !candidateMask[idxA] && !candidateMask[idxB]) continue;
 
         const txnA = transactions[idxA];
         const txnB = transactions[idxB];

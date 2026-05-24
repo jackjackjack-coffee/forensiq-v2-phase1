@@ -40,6 +40,7 @@ export function parseCsv(csvText: string, inputMapping: ColumnMapping): ParseRes
   const errors: ParseError[] = [];
   const transactions: RawTransaction[] = [];
   let skipped_rows = 0;
+  let credit_rows = 0;
 
   // Find amount column — try mapped name first, then fall back to first numeric column
   let amountCol = mapping['amount']?.toLowerCase();
@@ -52,6 +53,13 @@ export function parseCsv(csvText: string, inputMapping: ColumnMapping): ParseRes
     return { transactions: [], errors, skipped_rows: 0 };
   }
 
+  // Detect the date format up-front from a sample of rows so we can
+  // disambiguate MM/DD vs DD/MM rather than silently shifting dates.
+  const dateCol = mapping.date?.toLowerCase();
+  const dateFormat: NonNullable<ParseResult['date_format']> = dateCol && headers.includes(dateCol)
+    ? detectDateFormat(lines, headers, dateCol)
+    : 'unknown';
+
   // Parse data rows
   for (let i = 1; i < lines.length; i++) {
     const rowNum = i + 1; // 1-indexed for auditor-facing messages
@@ -62,37 +70,57 @@ export function parseCsv(csvText: string, inputMapping: ColumnMapping): ParseRes
     const row: CsvRow = {};
     headers.forEach((h, idx) => { row[h] = values[idx]; });
 
-    const extracted = extractTransaction(row, mapping, rowNum, errors);
-    if (extracted !== null) {
-      transactions.push(extracted);
+    const outcome = extractTransaction(row, mapping, rowNum, errors, dateFormat);
+    if (outcome.kind === 'ok') {
+      transactions.push(outcome.txn);
+    } else if (outcome.kind === 'credit') {
+      credit_rows++;
     } else {
       skipped_rows++;
     }
   }
 
-  return { transactions, errors, skipped_rows };
+  return {
+    transactions,
+    errors,
+    skipped_rows,
+    resolved_mapping: mapping,
+    credit_rows,
+    date_format: dateFormat,
+  };
 }
 
 // ── Internal helpers ─────────────────────────────────────────────
+
+type ExtractOutcome =
+  | { kind: 'ok'; txn: RawTransaction }
+  | { kind: 'credit' }   // amount was 0 or negative — a refund/credit, counted separately
+  | { kind: 'skip' };    // unparseable amount
 
 function extractTransaction(
   row: CsvRow,
   mapping: ColumnMapping,
   rowNum: number,
-  errors: ParseError[]
-): RawTransaction | null {
-  // Amount — required, must be positive numeric
+  errors: ParseError[],
+  dateFormat: NonNullable<ParseResult['date_format']>,
+): ExtractOutcome {
+  // Amount — required, must be numeric. Zero or negative = credit/refund.
   const rawAmount = row[mapping.amount.toLowerCase()];
   const amount = parseFloat(String(rawAmount ?? '').replace(/[$,\s]/g, ''));
-  if (isNaN(amount) || amount <= 0) {
-    errors.push({ row: rowNum, field: 'amount', message: `Invalid or non-positive amount: "${rawAmount}"` });
-    return null;
+  if (isNaN(amount)) {
+    errors.push({ row: rowNum, field: 'amount', message: `Unparseable amount: "${rawAmount}"` });
+    return { kind: 'skip' };
+  }
+  if (amount <= 0) {
+    return { kind: 'credit' };
   }
 
   // Date — optional, falls back to today
   const dateCol = mapping.date?.toLowerCase();
   const rawDate = dateCol && headers_available(row, dateCol) ? String(row[dateCol] ?? '').trim() : '';
-  const date = isValidDateString(rawDate) ? normalizeDate(rawDate) : new Date().toISOString().split('T')[0]!;
+  const date = isValidDateString(rawDate, dateFormat)
+    ? normalizeDate(rawDate, dateFormat)
+    : new Date().toISOString().split('T')[0]!;
 
   // Vendor — optional, falls back to "Unknown"
   const vendorCol = mapping.vendor?.toLowerCase();
@@ -112,14 +140,17 @@ function extractTransaction(
   const addressCol = mapping.address?.toLowerCase();
 
   return {
-    invoice_id,
-    date,
-    vendor,
-    amount,
-    description: descriptionCol ? String(row[descriptionCol] ?? '').trim() || undefined : undefined,
-    category: categoryCol ? String(row[categoryCol] ?? '').trim() || undefined : undefined,
-    approved_by: approvedByCol ? String(row[approvedByCol] ?? '').trim() || undefined : undefined,
-    address: addressCol ? String(row[addressCol] ?? '').trim() || undefined : undefined,
+    kind: 'ok',
+    txn: {
+      invoice_id,
+      date,
+      vendor,
+      amount,
+      description: descriptionCol ? String(row[descriptionCol] ?? '').trim() || undefined : undefined,
+      category: categoryCol ? String(row[categoryCol] ?? '').trim() || undefined : undefined,
+      approved_by: approvedByCol ? String(row[approvedByCol] ?? '').trim() || undefined : undefined,
+      address: addressCol ? String(row[addressCol] ?? '').trim() || undefined : undefined,
+    },
   };
 }
 
@@ -186,15 +217,72 @@ function parseCsvLine(line: string): string[] {
   return result;
 }
 
-function isValidDateString(date: string): boolean {
+/**
+ * Detect whether a date column is ISO (YYYY-MM-DD), US (MM/DD/YYYY), or EU
+ * (DD/MM/YYYY) format by sampling rows. Returns 'ambiguous' when the sample
+ * doesn't distinguish US vs EU (e.g., every row has both parts ≤ 12).
+ *
+ * Without this, `new Date('01/02/2024')` is treated as US format by the JS
+ * runtime, silently shifting European DD/MM/YYYY dates by a month.
+ */
+function detectDateFormat(
+  lines: string[],
+  headers: string[],
+  dateCol: string,
+): NonNullable<ParseResult['date_format']> {
+  const colIdx = headers.indexOf(dateCol);
+  if (colIdx < 0) return 'unknown';
+
+  const sampleSize = Math.min(50, lines.length - 1);
+  let iso = 0, slashFirstOver12 = 0, slashSecondOver12 = 0, slashSeen = 0;
+
+  for (let i = 1; i <= sampleSize; i++) {
+    const v = String(parseCsvLine(lines[i] ?? '')[colIdx] ?? '').trim();
+    if (!v) continue;
+    if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(v)) { iso++; continue; }
+    const m = v.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/);
+    if (m) {
+      slashSeen++;
+      const a = Number(m[1]);
+      const b = Number(m[2]);
+      if (a > 12) slashFirstOver12++;
+      if (b > 12) slashSecondOver12++;
+    }
+  }
+
+  if (iso > slashSeen) return 'ISO';
+  if (slashSeen === 0) return 'unknown';
+  if (slashFirstOver12 > 0 && slashSecondOver12 === 0) return 'EU (DD/MM)';
+  if (slashSecondOver12 > 0 && slashFirstOver12 === 0) return 'US (MM/DD)';
+  // Tied or both kinds present — too ambiguous; default to ISO interpretation downstream.
+  return 'ambiguous';
+}
+
+function isValidDateString(date: string, _format: NonNullable<ParseResult['date_format']>): boolean {
   if (!date) return false;
   const parsed = new Date(date);
   return !isNaN(parsed.getTime());
 }
 
-function normalizeDate(date: string): string {
+function normalizeDate(date: string, format: NonNullable<ParseResult['date_format']>): string {
+  // ISO date passes through unchanged.
+  if (/^\d{4}-\d{1,2}-\d{1,2}/.test(date)) {
+    const parsed = new Date(date);
+    return parsed.toISOString().split('T')[0]!;
+  }
+  // Slash/dash dates: reinterpret based on detected format to avoid the
+  // silent US-default that `new Date()` applies.
+  const m = date.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/);
+  if (m && (format === 'EU (DD/MM)' || format === 'US (MM/DD)')) {
+    const d = Number(format === 'EU (DD/MM)' ? m[1] : m[2]);
+    const mo = Number(format === 'EU (DD/MM)' ? m[2] : m[1]);
+    let y = Number(m[3]);
+    if (y < 100) y += y < 70 ? 2000 : 1900;
+    const dt = new Date(Date.UTC(y, mo - 1, d));
+    if (!isNaN(dt.getTime())) return dt.toISOString().split('T')[0]!;
+  }
   const parsed = new Date(date);
-  return parsed.toISOString().split('T')[0]; // YYYY-MM-DD
+  return parsed.toISOString().split('T')[0]!;
 }
 
 // ── Default column mapping (matches sample-invoices.csv) ─────────

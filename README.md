@@ -101,6 +101,83 @@ Per-transaction drill-down shows every detector's verdict — including the exte
 
 **Type discipline.** `lib/types/transaction.ts` is the single source of truth. External data enters as `unknown` and is narrowed through type guards. No `any` in the detector code.
 
+## How the ML actually works
+
+ForensiQ uses one machine-learning technique: **Isolation Forest** (Liu, Ting & Zhou, 2008), an unsupervised anomaly-detection algorithm. The rest of the detectors are classical statistics (Benford's Law) or rule-based heuristics (RSF, duplicates, structuring). I'm specific about this because "ML project" can mean a lot of different things, and overselling reads worse than under-explaining.
+
+### The 20-questions analogy
+
+Imagine playing 20 questions about a person in a crowd. A *normal* person (average height, average age) takes lots of questions to identify — they blend in. A 7-foot-tall outlier? You can identify them in two questions. **Unusual things are easy to "isolate."**
+
+Apply this to transactions. The algorithm picks a random split point in the amount range ("is amount > $73,205?") and divides transactions into two groups. It keeps splitting each group with new random questions until each transaction is alone in its own leaf — or the depth limit is hit. The number of splits required to isolate a transaction is its **anomaly score**: fewer splits = more anomalous.
+
+A typical $5,000 invoice falls into a fat bucket with many similar ones — takes ~7-8 splits. A $750,000 invoice from a shell company sits alone at the top of the amount distribution — takes ~3 splits. The latter scores much higher.
+
+### Why "forest"
+
+One tree depends on the luck of which random splits happened to be useful. To smooth out the noise, the algorithm builds **200 trees**, each with different random splits, and averages the path lengths. A score becomes robust only when most of the 200 trees agree.
+
+### Why ML and not just a threshold?
+
+The intuitive alternative — "flag anything over $X" — falls apart immediately:
+
+- The right threshold depends on the company. $50k is a red flag for a coffee shop, routine for a Fortune 500.
+- The Isolation Forest **learns from the file you upload**. Its trees are built from *your* transactions' amount range, so the same algorithm correctly scores a coffee-shop ledger and a Fortune-500 ledger without retuning.
+- We don't have labeled fraud examples to train a supervised classifier on. Unsupervised anomaly detection is the right tool for the problem.
+
+### Deterministic by design
+
+The random number generator is seeded with a fixed constant (`random_seed: 42` in `lib/fraud-logic/isolation-forest.ts`). Same CSV → same trees → same scores, every run. This is intentional: an auditor needs to defend their findings, and a non-deterministic score ("47 yesterday, 51 today, 49 just now") would be useless in a work paper.
+
+The seed controls the *pattern* of randomness (the sequence `0.3741, 0.8124, 0.7234, …`); the data controls how those fractions become actual split values. Different CSVs produce different trees because they have different amount ranges, even though the random sequence is identical.
+
+### What the model does *not* do
+
+- It does not learn across analyses — each upload builds a fresh model and discards it after scoring. Per-engagement isolation is required for forensic work; data must not leak between clients.
+- It does not predict future fraud, classify "fraud vs not fraud," or output labels — it produces a 0-100 anomaly score per transaction, ranked relative to other transactions in the same file.
+- It does not use neural networks, embeddings, or LLMs. It is ~200 lines of TypeScript, runs in milliseconds in a browser, and was implemented from scratch in `lib/fraud-logic/isolation-forest.ts`.
+
+## Using your own CSV
+
+The parser is permissive by design — most real ERP exports work without column renaming.
+
+**Auto-detected column aliases** (case-insensitive):
+
+| Canonical field | Aliases the parser recognizes |
+|---|---|
+| amount | `amount`, `amt`, `total`, `value`, `invoice_amount`, **SAP** `dmbtr`, **Oracle** `entered_dr` |
+| date | `date`, `invoice_date`, `posting_date`, `trans_date`, **SAP** `budat` |
+| vendor | `vendor`, `vendor_name`, `supplier`, `payee`, `company`, **SAP** `lifnr` |
+| invoice_id | `invoice_id`, `invoice_number`, `reference`, **SAP** `belnr` |
+| description | `description`, `desc`, `memo`, `notes`, **SAP** `sgtxt` |
+| address | `address`, `vendor_address`, `street_address`, `location` |
+
+If no header matches the amount aliases, the parser **samples 20 rows and picks whichever column has the highest ratio of positive numeric values** ≥ 50% threshold. Currency symbols (`$`, `,`, whitespace) are stripped before parsing.
+
+**After upload, a feedback card surfaces what was detected** — which columns mapped to which canonical fields, the inferred date format, the count of credit/refund rows excluded, and any unparseable rows. Catch parser misinterpretation before trusting the analysis.
+
+**Date format**: the parser samples up to 50 dates and distinguishes ISO (`2024-05-15`) vs US (`05/15/2024`) vs European (`15/05/2024`) format. If a date column has any value with a first-slot number greater than 12, that proves DD/MM (since no month exceeds 12). If neither pattern is conclusive, the result is flagged "ambiguous" in the feedback card and the user is warned.
+
+**Credits / refunds**: zero or negative amounts are no longer silently dropped — they're counted separately and excluded from the positive-amount detectors (they would distort RSF and Isolation Forest scoring).
+
+### Things to watch out for
+
+- **Excel files (.xlsx) not supported** — export to CSV first.
+- **Mixed-currency ledgers** silently compare amounts directly (€1,000 and $1,000 look the same to the detectors). For a single-currency engagement this is fine; for multi-currency, pre-normalize before upload.
+- **No header row**: the first line is always treated as headers. A header-less CSV will be misinterpreted.
+- **UTF-8 only.** UTF-16 or Latin-1 will fail with encoding errors.
+
+### Large datasets
+
+A pre-analysis confirmation appears when row count exceeds 50,000 — analysis time is dominated by fuzzy-duplicate detection (O(n²) within ±20% amount bands). For ledgers over 20,000 rows, fuzzy duplicates skip the long-tail of below-median amounts to keep the analysis tractable while preserving signal where it matters (fuzzy-duplicate fraud almost always involves material amounts).
+
+| Ledger size | Approximate analysis time | Notes |
+|---|---|---|
+| 1k–10k | 2–10 s | Smooth on any laptop |
+| 10k–50k | 15 s – 2 min | Web Worker keeps UI responsive |
+| 50k–100k | 2–8 min | Confirmation prompt before running |
+| 100k+ | Untested | Browser memory may become the bottleneck |
+
 ## Tech stack
 
 | | |
@@ -132,13 +209,26 @@ There's a "Generate Sample" button on the upload screen if you don't have a CSV 
 
 ## Roadmap
 
-ForensiQ Phase 1 is a single-user, in-browser tool. Planned for Phase 2:
+ForensiQ Phase 1 is a single-user, in-browser tool. Planned next:
 
+**Input robustness**
+- **Excel (.xlsx) parsing** on the upload path (the `xlsx` dependency is already used for export)
+- **Multi-currency detection and base-currency normalization**
+- **Encoding sniff** (UTF-16 BOM, Latin-1)
+- **First-5-rows preview** with detected column highlighting before commit
+
+**Large-dataset UX**
+- **Sub-detector progress** — current loading overlay shows step granularity ("FUZZY DUPLICATES 7/12"); for very large files we'd surface within-step progress so the user knows the worker hasn't hung
+- **Hard row cap with chunking guidance** for ledgers >500k rows
+
+**Forensic coverage**
 - **Server-side persistence** for multi-engagement audit firms (Supabase + RLS)
 - **Diff mode** — compare current ledger to last quarter and surface deltas
 - **Vendor master file analysis** — duplicate vendors with different bank accounts, vendors sharing addresses with employees
 - **PDF audit work-paper export** with detector-by-detector commentary
 - **Real-time mode** — Webhook from accounting system → screened in real time
+- **Replace OFAC's regex XML parsing** with a proper SAX parser (current implementation is brittle to schema changes)
+- **State-business-registry integration** — stronger "is this vendor real?" check than Nominatim geocoding alone
 
 ## Standards and references
 
