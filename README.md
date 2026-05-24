@@ -156,6 +156,8 @@ If no header matches the amount aliases, the parser **samples 20 rows and picks 
 
 **After upload, a feedback card surfaces what was detected** — which columns mapped to which canonical fields, the inferred date format, the count of credit/refund rows excluded, and any unparseable rows. Catch parser misinterpretation before trusting the analysis.
 
+![Parser feedback card](docs/screenshots/parser-feedback.png)
+
 **Date format**: the parser samples up to 50 dates and distinguishes ISO (`2024-05-15`) vs US (`05/15/2024`) vs European (`15/05/2024`) format. If a date column has any value with a first-slot number greater than 12, that proves DD/MM (since no month exceeds 12). If neither pattern is conclusive, the result is flagged "ambiguous" in the feedback card and the user is warned.
 
 **Credits / refunds**: zero or negative amounts are no longer silently dropped — they're counted separately and excluded from the positive-amount detectors (they would distort RSF and Isolation Forest scoring).
