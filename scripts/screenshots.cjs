@@ -113,6 +113,7 @@ async function shoot(page, name) {
   });
 
   const page = await ctx.newPage();
+  page.setDefaultTimeout(180_000);
   page.on('console', (msg) => {
     if (msg.type() === 'error') console.log('  [browser-err]', msg.text().slice(0, 120));
   });
